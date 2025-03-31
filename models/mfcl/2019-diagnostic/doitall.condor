@@ -1,0 +1,215 @@
+#!/bin/sh
+cd $_CONDOR_SCRATCH_DIR
+export PATH=.:$PATH
+export ADTMP1=.
+
+FRQ=cor.au.ll.len.frq
+INI=stm.mat_length.ini
+
+#  ------------------------
+#  PHASE 0 - create initial par file
+#  ------------------------
+   nice $MFCL $FRQ $INI 00.par -makepar
+#  ------------------------
+#  Initial fit conditions
+#  ------------------------
+  nice $MFCL $FRQ 00.par 01.par -file - <<PHASE01
+  # define PHASE 01 flags
+  # model set-up
+  1 32 6      # initial control sequence
+  1 141 3     # likelihood function for LF data = normal
+  1 139 3     # likelihood function for WF data = normal
+  2 32 1      # estimate scaling parameter for tot population
+  2 57 1      # set no. of recruitments per year to 1
+  1 400 2     # do not estimate recruits in final two years
+  1 398 0     # replace final two years with mean of log(recruits)
+  1 149 1000  #penalty on recruitment devs
+  2 94 1      # Initial age structure based on equilibrium conditions. F = 0.
+  2 95 10     # Multiplier for setting initial age structure
+  2 128 10    # Multiplier for setting initial age structure
+  -999 26 2   # length-dependent selectivity; standard deviation of length-at-age accounted for
+  1 12 0      # do not estimate mean length of first age
+  1 13 0      # do not estimate mean length of last age
+  2 188 2     # turn on length at maturity
+# effort deviations
+  -1 13 -2
+  -2 13 1
+  -3 13 -2
+  -4 13 -2
+  -5 13 -2
+  -6 13 -2
+  -7 13 -2
+  -8 13 -1
+  -9 13 -2
+  -10 13 -2
+  -11 13 -1
+  -12 13 -1
+  -13 13 -1
+  -14 13 -1
+  -999 15 50  # sets penalty weights for q devs
+# initial grouping of fleets with common selectivity
+  -1 24 1
+  -2 24 2
+  -3 24 3
+  -4 24 4
+  -5 24 4
+  -6 24 5
+  -7 24 6
+  -8 24 6
+  -9 24 7
+  -10 24 8
+  -11 24 1
+  -12 24 2
+  -13 24 3
+  -14 24 4
+# define fisheries selectivities
+  -999 57 3   # define cubic spline selectivity for all fisheries
+  -999 61 4   # number of nodes needed for the cubic splines
+# set penalty to force non-decreasing selectivity
+  -999 16 1
+  -999 56 10000000
+# define ages where selectivity is zero
+  -9 75 1
+# define age of terminal selectivity for each fishery
+  -1 3 6
+  -2 3 7
+  -3 3 7
+  -4 3 6
+  -5 3 6
+  -6 3 7
+  -7 3 7
+  -8 3 7
+  -9 3 7
+  -10 3 9
+  -11 3 6
+  -12 3 7
+  -13 3 7
+  -14 3 6
+# initial grouping of fisheries with common catchability throughout time series
+  -1 29 1
+  -2 29 2
+  -3 29 3
+  -4 29 4
+  -5 29 5
+  -6 29 6
+  -7 29 7
+  -8 29 8
+  -9 29 9
+  -10 29 10
+  -11 29 11
+  -12 29 12
+  -13 29 13
+  -14 29 14
+# initial grouping of fisheries with common catchability at start of time series
+  -1 60 1
+  -2 60 2
+  -3 60 3
+  -4 60 4
+  -5 60 5
+  -6 60 6
+  -7 60 7
+  -8 60 8
+  -9 60 9
+  -10 60 10
+  -11 60 11
+  -12 60 12
+  -13 60 13
+  -14 60 14
+# define variable q
+  -2 66 1
+# define weights for size freq data
+  -999 49 40  # downweight the length frquency data for all fisheries
+  -999 50 20  # downweight the weight frequency data for all fisheries
+  -6 49 100   # adjust length frequency weighting for fishery 6
+  -7 49 100   # adjust length frequency weighting for fishery 7
+  -8 49 100   # adjust length frequency weighting for fishery 8
+
+PHASE01
+#
+#
+nice $MFCL $FRQ 01.par 02.par -file - <<PHASE02
+  # define PHASE 02 flags
+  -999 14 1   # max fishing mortality in any interval is 0.1
+  1 149 1000  # recr dev pen to 1000
+  -999 4 2    # turn on effort dev estimation
+  2 34 1      # turns on effort dev. estimation in conjuction with (-999_4_2)
+  1 189 1     # write graph.frq file (LF observed and predicted)
+  1 190 1     # write plot.rep
+  1 1 500     # no. function evaluations
+
+PHASE02
+#
+#
+nice $MFCL $FRQ 02.par 03.par -file - <<PHASE03
+  # define PHASE 03 flags
+  -999 27 1   # estimate seasonal catchability for all fisheries
+  1 1 200     # no. function evaluations
+
+PHASE03
+#
+#
+nice $MFCL $FRQ 03.par 04.par -file - <<PHASE04
+  # define PHASE 04 flags
+  -999 10 1   # estimate time-series catchability for most fisheries, except
+  -2 10 0     # turn off time series catchability for fishery 2
+  -999 23 23  # only allow catchability deviations every 23 months (at a minimum)
+  1 1 500     # no. function evaluations
+  1 50 -5     # sets convergence criterion to 1E-5
+
+PHASE04
+#
+#
+nice $MFCL $FRQ 04.par 05.par -file - <<PHASE05
+  # define PHASE 05 flags
+  1 149 100    # reduce penalty on recruitment deviations
+  1 1 1000     # no. function evaluations
+ -999 14 0    # remove the constraint on max fishing mortality
+
+
+PHASE05
+#
+#
+nice $MFCL $FRQ 05.par 06.par -file - <<PHASE06
+  # define PHASE 06 flags
+  1 1 1000     # no. function evaluations
+  -999 16 0    # remove penalty on non-decreasing selectivity for all fleets except 10
+  -10 16 1
+  -12 24 9  # split the shared fishery selectivity between 2/12
+
+PHASE06
+#
+#
+nice $MFCL $FRQ 06.par 07.par -file - <<PHASE07
+  # define PHASE 07 flags
+1 1 15000    # function evaluations
+  1 50 -9     # increase convergence criteria
+  1 149 0     # remove penalty weight on recruitment deviations from the mean
+  2 145 12     # activates SRR, defines penalty weight
+  2 146 1     # estimate SRR parameter
+  2 199 66     # start year for SRR calcs
+  2 200 2     # ignore final 2 periods in SRR calcs
+  2 161 1     # correct BH recruits for lognormal bias
+  2 162 0     # do not estimate steepness!!
+  2 163 0     # SRR parametrized with steepness
+  2 153 36    # a in beta prior for steepness - new default values
+  2 154 12    # b in beta prior for steepness
+  2 147 2     # lag between spawning and recruitment
+  2 148 5     # no. years from last time period to compute average F
+  2 155 1     # omit the last year from average F calculation
+  -999 55 1   # disable all fisheries for impact analysis
+  2 171 0     # unfished biomass calculated based on recruit time series
+  2 172 0     # calculate depletion of total biomass
+  1 188 1     # write ests.rep and plot.rep
+  1 186 1     # write fishmort and plotq0.rep
+
+PHASE07
+#
+#
+nice $MFCL $FRQ 07.par 08.par -file - <<PHASE08
+  # define PHASE 08 flags
+  1 1 5        # no. function evaluations
+  2 171 1      # unfished biomass calculated based on SRR
+
+PHASE08
+#
+#

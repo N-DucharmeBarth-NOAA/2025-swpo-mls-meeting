@@ -1,0 +1,14 @@
+id,Label,values,lambdas
+08-relax-growth,TOTAL,964.952,
+08-relax-growth,Catch,1.69639,
+08-relax-growth,Equil_catch,0,
+08-relax-growth,Survey,-28.1062,
+08-relax-growth,Length_comp,113.733,
+08-relax-growth,SizeFreq,885.735,
+08-relax-growth,Recruitment,-8.23148,1
+08-relax-growth,InitEQ_Regime,0,1
+08-relax-growth,Forecast_Recruitment,0.0939024,1
+08-relax-growth,Parm_priors,0,1
+08-relax-growth,Parm_softbounds,0.0312077,
+08-relax-growth,Parm_devs,0,1
+08-relax-growth,Crash_Pen,0,1

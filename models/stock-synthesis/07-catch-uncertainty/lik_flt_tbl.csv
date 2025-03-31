@@ -1,0 +1,15 @@
+Label,ALL,F01_LL.JP.1,F02_LL.JP.2,F03_LL.JP.3,F04_LL.JP.4,F05_LL.TW.4,F06_LL.AU.2,F07_LL.AU.3,F08_LL.NZ.3,F09.REC.AU.3,F10_REC.NZ.3,F11_LL.ALL.1,F12_LL.ALL.2,F13_LL.ALL.3,F14_LL.ALL.4,F16_LL.JP.2_early,S01_INDEX.1-4,id
+Catch_lambda,,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,07-catch-uncertainty
+Catch_like,0.866822,0.00116298,0.00025062,0.00318111,0.00196154,0.000228326,0.000172277,0.000190191,0.000146729,0.000100955,0.00135108,0.000153092,0.000659702,0.000198371,8.39158e-05,0.856981,0,07-catch-uncertainty
+Init_equ_lambda,,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,07-catch-uncertainty
+Init_equ_like,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,07-catch-uncertainty
+Surv_lambda,,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,07-catch-uncertainty
+Surv_like,-28.032,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-28.032,07-catch-uncertainty
+Surv_N_use,,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,44,07-catch-uncertainty
+Surv_N_skip,,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,07-catch-uncertainty
+Length_lambda,,0,0,1,0,1,0,0,0,0,1,1,0,0,1,0,0,07-catch-uncertainty
+Length_like,127.047,0,0,15.2966,0,5.79883,0,0,0,0,22.1074,52.2244,0,0,31.6197,0,0,07-catch-uncertainty
+Length_N_use,,0,0,23,0,17,0,0,0,0,20,48,0,0,41,0,0,07-catch-uncertainty
+Length_N_skip,,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,07-catch-uncertainty
+SizeFreq_lambda:_1,,,1,1,,,1,1,,1,1,,,,,,1,07-catch-uncertainty
+SizeFreq_like:_1,842.638,,90.9362,35.6244,,,394.428,204.887,,55.275,53.7725,,,,,,7.71367,07-catch-uncertainty

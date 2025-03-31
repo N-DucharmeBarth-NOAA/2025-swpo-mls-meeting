@@ -1,0 +1,401 @@
+---
+# Define logo paths as Quarto variables
+logo1: "static/spc-logo.png"
+logo2: "static/noaa-fisheries-logo.png"
+
+format:
+  revealjs:
+    theme: [default, customizations/presentation-custom.scss]
+    slide-number: true
+    footer: "WCPFC-SC21-2025/SA-IP-XX"
+    include-in-header:
+      - text: |
+          <script>
+          // Access Quarto variables in JavaScript
+          window.quartoLogos = {
+            logo1: '{{< meta logo1 >}}',
+            logo2: '{{< meta logo2 >}}'
+          };
+          </script>
+          <script src="customizations/add-logos.js"></script>
+          <script src="customizations/slide-background.js"></script>
+    css: customizations/logos.css
+    self-contained: true
+resources:
+  - "static/**"  # Include all files in the static directory
+---
+
+## {.left-bg-image}
+
+<!-- Content area -->
+
+::: {.absolute top=20%}
+
+[NOAA-SPC Assessment Model Workshop on SWPO Striped Marlin]{.blue-title}
+
+[*Summary of Outcomes and Recommendations*]{style="font-size:0.85em;"}
+
+[Nicholas Ducharme-Barth, Claudio Castillo-Jordán, Michelle Sculley, Robert Ahrens, and Felipe Carvalho]{style="font-size:0.5em;"}  
+
+[January 20-24, 2025]{.blue style="font-size:0.5em;"}
+
+:::
+
+
+## Workshop context {.narrow-left-bg-image .smaller}
+
+::: {.incremental}
+- 2024 SWPO striped marlin stock assessment presented at SC20
+- SC20 identified several technical issues requiring attention:
+  - Poor fits to both size composition and abundance index data
+  - Conflicts between different data types
+  - Inconsistencies in fits to length/weight from same fisheries
+  - Concerns about selectivity (and interactions with the new growth curve)
+  - Inability to estimate model initial conditions
+- United States offered to host joint modeling meeting with SPC
+- [Workshop held January 20-24, 2025 in Honolulu, Hawaii]{.blue}
+:::
+
+## Workshop participants {.narrow-left-bg-image}
+
+::: {.absolute width=50% left=0%}
+
+**SPC**:
+
+- Claudio Castillo-Jordán
+
+**NOAA PIFSC**:
+
+- Rob Ahrens
+- Felipe Carvalho
+- Nicholas Ducharme-Barth
+- Michelle Sculley
+
+:::
+
+![](static/meeting-group-photo.jpeg){.absolute left=55% top=25% width=45% height=auto style="box-shadow: 0 0 2rem 0 rgba(0, 0, 0, .5); border-radius: 15%;"}
+
+## Pre-workshop status {.narrow-left-bg-image}
+
+::: {.absolute width=50% left=0% style="font-size:0.75em;"}
+
+::: {.fragment .fade-in fragment-index=1}
+- 2024 assessment used MULTIFAN-CL (MFCL) framework
+:::
+
+::: {.fragment .fade-in fragment-index=2}
+- Cubic splines defined selectivity as function of age
+  - Limited by 10 annual age classes
+  - Constraints on selectivity curve shape
+:::
+
+::: {.fragment .fade-in fragment-index=4}
+- SPC developed quarterly age model (`mfcl-1979-20p3`)
+  - Improved selectivity resolution
+  - Created mismatch with striped marlin reproductive biology
+:::
+
+:::
+
+::: {.fragment .fade-in fragment-index=3}
+![](static/fleet-1-old-selex.png){.absolute left=65% top=25% height=30% width=auto style="box-shadow: 0 0 2rem 0 rgba(0, 0, 0, .5); border-radius: 5px;"}
+:::
+
+::: {.fragment .fade-in fragment-index=5}
+![](static/fleet-1-new-selex.png){.absolute left=55% top=60% height=25% width=auto style="box-shadow: 0 0 2rem 0 rgba(0, 0, 0, .5); border-radius: 5px;"}
+:::
+
+## Key challenge {.narrow-left-bg-image}
+
+[Quarterly vs Annual Population Dynamics]{.blue style="font-size:0.85em;"}
+
+::: {.absolute width=50% left=0% style="font-size:0.7em;"}
+::: {.fragment .fade-in fragment-index=1}
+- Striped marlin have restricted spawning season (late austral spring/early summer)
+:::
+::: {.fragment .fade-in fragment-index=2}
+- MFCL quarterly model introduced year-round recruitment
+:::
+::: {.incremental}
+- Need for modeling approach that could:
+    - Provide [finer resolution]{.blue} for selectivity
+    - Maintain [annual]{.blue} population dynamics aligned with biology
+:::
+:::
+
+::: {.fragment .fade-in fragment-index=2}
+![](static/qtr-recruitment.png){.absolute left=55% top=30% height=25% width=auto style="box-shadow: 0 0 2rem 0 rgba(0, 0, 0, .5); border-radius: 5px;"}
+::: 
+
+## Workshop approach {.narrow-left-bg-image .smaller}
+
+::: {.absolute width=50% left=0%}
+
+::: {.fragment .fade-in fragment-index=1}
+- Shift from MULTIFAN-CL to Stock Synthesis
+:::
+::: {.incremental}
+- Investigate key issues
+    - Poor fits to size and index data
+    - Data conflicts
+    - Model initial conditions
+    - Growth curve
+:::
+:::
+
+::: {.fragment .fade-in fragment-index=1}
+![](static/stock-synthesis.png){.absolute top=15% height=25% left=55% style="border: 1px solid #323C46; max-height: unset; max-width: unset; box-shadow: 0 0 2rem 0 rgba(0, 0, 0, .5); border-radius: 5px;"}
+
+::: {.absolute top=50% height=20% left=52% right=0% style="border: 1px solid #323C46; max-height: unset; max-width: unset; box-shadow: 0 0 2rem 0 rgba(0, 0, 0, .5); border-radius: 5px; background-color: #C6E6F0;"}
+
+:::
+
+::: {.absolute top=50% height=40% left=55% right=0% style="font-size:0.75em;"}
+[Advantages of Stock Synthesis:]{.blue style="font-size:1.2em;"}
+
+- Can model selectivity as function of length
+- Maintains annual population dynamics
+:::
+:::
+
+## Model development process {.narrow-left-bg-image}
+
+:::: {.absolute width=45% left=0% style="font-size:0.625em;"}
+::: {.fragment .fade-in fragment-index=1}
+[Stepwise development:]{.blue style="font-size:1.25em;"}
+:::
+::: {.fragment .fade-in fragment-index=2}
+1. Base Stock Synthesis model (1979 start): `01-mls-base-1979`
+:::
+::: {.fragment .fade-in fragment-index=3}
+2. Refined selectivity & data treatment: `03-chg-selex-1979`
+:::
+::: {.fragment .fade-in fragment-index=4}
+3. Reverted to 1952 start year: `04-start-1952`
+:::
+::: {.fragment .fade-in fragment-index=5}
+4. Excluded problematic size data: `06-exclude-more-comp`
+:::
+::: {.fragment .fade-in fragment-index=6}
+5. Added catch uncertainty: `07-catch-uncertainty`
+:::
+::: {.fragment .fade-in fragment-index=7}
+6. Refined growth modeling: `12-CAAL-old-growth-SD`
+:::
+::::
+
+::: {.fragment .fade-out fragment-index=3}
+::: {.fragment .fade-in fragment-index=2}
+![](static/ts_comp.pres_stepwise_1.png){.absolute left=50% top=15% height=auto width=50% style="box-shadow: 0 0 2rem 0 rgba(0, 0, 0, .5); border-radius: 5px;"}
+:::
+:::
+
+::: {.fragment .fade-out fragment-index=4}
+::: {.fragment .fade-in fragment-index=3}
+![](static/ts_comp.pres_stepwise_2.png){.absolute left=50% top=15% height=auto width=50% style="box-shadow: 0 0 2rem 0 rgba(0, 0, 0, .5); border-radius: 5px;"}
+:::
+::: 
+
+::: {.fragment .fade-out fragment-index=5}
+::: {.fragment .fade-in fragment-index=4}
+![](static/ts_comp.pres_stepwise_3.png){.absolute left=50% top=15% height=auto width=50% style="box-shadow: 0 0 2rem 0 rgba(0, 0, 0, .5); border-radius: 5px;"}
+:::
+::: 
+
+::: {.fragment .fade-out fragment-index=6}
+::: {.fragment .fade-in fragment-index=5}
+![](static/ts_comp.pres_stepwise_4.png){.absolute left=50% top=15% height=auto width=50% style="box-shadow: 0 0 2rem 0 rgba(0, 0, 0, .5); border-radius: 5px;"}
+:::
+::: 
+
+::: {.fragment .fade-out fragment-index=7}
+::: {.fragment .fade-in fragment-index=6}
+![](static/ts_comp.pres_stepwise_5.png){.absolute left=50% top=15% height=auto width=50% style="box-shadow: 0 0 2rem 0 rgba(0, 0, 0, .5); border-radius: 5px;"}
+:::
+::: 
+
+::: {.fragment .fade-in fragment-index=7}
+![](static/ts_comp.pres_stepwise_6.png){.absolute left=50% top=15% height=auto width=50% style="box-shadow: 0 0 2rem 0 rgba(0, 0, 0, .5); border-radius: 5px;"}
+:::
+
+## Key changes {.narrow-left-bg-image .smaller}
+
+::: {.fragment .fade-in fragment-index=1}
+[Initial conditions:]{.blue style="font-size:1.3em;"}
+:::
+
+::: {.absolute width=45% left=0%}
+::: {.incremental}
+- Returned to 1952 start year with unfished state
+- Better addressed population initialization concerns
+- Consistency with `diagnostic-2019`
+:::
+:::
+
+::: {.fragment .fade-in fragment-index=1}
+![](static/ts_comp.pres_start1952.png){.absolute left=50% top=15% height=auto width=50% style="box-shadow: 0 0 2rem 0 rgba(0, 0, 0, .5); border-radius: 5px;"}
+:::
+
+## Key changes {.narrow-left-bg-image .smaller}
+
+::: {.fragment .fade-in fragment-index=1}
+[Selectivity:]{.blue style="font-size:1.3em;"}
+:::
+
+::: {.absolute width=45% left=0%}
+::: {.incremental}
+- Length-based selectivity provided greater resolution
+- Double-normal functional form with estimated parameters
+- Further refinements needed (*beyond range of observations*)
+:::
+:::
+
+::: {.fragment .fade-in fragment-index=1}
+![](static/selex_comp.pres.png){.absolute left=50% top=15% height=auto width=50% style="box-shadow: 0 0 2rem 0 rgba(0, 0, 0, .5); border-radius: 5px;"}
+:::
+
+## Key changes {.narrow-left-bg-image .smaller}
+
+::: {.fragment .fade-in fragment-index=1}
+[Size data exclusion:]{.blue style="font-size:1.3em;"}
+:::
+
+::: {.absolute width=45% left=0%}
+::: {.incremental}
+- Excluded problematic size composition data:
+  - Mixed-fleet data with temporal patchiness
+  - Fleets with small sample sizes
+  - Data showing internal conflicts
+  - Data with quality concerns
+- Generally improved fit to remaining data components
+:::
+:::
+
+
+::: {.fragment .fade-in-fade-out}
+![](static/index_comp.excomp.png){.absolute left=50% top=15% height=auto width=50% style="box-shadow: 0 0 2rem 0 rgba(0, 0, 0, .5); border-radius: 5px;"}
+:::
+
+::: {.fragment .fade-in-fade-out}
+![](static/wt_comp.pres_excomp.png){.absolute left=50% top=15% height=auto width=50% style="border-radius: 5px;"}
+:::
+
+::: {.fragment .fade-in}
+![](static/len_comp.pres_excomp.png){.absolute left=50% top=15% height=auto width=50% style="border-radius: 5px;"}
+:::
+
+
+## Key changes {.narrow-left-bg-image .smaller}
+
+::: {.fragment .fade-in fragment-index=1}
+[Growth:]{.blue style="font-size:1.3em;"}
+:::
+
+::: {.absolute width=45% left=0%}
+::: {.incremental}
+- Internal estimation using conditional age-at-length data
+- Addressed *some* limitations from externally derived growth curve
+- Improved overall model fit
+- Growth *slower* but still struggles fitting smallest observations
+:::
+:::
+
+::: {.fragment .fade-in fragment-index=1}
+![](static/bio_comp.growth.png){.absolute left=50% top=15% height=auto width=50% style="box-shadow: 0 0 2rem 0 rgba(0, 0, 0, .5); border-radius: 5px;"}
+:::
+
+## Key changes {.narrow-left-bg-image .smaller}
+
+::: {.fragment .fade-in fragment-index=1}
+[Catch uncertainty:]{.blue style="font-size:1.3em;"}
+:::
+
+::: {.absolute width=45% left=0%}
+::: {.incremental}
+- Implemented catch uncertainty for early high-catch periods
+- Bifurcated Japanese LL fleet in sub-region 2
+- Reduced sensitivity to potentially unreliable historical catch
+:::
+:::
+
+::: {.fragment .fade-in fragment-index=1}
+![](static/catch_comp.sens_catch.png){.absolute left=50% top=15% height=auto width=50% style="box-shadow: 0 0 2rem 0 rgba(0, 0, 0, .5); border-radius: 5px;"}
+:::
+
+## Additional investigation {.narrow-left-bg-image .smaller}
+
+::: {.absolute width=45% left=0%}
+::: {.fragment .fade-in fragment-index=1}
+- Investigated source of misfit to the index seen in 2000 - 2002
+:::
+::: {.incremental}
+- Ran additional models to remove the influence of:
+    - the index highpoint in 1998 (`16-CAAL-rm-spike`)
+    - Fleet 6 (Australian LL; sub-region 2) weight frequency data (`17-CAAL-noAU-ASPM`)
+- Conflict is driven by the [Fleet 6 weight data]{.blue} which suggests an increasing trend
+:::
+:::
+
+::: {.fragment .fade-in fragment-index=1}
+![](static/index_comp.sens_idx.png){.absolute left=50% top=15% height=auto width=50% style="box-shadow: 0 0 2rem 0 rgba(0, 0, 0, .5); border-radius: 5px;"}
+:::
+
+## Remaining challenges {.narrow-left-bg-image .smaller}
+
+::: {.absolute width=45% left=0%}
+::: {.fragment .fade-in fragment-index=1}
+- Spatiotemporal heterogeneity in fleet coverage
+  - No single fleet samples all areas consistently
+  - Different spatial coverage during different time periods
+:::
+::: {.incremental}
+- Potential non-representativeness in mixed-fleet size data
+- Limitations in age data from opportunistic sampling
+    - Longline will select for fastest growing younger individuals
+- Data weighting remains challenging
+:::
+:::
+
+::: {.fragment .fade-in fragment-index=1}
+![](static/sc15-fleet-dist.png){.absolute left=50% top=15% height=auto width=50% style="box-shadow: 0 0 2rem 0 rgba(0, 0, 0, .5); border-radius: 5px;"}
+:::
+
+## Assessment recommendations  {.narrow-left-bg-image}
+
+::: {.incremental}
+- Continue development in Stock Synthesis framework
+- Begin model from 1952 assuming unfished initial conditions
+- Develop multiple alternative abundance indices
+- Exclude problematic size composition data
+- Consider ensemble modeling approaches
+- Explore two-sex model development
+:::
+
+## Prioritized tasks {.narrow-left-bg-image}
+
+::: {.incremental}
+1. Develop alternative relative abundance indices
+   - JP/TW/AU (all region data)
+   - JP only (sub-region 2 data)
+   - JP/AU (sub-regions 2 & 3)
+   - JP only (all region data)
+   - AU (CSIRO index)
+2. Finalize updated size composition data
+:::
+
+## Summary  {.narrow-left-bg-image}
+
+::: {.incremental}
+- Successfully transitioned assessment model to Stock Synthesis
+- Addressed some key technical concerns raised by SC20
+- Improved fit to data while maintaining biological realism
+- Identified clear path forward for 2025 assessment
+:::
+
+## Thank you  {.narrow-left-bg-image}
+
+Questions or Comments?
+
+</br>
+
+Project repository: <https://github.com/N-DucharmeBarth-NOAA/2025-swpo-mls>

@@ -1,0 +1,14 @@
+id,Label,values,lambdas
+22-1979-estInitF-v2,TOTAL,1395.75,
+22-1979-estInitF-v2,Catch,0.000587356,
+22-1979-estInitF-v2,Equil_catch,0.0623807,
+22-1979-estInitF-v2,Survey,-29.5129,
+22-1979-estInitF-v2,Length_comp,554.753,
+22-1979-estInitF-v2,SizeFreq,846.235,
+22-1979-estInitF-v2,Recruitment,24.1293,1
+22-1979-estInitF-v2,InitEQ_Regime,0,1
+22-1979-estInitF-v2,Forecast_Recruitment,0.0525334,1
+22-1979-estInitF-v2,Parm_priors,0,1
+22-1979-estInitF-v2,Parm_softbounds,0.0279082,
+22-1979-estInitF-v2,Parm_devs,0,1
+22-1979-estInitF-v2,Crash_Pen,0,1

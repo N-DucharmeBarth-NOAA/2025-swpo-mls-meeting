@@ -1,0 +1,14 @@
+id,Label,values,lambdas
+07-catch-uncertainty,TOTAL,938.389,
+07-catch-uncertainty,Catch,0.866822,
+07-catch-uncertainty,Equil_catch,0,
+07-catch-uncertainty,Survey,-28.032,
+07-catch-uncertainty,Length_comp,127.047,
+07-catch-uncertainty,SizeFreq,842.638,
+07-catch-uncertainty,Recruitment,-4.17982,1
+07-catch-uncertainty,InitEQ_Regime,0,1
+07-catch-uncertainty,Forecast_Recruitment,0.0231344,1
+07-catch-uncertainty,Parm_priors,0,1
+07-catch-uncertainty,Parm_softbounds,0.0264345,
+07-catch-uncertainty,Parm_devs,0,1
+07-catch-uncertainty,Crash_Pen,0,1

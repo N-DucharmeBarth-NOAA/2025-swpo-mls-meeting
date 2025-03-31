@@ -1,0 +1,16 @@
+num	code	method	fishery	region	group
+1	01.LL.JP.1	L	1	1	LL.1
+2	02.LL.JP.2	L	2	1	LL.2
+3	03.LL.JP.3	L	3	1	LL.3
+4	04.LL.JP.4	L	4	1	LL.4
+5	05.LL.TW.4	L	5	1	LL.4
+6	06.LL.AU.3	L	6	1	LL.AU
+7	07.LL.AU.4	L	7	1	LL.AU.NZ
+8	08.LL.NZ.4	L	8	1	LL.AU.NZ
+9	09.Rec.AU.3	Rec	9	1	Rec.AU
+10	10.Rec.NZ.5	Rec	10	1	Rec.NZ
+11	11.LL.ALL.1	L	11	1	LL.1
+12	12.LL.ALL.2	L	12	1	LL.2
+13	13.LL.ALL.3	L	13	1	LL.3
+14	14.LL.ALL.4	L	14	1	LL.4
+15	15.Index.1_4	I	15	1	Index

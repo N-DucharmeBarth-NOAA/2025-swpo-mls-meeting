@@ -1,0 +1,14 @@
+id,Label,values,lambdas
+05-exclude-bad-comp,TOTAL,988.205,
+05-exclude-bad-comp,Catch,0.0151361,
+05-exclude-bad-comp,Equil_catch,0,
+05-exclude-bad-comp,Survey,-17.2356,
+05-exclude-bad-comp,Length_comp,159.074,
+05-exclude-bad-comp,SizeFreq,848.181,
+05-exclude-bad-comp,Recruitment,-1.87601,1
+05-exclude-bad-comp,InitEQ_Regime,0,1
+05-exclude-bad-comp,Forecast_Recruitment,0.0214711,1
+05-exclude-bad-comp,Parm_priors,0,1
+05-exclude-bad-comp,Parm_softbounds,0.0254474,
+05-exclude-bad-comp,Parm_devs,0,1
+05-exclude-bad-comp,Crash_Pen,0,1

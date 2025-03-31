@@ -1,0 +1,15 @@
+Label,ALL,F01_LL.JP.1,F02_LL.JP.2,F03_LL.JP.3,F04_LL.JP.4,F05_LL.TW.4,F06_LL.AU.2,F07_LL.AU.3,F08_LL.NZ.3,F09.REC.AU.3,F10_REC.NZ.3,F11_LL.ALL.1,F12_LL.ALL.2,F13_LL.ALL.3,F14_LL.ALL.4,S01_INDEX.1-4,id
+Catch_lambda,,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,06-exclude-more-comp
+Catch_like,0.0121853,0.000198144,0.00754019,0.000752082,0.00021327,0.000100303,0.000184813,0.000207618,0.000157002,0.000117344,0.00193301,8.92403e-05,0.000404553,0.000197934,8.97695e-05,0,06-exclude-more-comp
+Init_equ_lambda,,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,06-exclude-more-comp
+Init_equ_like,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,06-exclude-more-comp
+Surv_lambda,,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,06-exclude-more-comp
+Surv_like,-16.9754,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-16.9754,06-exclude-more-comp
+Surv_N_use,,0,0,0,0,0,0,0,0,0,0,0,0,0,0,44,06-exclude-more-comp
+Surv_N_skip,,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,06-exclude-more-comp
+Length_lambda,,0,0,1,0,1,0,0,0,0,1,1,0,0,1,0,06-exclude-more-comp
+Length_like,127.86,0,0,15.5506,0,5.80777,0,0,0,0,22.3098,52.6094,0,0,31.5826,0,06-exclude-more-comp
+Length_N_use,,0,0,23,0,17,0,0,0,0,20,48,0,0,41,0,06-exclude-more-comp
+Length_N_skip,,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,06-exclude-more-comp
+SizeFreq_lambda:_1,,,1,1,,,1,1,,1,1,,,,,1,06-exclude-more-comp
+SizeFreq_like:_1,836.134,,89.4824,35.9496,,,393.235,203.985,,54.6856,53.6971,,,,,5.09921,06-exclude-more-comp
