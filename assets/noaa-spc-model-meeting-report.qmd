@@ -414,6 +414,10 @@ A generative artificial intelligence (AI) assistant, Anthropic Claude Sonnet 3.7
 
 \newpage
 
+```{=html}
+<br>
+```
+
 # Tables
 
 ```{r}
@@ -471,6 +475,11 @@ kable(summary_dt_report, format = "latex", escape = FALSE,
 
 \newpage
 
+```{=html}
+<br>
+```
+
+
 Table: Fleet definitions for model `06-exclude-more-comp`. {#tbl-flt-defs-06}
 
 | Fleet Number | Fleet Description | Selectivity grouping | 
@@ -494,14 +503,26 @@ Table: Fleet definitions for model `06-exclude-more-comp`. {#tbl-flt-defs-06}
 
 \newpage
 
+```{=html}
+<br>
+```
+
 # Figures
 ![Age-specific fishery selectivity curves defined for longline fisheries in the `diagnostic-2024` model.](static/sc20-age-selex.jpg){#fig-age-selex width=80%}
 
 \newpage
 
+```{=html}
+<br>
+```
+
 ![Time series comparison of Spawning Stock Biomass (SSB), Depletion (D), and total population numbers (N) across different models: `diagnostic-2019`, `diagnostic-2024`, `mfcl-1979-20p3`.](static/ts_comp.pre_meeting.png){#fig-tscomp-pre}
 
 \newpage
+
+```{=html}
+<br>
+```
 
 ::: {#fig-age-selex-panels layout-ncol=2}
 
@@ -514,113 +535,225 @@ Age-specific selectivity for longline fishery 1 in a model with 10 annual ages `
 
 \newpage
 
+```{=html}
+<br>
+```
+
 ![Recruitment estimated in the `mfcl-1979-20p3` model.](static/qtr-recruitment.png){#fig-qtr-recruitment}
 
 \newpage
+
+```{=html}
+<br>
+```
 
 ![Time series comparison of Spawning Stock Biomass (SSB), Depletion (D), and total population numbers (N) across different models: `mfcl-1979-20p3`, `01-mls-base-1979`, and `25-mls-base-1979-corrected`.](static/ts_comp.ss_transition.png){#fig-tscomp-sstrans}
 
 \newpage
 
+```{=html}
+<br>
+```
+
 ![Fit to standardized CPUE index time series comparison showing observed values (circles) fitted by three different model configurations (lines): `01-mls-base-1979` (blue), `02-mls-ss3-1979` (green), and `03-chg-selex-1979` (orange).](static/index_comp.early.png){#fig-index-comp-early}
 
 \newpage
+
+```{=html}
+<br>
+```
 
 ![Selectivity curves by length across fisheries comparing three model configurations: `01-mls-base-1979` (blue), `02-mls-ss3-1979` (green), and `03-chg-selex-1979` (orange).](static/selex_comp.early.png){#fig-selex-comp-early}
 
 \newpage
 
+```{=html}
+<br>
+```
+
 ![Fit to length composition showing observed and expected proportions by length bin. The histograms represent observed data while colored lines show model fits from two configurations: `02-mls-ss3-1979` (green) and `03-chg-selex-1979` (orange).](static/len_comp.early.png){#fig-length-comp-early}
 
 \newpage
+
+```{=html}
+<br>
+```
 
 ![Fit to weight composition showing observed and expected proportions by weight bin. The histograms represent observed data while colored lines show model fits from two configurations: `02-mls-ss3-1979` (green) and `03-chg-selex-1979` (orange). Note that the discontinuity seen at $\sim140$ is due to the change in bin width from 2 to 4 kg at that point.](static/wt_comp.early.png){#fig-weight-comp-early}
 
 \newpage
 
+```{=html}
+<br>
+```
+
 ![Time series comparison of key population metrics (Depletion (D), Recruitment, and Spawning Stock Biomass (SSB)) across different models: `diagnostic-2019` (light gray), `diagnostic-2024` (dark gray), and `04-start-1952` (orange).](static/ts_comp.start1952.png){#fig-tscomp-start1952}
 
 \newpage
+
+```{=html}
+<br>
+```
 
 ![Fit to standardized CPUE index time series comparison showing observed values (circles) fitted by two different model configurations: `03-chg-selex-1979` (blue) and `04-start-1952` (orange).](static/index_comp.start1952.png){#fig-index-comp-start1952}
 
 \newpage
 
+```{=html}
+<br>
+```
+
 ![Fit to standardized CPUE index time series comparison showing observed values (circles) fitted by two different model configurations: `04-start-1952` (blue) and `06-exclude-more-comp` (orange).](static/index_comp.excomp.png){#fig-index-comp-excomp}
 
 \newpage
+
+```{=html}
+<br>
+```
 
 ![Fit to length composition showing observed and expected proportions by length bin. The histograms represent observed data while colored lines show model fits from `06-exclude-more-comp` (orange).](static/len_comp.excomp.png){#fig-length-comp-excomp}
 
 \newpage
 
+```{=html}
+<br>
+```
+
 ![Fit to weight composition showing observed and expected proportions by weight bin. The histograms represent observed data while colored lines show model fits from `06-exclude-more-comp` (orange). Note that the discontinuity seen at $\sim140$ is due to the change in bin width from 2 to 4 kg at that point.](static/wt_comp.excomp.png){#fig-weight-comp-excomp}
 
 \newpage
+
+```{=html}
+<br>
+```
 
 ![Fit to the catch for Fleet 15 (Early Japan LL; sub-region 2). The histograms represent observed data while colored lines show model fits from `07-catch-uncertainty` (orange).](static/catch_comp.catch_unc.png){#fig-catchcomp-catchunc}
 
 \newpage
 
+```{=html}
+<br>
+```
+
 ![Time series comparison of key population metrics (Depletion (D), Recruitment, and Spawning Stock Biomass (SSB)) across different models: `diagnostic-2019` (light gray), `06-exclude-more-comp` (blue), and `07-catch-uncertainty` (orange).](static/ts_comp.catch_unc.png){#fig-tscomp-catchunc}
 
 \newpage
+
+```{=html}
+<br>
+```
 
 ![Fit to standardized CPUE index time series comparison showing observed values (circles) fitted by two different model configurations: `06-exclude-more-comp` (blue) and `07-catch-uncertainty` (orange).](static/index_comp.catch_unc.png){#fig-index-comp-catchunc}
 
 \newpage
 
+```{=html}
+<br>
+```
+
 ![Length-at-age, weight-at-age, and maturity-at-age from two different models: `07-catch-uncertainty` (blue), and `12-CAAL-old-growth-SD` (orange). Variability in the length-at-age is shown in the top panel. Also weight-at-age and maturity-at-age are converted from length internal to the model using the probability of length-at-age.](static/bio_comp.growth.png){#fig-biocomp-grow}
 
 \newpage
+
+```{=html}
+<br>
+```
 
 ![Time series comparison of key population metrics (Depletion (D), Recruitment, and Spawning Stock Biomass (SSB)) across different models: `07-catch-uncertainty` (blue), and `12-CAAL-old-growth-SD` (orange).](static/ts_comp.growth.png){#fig-tscomp-grow}
 
 \newpage
 
+```{=html}
+<br>
+```
+
 ![Fit to standardized CPUE index time series comparison showing observed values (circles) fitted by two different model configurations: `07-catch-uncertainty` (blue) and `12-CAAL-old-growth-SD` (orange).](static/index_comp.growth.png){#fig-index-comp-grow}
 
 \newpage
+
+```{=html}
+<br>
+```
 
 ![Fit to length composition showing observed and expected proportions by length bin. The histograms represent observed data while colored lines show model fits from two configurations: `07-catch-uncertainty` (blue) and `12-CAAL-old-growth-SD` (orange).](static/len_comp.growth.png){#fig-length-comp-grow}
 
 \newpage
 
+```{=html}
+<br>
+```
+
 ![Fit to weight composition showing observed and expected proportions by weight bin. The histograms represent observed data while colored lines show model fits from two configurations: `07-catch-uncertainty` (blue) and `12-CAAL-old-growth-SD` (orange). Note that the discontinuity seen at $\sim140$ is due to the change in bin width from 2 to 4 kg at that point.](static/wt_comp.growth.png){#fig-weight-comp-grow}
 
 \newpage
+
+```{=html}
+<br>
+```
 
 ![Fit to standardized CPUE index time series comparison showing observed values (circles) fitted by three different model configurations: `12-CAAL-old-growth-SD` (blue), `16-CAAL-rm-spike` (green), and `17-CAAL-noAU-ASPM` (orange).](static/index_comp.sens_idx.png){#fig-index-comp-sens-idx}
 
 \newpage
 
+```{=html}
+<br>
+```
+
 ![Time series comparison of key population metrics (Depletion (D), Recruitment, and Spawning Stock Biomass (SSB)) across different models: `12-CAAL-old-growth-SD` (blue), and `23-CAAL-2sex` (orange).](static/ts_comp.sens_2sex.png){#fig-tscomp-sens-2sex}
 
 \newpage
+
+```{=html}
+<br>
+```
 
 ![Length-at-age, weight-at-age, and maturity-at-age from two different models: `12-CAAL-old-growth-SD` (blue), and `23-CAAL-2sex` (orange). Variability in the length-at-age is shown in the top panel. Also weight-at-age and maturity-at-age are converted from length internal to the model using the probability of length-at-age. Sex is given by line type.](static/bio_comp.sens_2sex.png){#fig-biocomp-sens-2sex}
 
 \newpage
 
+```{=html}
+<br>
+```
+
 ![Length-at-age, weight-at-age, and maturity-at-age from two different models: `12-CAAL-old-growth-SD` (blue), and `24-CAAL-Richards` (orange). Variability in the length-at-age is shown in the top panel. Also weight-at-age and maturity-at-age are converted from length internal to the model using the probability of length-at-age.](static/bio_comp.sens_rich.png){#fig-biocomp-sens-rich}
 
 \newpage
+
+```{=html}
+<br>
+```
 
 ![Time series comparison of key population metrics (Depletion (D), Recruitment, and Spawning Stock Biomass (SSB)) across different models: `12-CAAL-old-growth-SD` (blue), and `21-CAAL-NZrecwtQtr` (orange).](static/ts_comp.sens_nzrec.png){#fig-tscomp-sens-nzrec}
 
 \newpage
 
+```{=html}
+<br>
+```
+
 ![Fit to the catch for Fleet 15 (Early Japan LL; sub-region 2). The histograms represent observed data while colored lines show model fits from `12-CAAL-old-growth-SD` (blue), and `18-CAAL-cUnc-cv40` (orange).](static/catch_comp.sens_catch.png){#fig-catchcomp-sens-catch}
 
 \newpage
+
+```{=html}
+<br>
+```
 
 ![Time series comparison of key population metrics (Depletion (D), Recruitment, and Spawning Stock Biomass (SSB)) across different models: `12-CAAL-old-growth-SD` (blue), and `18-CAAL-cUnc-cv40` (orange).](static/ts_comp.sens_catch.png){#fig-tscomp-sens-catch}
 
 \newpage
 
+```{=html}
+<br>
+```
+
 ![Reprinted from WCPFC-SC-15/SA-IP-07 Figure 16. The spatiotemporal distributions of longline fishing effort for the distant-water (DW) and offshore (OS) components of the Japanese (JP) and Chinese Taipei (TW) fleets. Lighter colors indicate the $1^\circ \times 1^\circ$ grid cells have been fished more recently while darker colors indicate that the grid cell was last fished earlier in the model period.](static/sc15-fleet-dist.png){#fig-fleet-dist width=80%}
 
 \newpage
+
+```{=html}
+<br>
+```
 
 # Appendix {.unnumbered}
 
