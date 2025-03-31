@@ -144,9 +144,9 @@ While this new model `mfcl-1979-20p3` had the desired effect of improving the re
 
 Model investigations during the January 2025 stock assessment modeling meeting used the `mfcl-1979-20p3` \mfcl model provided by SPC as a starting point. A table of key model convergence and fit metrics is provided in @tbl-summary. 
 
-<!-- Model configuration files, output, and analytic code are available on GitHub[^1] : [https://github.com/N-DucharmeBarth-NOAA/2025-swpo-mls](https://github.com/N-DucharmeBarth-NOAA/2025-swpo-mls).
+Model configuration files, output, and analytic code are available on GitHub[^1] : [https://n-ducharmebarth-noaa.github.io/2025-swpo-mls-meeting/](https://n-ducharmebarth-noaa.github.io/2025-swpo-mls-meeting/).
 
-[^1]: This repository will be made public following the 2025 SPC Pre-Assessment Workshop, noting that these represent preliminary model explorations and should not be used as the basis for management advice. -->
+[^1]: This repository will be made public following the 2025 SPC Pre-Assessment Workshop, noting that these represent preliminary model explorations and should not be used as the basis for management advice.
 
 ### Transition to Stock Synthesis
 

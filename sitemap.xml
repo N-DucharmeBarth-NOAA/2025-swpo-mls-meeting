@@ -1,119 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://N-DucharmeBarth-NOAA.github.io/2025-swpo-mls-meeting/index.html</loc>
-    <lastmod>2025-03-31T18:35:41.818Z</lastmod>
-  </url>
-  <url>
-    <loc>https://N-DucharmeBarth-NOAA.github.io/2025-swpo-mls-meeting/executables/mfcl/viewer/runtime/legal/javafx.graphics/jpeg_fx.html</loc>
-    <lastmod>2025-01-21T08:45:21.876Z</lastmod>
-  </url>
-  <url>
-    <loc>https://N-DucharmeBarth-NOAA.github.io/2025-swpo-mls-meeting/executables/mfcl/viewer/runtime/legal/java.xml/xalan.html</loc>
-    <lastmod>2025-01-21T08:45:21.875Z</lastmod>
-  </url>
-  <url>
-    <loc>https://N-DucharmeBarth-NOAA.github.io/2025-swpo-mls-meeting/executables/mfcl/viewer/runtime/legal/java.xml/dom.html</loc>
-    <lastmod>2025-01-21T08:45:21.874Z</lastmod>
-  </url>
-  <url>
-    <loc>https://N-DucharmeBarth-NOAA.github.io/2025-swpo-mls-meeting/executables/mfcl/viewer/runtime/legal/java.desktop/mesa3d.html</loc>
-    <lastmod>2025-01-21T08:45:21.873Z</lastmod>
-  </url>
-  <url>
-    <loc>https://N-DucharmeBarth-NOAA.github.io/2025-swpo-mls-meeting/executables/mfcl/viewer/runtime/legal/java.desktop/lcms.html</loc>
-    <lastmod>2025-01-21T08:45:21.871Z</lastmod>
-  </url>
-  <url>
-    <loc>https://N-DucharmeBarth-NOAA.github.io/2025-swpo-mls-meeting/executables/mfcl/viewer/runtime/legal/java.desktop/harfbuzz.html</loc>
-    <lastmod>2025-01-21T08:45:21.870Z</lastmod>
-  </url>
-  <url>
-    <loc>https://N-DucharmeBarth-NOAA.github.io/2025-swpo-mls-meeting/executables/mfcl/viewer/runtime/legal/java.desktop/freetype.html</loc>
-    <lastmod>2025-01-21T08:45:21.869Z</lastmod>
-  </url>
-  <url>
-    <loc>https://N-DucharmeBarth-NOAA.github.io/2025-swpo-mls-meeting/executables/mfcl/viewer/runtime/legal/java.base/zlib.html</loc>
-    <lastmod>2025-01-21T08:45:21.868Z</lastmod>
-  </url>
-  <url>
-    <loc>https://N-DucharmeBarth-NOAA.github.io/2025-swpo-mls-meeting/executables/mfcl/viewer/runtime/legal/java.base/public_suffix.html</loc>
-    <lastmod>2025-01-21T08:45:21.866Z</lastmod>
-  </url>
-  <url>
-    <loc>https://N-DucharmeBarth-NOAA.github.io/2025-swpo-mls-meeting/executables/mfcl/viewer/runtime/legal/java.base/cldr.html</loc>
-    <lastmod>2025-01-21T08:45:21.865Z</lastmod>
-  </url>
-  <url>
-    <loc>https://N-DucharmeBarth-NOAA.github.io/2025-swpo-mls-meeting/executables/mfcl/viewer/runtime/legal/java.base/asm.html</loc>
-    <lastmod>2025-01-21T08:45:21.863Z</lastmod>
-  </url>
-  <url>
     <loc>https://N-DucharmeBarth-NOAA.github.io/2025-swpo-mls-meeting/DISCLAIMER.html</loc>
-    <lastmod>2024-07-16T22:44:05.580Z</lastmod>
-  </url>
-  <url>
-    <loc>https://N-DucharmeBarth-NOAA.github.io/2025-swpo-mls-meeting/assets/overview-pres.html</loc>
-    <lastmod>2025-01-21T19:50:16.743Z</lastmod>
+    <lastmod>2025-03-31T21:45:47.953Z</lastmod>
   </url>
   <url>
     <loc>https://N-DucharmeBarth-NOAA.github.io/2025-swpo-mls-meeting/assets/noaa-spc-model-meeting-pres.html</loc>
-    <lastmod>2025-03-31T18:15:47.845Z</lastmod>
+    <lastmod>2025-03-31T21:45:47.954Z</lastmod>
+  </url>
+  <url>
+    <loc>https://N-DucharmeBarth-NOAA.github.io/2025-swpo-mls-meeting/assets/overview-pres.html</loc>
+    <lastmod>2025-03-31T21:45:47.954Z</lastmod>
+  </url>
+  <url>
+    <loc>https://N-DucharmeBarth-NOAA.github.io/2025-swpo-mls-meeting/index.html</loc>
+    <lastmod>2025-03-31T21:45:48.151Z</lastmod>
   </url>
   <url>
     <loc>https://N-DucharmeBarth-NOAA.github.io/2025-swpo-mls-meeting/assets/noaa-spc-model-meeting-report.html</loc>
-    <lastmod>2025-03-31T19:00:37.102Z</lastmod>
+    <lastmod>2025-03-31T21:45:47.954Z</lastmod>
   </url>
   <url>
     <loc>https://N-DucharmeBarth-NOAA.github.io/2025-swpo-mls-meeting/code/shiny/introduction_index.html</loc>
-    <lastmod>2025-01-21T07:50:21.929Z</lastmod>
-  </url>
-  <url>
-    <loc>https://N-DucharmeBarth-NOAA.github.io/2025-swpo-mls-meeting/executables/mfcl/viewer/runtime/legal/java.base/aes.html</loc>
-    <lastmod>2025-01-21T08:45:21.863Z</lastmod>
-  </url>
-  <url>
-    <loc>https://N-DucharmeBarth-NOAA.github.io/2025-swpo-mls-meeting/executables/mfcl/viewer/runtime/legal/java.base/c-libutl.html</loc>
-    <lastmod>2025-01-21T08:45:21.864Z</lastmod>
-  </url>
-  <url>
-    <loc>https://N-DucharmeBarth-NOAA.github.io/2025-swpo-mls-meeting/executables/mfcl/viewer/runtime/legal/java.base/icu.html</loc>
-    <lastmod>2025-01-21T08:45:21.865Z</lastmod>
-  </url>
-  <url>
-    <loc>https://N-DucharmeBarth-NOAA.github.io/2025-swpo-mls-meeting/executables/mfcl/viewer/runtime/legal/java.base/unicode.html</loc>
-    <lastmod>2025-01-21T08:45:21.867Z</lastmod>
-  </url>
-  <url>
-    <loc>https://N-DucharmeBarth-NOAA.github.io/2025-swpo-mls-meeting/executables/mfcl/viewer/runtime/legal/java.desktop/colorimaging.html</loc>
-    <lastmod>2025-01-21T08:45:21.868Z</lastmod>
-  </url>
-  <url>
-    <loc>https://N-DucharmeBarth-NOAA.github.io/2025-swpo-mls-meeting/executables/mfcl/viewer/runtime/legal/java.desktop/giflib.html</loc>
-    <lastmod>2025-01-21T08:45:21.869Z</lastmod>
-  </url>
-  <url>
-    <loc>https://N-DucharmeBarth-NOAA.github.io/2025-swpo-mls-meeting/executables/mfcl/viewer/runtime/legal/java.desktop/jpeg.html</loc>
-    <lastmod>2025-01-21T08:45:21.871Z</lastmod>
-  </url>
-  <url>
-    <loc>https://N-DucharmeBarth-NOAA.github.io/2025-swpo-mls-meeting/executables/mfcl/viewer/runtime/legal/java.desktop/libpng.html</loc>
-    <lastmod>2025-01-21T08:45:21.872Z</lastmod>
-  </url>
-  <url>
-    <loc>https://N-DucharmeBarth-NOAA.github.io/2025-swpo-mls-meeting/executables/mfcl/viewer/runtime/legal/java.xml/bcel.html</loc>
-    <lastmod>2025-01-21T08:45:21.873Z</lastmod>
-  </url>
-  <url>
-    <loc>https://N-DucharmeBarth-NOAA.github.io/2025-swpo-mls-meeting/executables/mfcl/viewer/runtime/legal/java.xml/jcup.html</loc>
-    <lastmod>2025-01-21T08:45:21.875Z</lastmod>
-  </url>
-  <url>
-    <loc>https://N-DucharmeBarth-NOAA.github.io/2025-swpo-mls-meeting/executables/mfcl/viewer/runtime/legal/java.xml/xerces.html</loc>
-    <lastmod>2025-01-21T08:45:21.876Z</lastmod>
-  </url>
-  <url>
-    <loc>https://N-DucharmeBarth-NOAA.github.io/2025-swpo-mls-meeting/executables/mfcl/viewer/runtime/legal/javafx.graphics/mesa3d.html</loc>
-    <lastmod>2025-01-21T08:45:21.877Z</lastmod>
+    <lastmod>2025-03-31T21:45:47.998Z</lastmod>
   </url>
 </urlset>
