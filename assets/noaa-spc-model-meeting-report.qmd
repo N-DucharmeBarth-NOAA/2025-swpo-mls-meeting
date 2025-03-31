@@ -47,17 +47,40 @@ format:
     code-block-bg: "#f6f8fa"
     code-block-border-left: "#c5c5c5"
     code-font: "Consolas, Monaco, 'Andale Mono', monospace"
+    filters:
+      - inline-code.lua
+    header-includes: |
+     \usepackage{draftwatermark}
   html:
     toc: true
     number-sections: true
     link-citations: true
     colorlinks: true
     highlight-style: github
+    self-contained: true
 bibliography: 202503_swpo_mls.bib
 csl: apa.csl
-filters:
-  - inline-code.lua
+
 ---
+
+```{=html}
+<style>
+.draft-watermark {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-45deg);
+  font-size: 100px;
+  font-weight: bold;
+  color: #ccc;
+  opacity: 0.5;
+  z-index: -1000;
+  pointer-events: none;
+}
+</style>
+<div class="draft-watermark">DRAFT</div>
+```
+
 \newpage
 
 # Executive summary

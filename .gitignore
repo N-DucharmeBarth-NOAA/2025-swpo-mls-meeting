@@ -35,11 +35,11 @@
 !settings.json
 !.renvignore
 # markdown
-!README.md 
+!README.md
 !*.qmd
 # stock synthesis
-!control.ss 
-!data.ss 
+!control.ss
+!data.ss
 !forecast.ss
 !starter.ss
 !control.ss_new
@@ -65,3 +65,8 @@
 !*.csl
 !*.lua
 !assets/noaa-spc-model-meeting*
+policy/README.txt
+
+/.quarto/
+_site/*
+!*.yaml

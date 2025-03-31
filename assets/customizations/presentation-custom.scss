@@ -53,7 +53,7 @@ $slide-height: 100vh;
 @mixin wide-sidebar {
   @include full-screen-background;
   width: 35vw !important;
-  background-image: url('static/spc-title-sidebar.png');
+  background-image: url('https://raw.githubusercontent.com/N-DucharmeBarth-NOAA/2025-swpo-mls-meeting/refs/heads/main/assets/static/spc-title-sidebar.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -63,7 +63,7 @@ $slide-height: 100vh;
 @mixin narrow-sidebar {
   @include full-screen-background;
   width: 5vw !important;
-  background-image: url('static/spc-slide-sidebar.png');
+  background-image: url('https://raw.githubusercontent.com/N-DucharmeBarth-NOAA/2025-swpo-mls-meeting/refs/heads/main/assets/static/spc-slide-sidebar.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
