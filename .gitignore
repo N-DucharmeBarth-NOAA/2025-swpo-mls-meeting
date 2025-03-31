@@ -70,3 +70,4 @@ policy/README.txt
 /.quarto/
 _site/*
 !*.yaml
+!*.yml
