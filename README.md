@@ -1,4 +1,4 @@
-# 2025-swpo-mls
+# 2025-swpo-mls-meeting
 
 Model development for 2025 Southwest Pacific Ocean striped marlin stock assessment conducted during the joint Pacific Community (SPC) and NOAA Fisheries stock assessment modeling meeting held in Honolulu, Hawai'i from 20-24 January 2025.
 
