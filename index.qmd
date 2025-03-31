@@ -7,11 +7,32 @@ format:
 
 This repository contains model developments for 2025 Southwest Pacific Ocean striped marlin stock assessment conducted during the joint Pacific Community ([SPC](https://fame.spc.int/key-work-areas/stock-assessment)) and [NOAA Fisheries](https://www.fisheries.noaa.gov/about/pacific-islands-fisheries-science-center) stock assessment modeling meeting held in Honolulu, Hawai'i from 20-24 January 2025.
 
-A draft meeting [report](https://n-ducharmebarth-noaa.github.io/2025-swpo-mls-meeting/assets/noaa-spc-model-meeting-report.html) is available which will be submit to the 21st Scientific Committee ([SC21](https://meetings.wcpfc.int/meetings/sc21)) of the Western and Central Pacific Fisheries Committee ([WCPFC](https://www.wcpfc.int/)) as an information paper. Additionally, a summary presentation of the meeting activities to be presented at the SPC Pre-Assessment Workshop (PAW) is available below.
+A draft meeting [report](https://n-ducharmebarth-noaa.github.io/2025-swpo-mls-meeting/assets/noaa-spc-model-meeting-report.html) is available which will be submit to the 21st Scientific Committee ([SC21](https://meetings.wcpfc.int/meetings/sc21)) of the Western and Central Pacific Fisheries Committee ([WCPFC](https://www.wcpfc.int/)) as an information paper. Additionally, a summary presentation of the meeting activities to be presented at the SPC Pre-Assessment Workshop (PAW), and a [Shiny application](https://connect.fisheries.noaa.gov/2025-swpo-mls-viewer/) showing outputs of the investigated models are available below.
+
+<br>
 
 ## Presentation
 
 {{< revealjs file="assets/noaa-spc-model-meeting-pres.html" height="500px" class="ratio ratio-16x9" >}}
+
+<br>
+
+## Shiny application
+
+<a href="https://connect.fisheries.noaa.gov/2025-swpo-mls-viewer/" target="_blank" rel="noopener noreferrer">View app in full screen</a>
+
+```{=html}
+<div class="ratio ratio-16x9">
+  <iframe 
+    src="https://connect.fisheries.noaa.gov/2025-swpo-mls-viewer/" 
+    height="500px"
+    frameborder="0"
+    allowfullscreen>
+  </iframe>
+</div>
+```
+
+<br>
 
 ## Disclaimer
 
