@@ -7,211 +7,6 @@
     "text": "This repository is a scientific product and is not official communication of the National Oceanic and Atmospheric Administration, or the United States Department of Commerce. All NOAA GitHub project code is provided on an ‘as is’ basis and the user assumes responsibility for its use. Any claims against the Department of Commerce or Department of Commerce bureaus stemming from the use of this GitHub project will be governed by all applicable Federal law. Any reference to specific commercial products, processes, or services by service mark, trademark, manufacturer, or otherwise, does not constitute or imply their endorsement, recommendation or favoring by the Department of Commerce. The Department of Commerce seal and logo, or the seal and logo of a DOC bureau, shall not be used in any manner to imply endorsement of any commercial product or activity by DOC or the United States Government.\n\n\n\n Back to top"
   },
   {
-    "objectID": "assets/noaa-spc-model-meeting-pres.html#section",
-    "href": "assets/noaa-spc-model-meeting-pres.html#section",
-    "title": "2025 SWPO striped marlin assessment meeting",
-    "section": "",
-    "text": "NOAA-SPC Assessment Model Workshop on SWPO Striped Marlin\nSummary of Outcomes and Recommendations\nNicholas Ducharme-Barth, Claudio Castillo-Jordán, Michelle Sculley, Robert Ahrens, and Felipe Carvalho\nJanuary 20-24, 2025"
-  },
-  {
-    "objectID": "assets/noaa-spc-model-meeting-pres.html#workshop-context",
-    "href": "assets/noaa-spc-model-meeting-pres.html#workshop-context",
-    "title": "2025 SWPO striped marlin assessment meeting",
-    "section": "Workshop context",
-    "text": "Workshop context\n\n\n2024 SWPO striped marlin stock assessment presented at SC20\nSC20 identified several technical issues requiring attention:\n\nPoor fits to both size composition and abundance index data\nConflicts between different data types\nInconsistencies in fits to length/weight from same fisheries\nConcerns about selectivity (and interactions with the new growth curve)\nInability to estimate model initial conditions\n\nUnited States offered to host joint modeling meeting with SPC\nWorkshop held January 20-24, 2025 in Honolulu, Hawaii"
-  },
-  {
-    "objectID": "assets/noaa-spc-model-meeting-pres.html#workshop-participants",
-    "href": "assets/noaa-spc-model-meeting-pres.html#workshop-participants",
-    "title": "2025 SWPO striped marlin assessment meeting",
-    "section": "Workshop participants",
-    "text": "Workshop participants\n\nSPC:\n\nClaudio Castillo-Jordán\n\nNOAA PIFSC:\n\nRob Ahrens\nFelipe Carvalho\nNicholas Ducharme-Barth\nMichelle Sculley"
-  },
-  {
-    "objectID": "assets/noaa-spc-model-meeting-pres.html#pre-workshop-status",
-    "href": "assets/noaa-spc-model-meeting-pres.html#pre-workshop-status",
-    "title": "2025 SWPO striped marlin assessment meeting",
-    "section": "Pre-workshop status",
-    "text": "Pre-workshop status\n\n\n\n2024 assessment used MULTIFAN-CL (MFCL) framework\n\n\n\n\nCubic splines defined selectivity as function of age\n\nLimited by 10 annual age classes\nConstraints on selectivity curve shape\n\n\n\n\n\nSPC developed quarterly age model (mfcl-1979-20p3)\n\nImproved selectivity resolution\nCreated mismatch with striped marlin reproductive biology"
-  },
-  {
-    "objectID": "assets/noaa-spc-model-meeting-pres.html#key-challenge",
-    "href": "assets/noaa-spc-model-meeting-pres.html#key-challenge",
-    "title": "2025 SWPO striped marlin assessment meeting",
-    "section": "Key challenge",
-    "text": "Key challenge\nQuarterly vs Annual Population Dynamics\n\n\n\nStriped marlin have restricted spawning season (late austral spring/early summer)\n\n\n\n\nMFCL quarterly model introduced year-round recruitment\n\n\n\n\nNeed for modeling approach that could:\n\nProvide finer resolution for selectivity\nMaintain annual population dynamics aligned with biology"
-  },
-  {
-    "objectID": "assets/noaa-spc-model-meeting-pres.html#workshop-approach",
-    "href": "assets/noaa-spc-model-meeting-pres.html#workshop-approach",
-    "title": "2025 SWPO striped marlin assessment meeting",
-    "section": "Workshop approach",
-    "text": "Workshop approach\n\n\n\nShift from MULTIFAN-CL to Stock Synthesis\n\n\n\n\nInvestigate key issues\n\nPoor fits to size and index data\nData conflicts\nModel initial conditions\nGrowth curve\n\n\n\n\n\n\n\n\n\n\nAdvantages of Stock Synthesis:\n\nCan model selectivity as function of length\nMaintains annual population dynamics"
-  },
-  {
-    "objectID": "assets/noaa-spc-model-meeting-pres.html#model-development-process",
-    "href": "assets/noaa-spc-model-meeting-pres.html#model-development-process",
-    "title": "2025 SWPO striped marlin assessment meeting",
-    "section": "Model development process",
-    "text": "Model development process\n\n\nStepwise development:\n\n\n\nBase Stock Synthesis model (1979 start): 01-mls-base-1979\n\n\n\n\nRefined selectivity & data treatment: 03-chg-selex-1979\n\n\n\n\nReverted to 1952 start year: 04-start-1952\n\n\n\n\nExcluded problematic size data: 06-exclude-more-comp\n\n\n\n\nAdded catch uncertainty: 07-catch-uncertainty\n\n\n\n\nRefined growth modeling: 12-CAAL-old-growth-SD"
-  },
-  {
-    "objectID": "assets/noaa-spc-model-meeting-pres.html#key-changes",
-    "href": "assets/noaa-spc-model-meeting-pres.html#key-changes",
-    "title": "2025 SWPO striped marlin assessment meeting",
-    "section": "Key changes",
-    "text": "Key changes\n\nInitial conditions:\n\n\n\n\nReturned to 1952 start year with unfished state\nBetter addressed population initialization concerns\nConsistency with diagnostic-2019"
-  },
-  {
-    "objectID": "assets/noaa-spc-model-meeting-pres.html#key-changes-1",
-    "href": "assets/noaa-spc-model-meeting-pres.html#key-changes-1",
-    "title": "2025 SWPO striped marlin assessment meeting",
-    "section": "Key changes",
-    "text": "Key changes\n\nSelectivity:\n\n\n\n\nLength-based selectivity provided greater resolution\nDouble-normal functional form with estimated parameters\nFurther refinements needed (beyond range of observations)"
-  },
-  {
-    "objectID": "assets/noaa-spc-model-meeting-pres.html#key-changes-2",
-    "href": "assets/noaa-spc-model-meeting-pres.html#key-changes-2",
-    "title": "2025 SWPO striped marlin assessment meeting",
-    "section": "Key changes",
-    "text": "Key changes\n\nSize data exclusion:\n\n\n\n\nExcluded problematic size composition data:\n\nMixed-fleet data with temporal patchiness\nFleets with small sample sizes\nData showing internal conflicts\nData with quality concerns\n\nGenerally improved fit to remaining data components"
-  },
-  {
-    "objectID": "assets/noaa-spc-model-meeting-pres.html#key-changes-3",
-    "href": "assets/noaa-spc-model-meeting-pres.html#key-changes-3",
-    "title": "2025 SWPO striped marlin assessment meeting",
-    "section": "Key changes",
-    "text": "Key changes\n\nGrowth:\n\n\n\n\nInternal estimation using conditional age-at-length data\nAddressed some limitations from externally derived growth curve\nImproved overall model fit\nGrowth slower but still struggles fitting smallest observations"
-  },
-  {
-    "objectID": "assets/noaa-spc-model-meeting-pres.html#key-changes-4",
-    "href": "assets/noaa-spc-model-meeting-pres.html#key-changes-4",
-    "title": "2025 SWPO striped marlin assessment meeting",
-    "section": "Key changes",
-    "text": "Key changes\n\nCatch uncertainty:\n\n\n\n\nImplemented catch uncertainty for early high-catch periods\nBifurcated Japanese LL fleet in sub-region 2\nReduced sensitivity to potentially unreliable historical catch"
-  },
-  {
-    "objectID": "assets/noaa-spc-model-meeting-pres.html#additional-investigation",
-    "href": "assets/noaa-spc-model-meeting-pres.html#additional-investigation",
-    "title": "2025 SWPO striped marlin assessment meeting",
-    "section": "Additional investigation",
-    "text": "Additional investigation\n\n\n\nInvestigated source of misfit to the index seen in 2000 - 2002\n\n\n\n\nRan additional models to remove the influence of:\n\nthe index highpoint in 1998 (16-CAAL-rm-spike)\nFleet 6 (Australian LL; sub-region 2) weight frequency data (17-CAAL-noAU-ASPM)\n\nConflict is driven by the Fleet 6 weight data which suggests an increasing trend"
-  },
-  {
-    "objectID": "assets/noaa-spc-model-meeting-pres.html#remaining-challenges",
-    "href": "assets/noaa-spc-model-meeting-pres.html#remaining-challenges",
-    "title": "2025 SWPO striped marlin assessment meeting",
-    "section": "Remaining challenges",
-    "text": "Remaining challenges\n\n\n\nSpatiotemporal heterogeneity in fleet coverage\n\nNo single fleet samples all areas consistently\nDifferent spatial coverage during different time periods\n\n\n\n\n\nPotential non-representativeness in mixed-fleet size data\nLimitations in age data from opportunistic sampling\n\nLongline will select for fastest growing younger individuals\n\nData weighting remains challenging"
-  },
-  {
-    "objectID": "assets/noaa-spc-model-meeting-pres.html#assessment-recommendations",
-    "href": "assets/noaa-spc-model-meeting-pres.html#assessment-recommendations",
-    "title": "2025 SWPO striped marlin assessment meeting",
-    "section": "Assessment recommendations",
-    "text": "Assessment recommendations\n\n\nContinue development in Stock Synthesis framework\nBegin model from 1952 assuming unfished initial conditions\nDevelop multiple alternative abundance indices\nExclude problematic size composition data\nConsider ensemble modeling approaches\nExplore two-sex model development"
-  },
-  {
-    "objectID": "assets/noaa-spc-model-meeting-pres.html#prioritized-tasks",
-    "href": "assets/noaa-spc-model-meeting-pres.html#prioritized-tasks",
-    "title": "2025 SWPO striped marlin assessment meeting",
-    "section": "Prioritized tasks",
-    "text": "Prioritized tasks\n\n\nDevelop alternative relative abundance indices\n\nJP/TW/AU (all region data)\nJP only (sub-region 2 data)\nJP/AU (sub-regions 2 & 3)\nJP only (all region data)\nAU (CSIRO index)\n\nFinalize updated size composition data"
-  },
-  {
-    "objectID": "assets/noaa-spc-model-meeting-pres.html#summary",
-    "href": "assets/noaa-spc-model-meeting-pres.html#summary",
-    "title": "2025 SWPO striped marlin assessment meeting",
-    "section": "Summary",
-    "text": "Summary\n\n\nSuccessfully transitioned assessment model to Stock Synthesis\nAddressed some key technical concerns raised by SC20\nImproved fit to data while maintaining biological realism\nIdentified clear path forward for 2025 assessment"
-  },
-  {
-    "objectID": "assets/noaa-spc-model-meeting-pres.html#thank-you",
-    "href": "assets/noaa-spc-model-meeting-pres.html#thank-you",
-    "title": "2025 SWPO striped marlin assessment meeting",
-    "section": "Thank you",
-    "text": "Thank you\nQuestions or Comments?\n\nProject repository: https://github.com/N-DucharmeBarth-NOAA/2025-swpo-mls"
-  },
-  {
-    "objectID": "assets/overview-pres.html#section",
-    "href": "assets/overview-pres.html#section",
-    "title": "2025 SWPO striped marlin assessment meeting",
-    "section": "",
-    "text": "2025 SWPO striped marlin stock assessment modelling workshop\nJanuary 2025"
-  },
-  {
-    "objectID": "assets/overview-pres.html#overview",
-    "href": "assets/overview-pres.html#overview",
-    "title": "2025 SWPO striped marlin assessment meeting",
-    "section": "Overview",
-    "text": "Overview\n\n\n\nSPC presented the 2024 SWPO striped marlin stock assessment to SC20 and identified issues with fits to the index and size composition data.\nSC20 requested these issues be addressed and presented to SC21\nThe US offered to assist in the redevelopment of the stock assessment and host SPC staff for a modelling workshop."
-  },
-  {
-    "objectID": "assets/overview-pres.html#developments-since-sc20",
-    "href": "assets/overview-pres.html#developments-since-sc20",
-    "title": "2025 SWPO striped marlin assessment meeting",
-    "section": "Developments since SC20",
-    "text": "Developments since SC20\nImproving the fit to the size composition data\n\n\n\nMultifan-CL can only implement selectivity at age, and spline selectivity nodes can only be on age points\nImproving the resolution of the selectivity curve was accomplished by moving to a quarterly population dynamics model\nUnfortunately this results in seasonal recruitment dynamics which are inconsistent with our understanding of striped marlin biology"
-  },
-  {
-    "objectID": "assets/overview-pres.html#transition-to-stock-synthesis",
-    "href": "assets/overview-pres.html#transition-to-stock-synthesis",
-    "title": "2025 SWPO striped marlin assessment meeting",
-    "section": "Transition to Stock Synthesis",
-    "text": "Transition to Stock Synthesis\n\n\n\n\nStock Synthesis can model selectivity at length\nImproves the resolution of the selectivity curve and fit to the composition data while maintaining annual population dynamics"
-  },
-  {
-    "objectID": "assets/overview-pres.html#remaining-issues",
-    "href": "assets/overview-pres.html#remaining-issues",
-    "title": "2025 SWPO striped marlin assessment meeting",
-    "section": "Remaining issues",
-    "text": "Remaining issues\n\n\nData\n\nConflict between AU length/weight data\nNon-representative composition data (mixed flag fisheries)\nRepresentativeness of the CPUE index (large spike)\nInclusion of TW size composition data\n\n\nModel structure\n\nModel start year (1952 v. 1979)\nData-weighting\nRefine growth parameterization (estimate internally using CAAL)\nRefine selectivities (time-blocks or seasonal selectivity)\n2 sex model\nDealing with large catch in 1954"
-  },
-  {
-    "objectID": "assets/overview-pres.html#workshop-workplan",
-    "href": "assets/overview-pres.html#workshop-workplan",
-    "title": "2025 SWPO striped marlin assessment meeting",
-    "section": "Workshop workplan",
-    "text": "Workshop workplan\n\n\nAcknowledging that it may be difficult to progress on data issues at this stage, progress on identified issues where possible\nHelp prioritize a workplan for SPC to undertake prior to PAW\nIdentify how the US can continue to provide support\nBegin documenting workshop activities"
-  },
-  {
-    "objectID": "assets/overview-pres.html#running-models",
-    "href": "assets/overview-pres.html#running-models",
-    "title": "2025 SWPO striped marlin assessment meeting",
-    "section": "Running models",
-    "text": "Running models\nPlease conduct model developments in your own branch of the repository\ngit checkout -b &lt;branch-name&gt;\nUse 00-test-stock-synthesis-workflow.r as a template for script based model development."
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Home",
-    "section": "",
-    "text": "This repository contains model developments for 2025 Southwest Pacific Ocean striped marlin stock assessment conducted during the joint Pacific Community (SPC) and NOAA Fisheries stock assessment modeling meeting held in Honolulu, Hawai’i from 20-24 January 2025.\nA draft meeting report is available which will be submit to the 21st Scientific Committee (SC21) of the Western and Central Pacific Fisheries Committee (WCPFC) as an information paper. Additionally, a summary presentation of the meeting activities to be presented at the SPC Pre-Assessment Workshop (PAW) is available below.",
-    "crumbs": [
-      "Home"
-    ]
-  },
-  {
-    "objectID": "index.html#presentation",
-    "href": "index.html#presentation",
-    "title": "Home",
-    "section": "Presentation",
-    "text": "Presentation\n    View slides in full screen",
-    "crumbs": [
-      "Home"
-    ]
-  },
-  {
-    "objectID": "index.html#disclaimer",
-    "href": "index.html#disclaimer",
-    "title": "Home",
-    "section": "Disclaimer",
-    "text": "Disclaimer\nAny model runs contained within this repository represent preliminary model explorations and should not be used ‘as is’ for the consideration of management advice. Only models that have been presented and accepted to the WCPFC Scientific Committee can be used as the basis for management advice.",
-    "crumbs": [
-      "Home"
-    ]
-  },
-  {
     "objectID": "assets/noaa-spc-model-meeting-report.html",
     "href": "assets/noaa-spc-model-meeting-report.html",
     "title": "Summary report from the NOAA-SPC assessment model meeting on SWPO striped marlin",
@@ -355,10 +150,225 @@
     ]
   },
   {
-    "objectID": "code/shiny/introduction_index.html",
-    "href": "code/shiny/introduction_index.html",
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Home",
+    "section": "",
+    "text": "This repository contains model developments for 2025 Southwest Pacific Ocean striped marlin stock assessment conducted during the joint Pacific Community (SPC) and NOAA Fisheries stock assessment modeling meeting held in Honolulu, Hawai’i from 20-24 January 2025.\nA draft meeting report is available which will be submit to the 21st Scientific Committee (SC21) of the Western and Central Pacific Fisheries Committee (WCPFC) as an information paper. Additionally, a summary presentation of the meeting activities to be presented at the SPC Pre-Assessment Workshop (PAW), and a Shiny application showing outputs of the investigated models are available below.",
+    "crumbs": [
+      "Home"
+    ]
+  },
+  {
+    "objectID": "index.html#presentation",
+    "href": "index.html#presentation",
+    "title": "Home",
+    "section": "Presentation",
+    "text": "Presentation\n    View slides in full screen",
+    "crumbs": [
+      "Home"
+    ]
+  },
+  {
+    "objectID": "index.html#shiny-application",
+    "href": "index.html#shiny-application",
+    "title": "Home",
+    "section": "Shiny application",
+    "text": "Shiny application\nView app in full screen",
+    "crumbs": [
+      "Home"
+    ]
+  },
+  {
+    "objectID": "index.html#disclaimer",
+    "href": "index.html#disclaimer",
+    "title": "Home",
+    "section": "Disclaimer",
+    "text": "Disclaimer\nAny model runs contained within this repository represent preliminary model explorations and should not be used ‘as is’ for the consideration of management advice. Only models that have been presented and accepted to the WCPFC Scientific Committee can be used as the basis for management advice.",
+    "crumbs": [
+      "Home"
+    ]
+  },
+  {
+    "objectID": "shiny/introduction_index.html",
+    "href": "shiny/introduction_index.html",
     "title": "2025 SWPO striped marlin assessment meeting",
     "section": "",
-    "text": "Shiny app to compare Stock Synthesis model runs for Southwest Pacific Ocean striped marlin.\nAvailable panels: - [x] Summary table - [ ] Time series plots: spawning stock biomass (SSB), annual fishing mortality (F), Recruitment, Depletion (D, dynamic), SSB in the unfished condition, SSB relative to SSB at MSY (SSB/SSBmsy), F relative to F at MSY (F/Fmsy), and number of mature females. - [ ] Biology: Growth, Natural mortality (M), Maturity at age, Fecundity at age & Length-Weight - [ ] SRR, Recruitment deviates & recruits per spawner (predicted by SRR & actual) - [ ] Kobe - [ ] Selectivity (length) - [ ] Residuals (multimodel): CPUE, Size frequency & Catch - [ ] Observed & Expected (single model): CPUE, Size frequency & Catch - [ ] Fishery definitions (single model)\n\n\n\n Back to top"
+    "text": "Shiny app to compare Stock Synthesis model runs for 2025 Southwest Pacific Ocean striped marlin stock assessment conducted during the joint Pacific Community (SPC) and NOAA Fisheries stock assessment modeling meeting held in Honolulu, Hawai’i from 20-24 January 2025.\nAny model runs contained within this repository represent preliminary model explorations and should not be used ‘as is’ for the consideration of management advice. Only models that have been presented and accepted to the Western and Central Pacific Fisheries Commission (WCPFC) Scientific Committee can be used as the basis for management advice.\nReturn to the repository webpage: https://n-ducharmebarth-noaa.github.io/2025-swpo-mls-meeting/\n\n\n\n Back to top"
+  },
+  {
+    "objectID": "assets/overview-pres.html#section",
+    "href": "assets/overview-pres.html#section",
+    "title": "2025 SWPO striped marlin assessment meeting",
+    "section": "",
+    "text": "2025 SWPO striped marlin stock assessment modelling workshop\nJanuary 2025"
+  },
+  {
+    "objectID": "assets/overview-pres.html#overview",
+    "href": "assets/overview-pres.html#overview",
+    "title": "2025 SWPO striped marlin assessment meeting",
+    "section": "Overview",
+    "text": "Overview\n\n\n\nSPC presented the 2024 SWPO striped marlin stock assessment to SC20 and identified issues with fits to the index and size composition data.\nSC20 requested these issues be addressed and presented to SC21\nThe US offered to assist in the redevelopment of the stock assessment and host SPC staff for a modelling workshop."
+  },
+  {
+    "objectID": "assets/overview-pres.html#developments-since-sc20",
+    "href": "assets/overview-pres.html#developments-since-sc20",
+    "title": "2025 SWPO striped marlin assessment meeting",
+    "section": "Developments since SC20",
+    "text": "Developments since SC20\nImproving the fit to the size composition data\n\n\n\nMultifan-CL can only implement selectivity at age, and spline selectivity nodes can only be on age points\nImproving the resolution of the selectivity curve was accomplished by moving to a quarterly population dynamics model\nUnfortunately this results in seasonal recruitment dynamics which are inconsistent with our understanding of striped marlin biology"
+  },
+  {
+    "objectID": "assets/overview-pres.html#transition-to-stock-synthesis",
+    "href": "assets/overview-pres.html#transition-to-stock-synthesis",
+    "title": "2025 SWPO striped marlin assessment meeting",
+    "section": "Transition to Stock Synthesis",
+    "text": "Transition to Stock Synthesis\n\n\n\n\nStock Synthesis can model selectivity at length\nImproves the resolution of the selectivity curve and fit to the composition data while maintaining annual population dynamics"
+  },
+  {
+    "objectID": "assets/overview-pres.html#remaining-issues",
+    "href": "assets/overview-pres.html#remaining-issues",
+    "title": "2025 SWPO striped marlin assessment meeting",
+    "section": "Remaining issues",
+    "text": "Remaining issues\n\n\nData\n\nConflict between AU length/weight data\nNon-representative composition data (mixed flag fisheries)\nRepresentativeness of the CPUE index (large spike)\nInclusion of TW size composition data\n\n\nModel structure\n\nModel start year (1952 v. 1979)\nData-weighting\nRefine growth parameterization (estimate internally using CAAL)\nRefine selectivities (time-blocks or seasonal selectivity)\n2 sex model\nDealing with large catch in 1954"
+  },
+  {
+    "objectID": "assets/overview-pres.html#workshop-workplan",
+    "href": "assets/overview-pres.html#workshop-workplan",
+    "title": "2025 SWPO striped marlin assessment meeting",
+    "section": "Workshop workplan",
+    "text": "Workshop workplan\n\n\nAcknowledging that it may be difficult to progress on data issues at this stage, progress on identified issues where possible\nHelp prioritize a workplan for SPC to undertake prior to PAW\nIdentify how the US can continue to provide support\nBegin documenting workshop activities"
+  },
+  {
+    "objectID": "assets/overview-pres.html#running-models",
+    "href": "assets/overview-pres.html#running-models",
+    "title": "2025 SWPO striped marlin assessment meeting",
+    "section": "Running models",
+    "text": "Running models\nPlease conduct model developments in your own branch of the repository\ngit checkout -b &lt;branch-name&gt;\nUse 00-test-stock-synthesis-workflow.r as a template for script based model development."
+  },
+  {
+    "objectID": "assets/noaa-spc-model-meeting-pres.html#section",
+    "href": "assets/noaa-spc-model-meeting-pres.html#section",
+    "title": "2025 SWPO striped marlin assessment meeting",
+    "section": "",
+    "text": "NOAA-SPC Assessment Model Workshop on SWPO Striped Marlin\nSummary of Outcomes and Recommendations\nNicholas Ducharme-Barth, Claudio Castillo-Jordán, Michelle Sculley, Robert Ahrens, and Felipe Carvalho\nJanuary 20-24, 2025"
+  },
+  {
+    "objectID": "assets/noaa-spc-model-meeting-pres.html#workshop-context",
+    "href": "assets/noaa-spc-model-meeting-pres.html#workshop-context",
+    "title": "2025 SWPO striped marlin assessment meeting",
+    "section": "Workshop context",
+    "text": "Workshop context\n\n\n2024 SWPO striped marlin stock assessment presented at SC20\nSC20 identified several technical issues requiring attention:\n\nPoor fits to both size composition and abundance index data\nConflicts between different data types\nInconsistencies in fits to length/weight from same fisheries\nConcerns about selectivity (and interactions with the new growth curve)\nInability to estimate model initial conditions\n\nUnited States offered to host joint modeling meeting with SPC\nWorkshop held January 20-24, 2025 in Honolulu, Hawaii"
+  },
+  {
+    "objectID": "assets/noaa-spc-model-meeting-pres.html#workshop-participants",
+    "href": "assets/noaa-spc-model-meeting-pres.html#workshop-participants",
+    "title": "2025 SWPO striped marlin assessment meeting",
+    "section": "Workshop participants",
+    "text": "Workshop participants\n\nSPC:\n\nClaudio Castillo-Jordán\n\nNOAA PIFSC:\n\nRob Ahrens\nFelipe Carvalho\nNicholas Ducharme-Barth\nMichelle Sculley"
+  },
+  {
+    "objectID": "assets/noaa-spc-model-meeting-pres.html#pre-workshop-status",
+    "href": "assets/noaa-spc-model-meeting-pres.html#pre-workshop-status",
+    "title": "2025 SWPO striped marlin assessment meeting",
+    "section": "Pre-workshop status",
+    "text": "Pre-workshop status\n\n\n\n2024 assessment used MULTIFAN-CL (MFCL) framework\n\n\n\n\nCubic splines defined selectivity as function of age\n\nLimited by 10 annual age classes\nConstraints on selectivity curve shape\n\n\n\n\n\nSPC developed quarterly age model (mfcl-1979-20p3)\n\nImproved selectivity resolution\nCreated mismatch with striped marlin reproductive biology"
+  },
+  {
+    "objectID": "assets/noaa-spc-model-meeting-pres.html#key-challenge",
+    "href": "assets/noaa-spc-model-meeting-pres.html#key-challenge",
+    "title": "2025 SWPO striped marlin assessment meeting",
+    "section": "Key challenge",
+    "text": "Key challenge\nQuarterly vs Annual Population Dynamics\n\n\n\nStriped marlin have restricted spawning season (late austral spring/early summer)\n\n\n\n\nMFCL quarterly model introduced year-round recruitment\n\n\n\n\nNeed for modeling approach that could:\n\nProvide finer resolution for selectivity\nMaintain annual population dynamics aligned with biology"
+  },
+  {
+    "objectID": "assets/noaa-spc-model-meeting-pres.html#workshop-approach",
+    "href": "assets/noaa-spc-model-meeting-pres.html#workshop-approach",
+    "title": "2025 SWPO striped marlin assessment meeting",
+    "section": "Workshop approach",
+    "text": "Workshop approach\n\n\n\nShift from MULTIFAN-CL to Stock Synthesis\n\n\n\n\nInvestigate key issues\n\nPoor fits to size and index data\nData conflicts\nModel initial conditions\nGrowth curve\n\n\n\n\n\n\n\n\n\n\nAdvantages of Stock Synthesis:\n\nCan model selectivity as function of length\nMaintains annual population dynamics"
+  },
+  {
+    "objectID": "assets/noaa-spc-model-meeting-pres.html#model-development-process",
+    "href": "assets/noaa-spc-model-meeting-pres.html#model-development-process",
+    "title": "2025 SWPO striped marlin assessment meeting",
+    "section": "Model development process",
+    "text": "Model development process\n\n\nStepwise development:\n\n\n\nBase Stock Synthesis model (1979 start): 01-mls-base-1979\n\n\n\n\nRefined selectivity & data treatment: 03-chg-selex-1979\n\n\n\n\nReverted to 1952 start year: 04-start-1952\n\n\n\n\nExcluded problematic size data: 06-exclude-more-comp\n\n\n\n\nAdded catch uncertainty: 07-catch-uncertainty\n\n\n\n\nRefined growth modeling: 12-CAAL-old-growth-SD"
+  },
+  {
+    "objectID": "assets/noaa-spc-model-meeting-pres.html#key-changes",
+    "href": "assets/noaa-spc-model-meeting-pres.html#key-changes",
+    "title": "2025 SWPO striped marlin assessment meeting",
+    "section": "Key changes",
+    "text": "Key changes\n\nInitial conditions:\n\n\n\n\nReturned to 1952 start year with unfished state\nBetter addressed population initialization concerns\nConsistency with diagnostic-2019"
+  },
+  {
+    "objectID": "assets/noaa-spc-model-meeting-pres.html#key-changes-1",
+    "href": "assets/noaa-spc-model-meeting-pres.html#key-changes-1",
+    "title": "2025 SWPO striped marlin assessment meeting",
+    "section": "Key changes",
+    "text": "Key changes\n\nSelectivity:\n\n\n\n\nLength-based selectivity provided greater resolution\nDouble-normal functional form with estimated parameters\nFurther refinements needed (beyond range of observations)"
+  },
+  {
+    "objectID": "assets/noaa-spc-model-meeting-pres.html#key-changes-2",
+    "href": "assets/noaa-spc-model-meeting-pres.html#key-changes-2",
+    "title": "2025 SWPO striped marlin assessment meeting",
+    "section": "Key changes",
+    "text": "Key changes\n\nSize data exclusion:\n\n\n\n\nExcluded problematic size composition data:\n\nMixed-fleet data with temporal patchiness\nFleets with small sample sizes\nData showing internal conflicts\nData with quality concerns\n\nGenerally improved fit to remaining data components"
+  },
+  {
+    "objectID": "assets/noaa-spc-model-meeting-pres.html#key-changes-3",
+    "href": "assets/noaa-spc-model-meeting-pres.html#key-changes-3",
+    "title": "2025 SWPO striped marlin assessment meeting",
+    "section": "Key changes",
+    "text": "Key changes\n\nGrowth:\n\n\n\n\nInternal estimation using conditional age-at-length data\nAddressed some limitations from externally derived growth curve\nImproved overall model fit\nGrowth slower but still struggles fitting smallest observations"
+  },
+  {
+    "objectID": "assets/noaa-spc-model-meeting-pres.html#key-changes-4",
+    "href": "assets/noaa-spc-model-meeting-pres.html#key-changes-4",
+    "title": "2025 SWPO striped marlin assessment meeting",
+    "section": "Key changes",
+    "text": "Key changes\n\nCatch uncertainty:\n\n\n\n\nImplemented catch uncertainty for early high-catch periods\nBifurcated Japanese LL fleet in sub-region 2\nReduced sensitivity to potentially unreliable historical catch"
+  },
+  {
+    "objectID": "assets/noaa-spc-model-meeting-pres.html#additional-investigation",
+    "href": "assets/noaa-spc-model-meeting-pres.html#additional-investigation",
+    "title": "2025 SWPO striped marlin assessment meeting",
+    "section": "Additional investigation",
+    "text": "Additional investigation\n\n\n\nInvestigated source of misfit to the index seen in 2000 - 2002\n\n\n\n\nRan additional models to remove the influence of:\n\nthe index highpoint in 1998 (16-CAAL-rm-spike)\nFleet 6 (Australian LL; sub-region 2) weight frequency data (17-CAAL-noAU-ASPM)\n\nConflict is driven by the Fleet 6 weight data which suggests an increasing trend"
+  },
+  {
+    "objectID": "assets/noaa-spc-model-meeting-pres.html#remaining-challenges",
+    "href": "assets/noaa-spc-model-meeting-pres.html#remaining-challenges",
+    "title": "2025 SWPO striped marlin assessment meeting",
+    "section": "Remaining challenges",
+    "text": "Remaining challenges\n\n\n\nSpatiotemporal heterogeneity in fleet coverage\n\nNo single fleet samples all areas consistently\nDifferent spatial coverage during different time periods\n\n\n\n\n\nPotential non-representativeness in mixed-fleet size data\nLimitations in age data from opportunistic sampling\n\nLongline will select for fastest growing younger individuals\n\nData weighting remains challenging"
+  },
+  {
+    "objectID": "assets/noaa-spc-model-meeting-pres.html#assessment-recommendations",
+    "href": "assets/noaa-spc-model-meeting-pres.html#assessment-recommendations",
+    "title": "2025 SWPO striped marlin assessment meeting",
+    "section": "Assessment recommendations",
+    "text": "Assessment recommendations\n\n\nContinue development in Stock Synthesis framework\nBegin model from 1952 assuming unfished initial conditions\nDevelop multiple alternative abundance indices\nExclude problematic size composition data\nConsider ensemble modeling approaches\nExplore two-sex model development"
+  },
+  {
+    "objectID": "assets/noaa-spc-model-meeting-pres.html#prioritized-tasks",
+    "href": "assets/noaa-spc-model-meeting-pres.html#prioritized-tasks",
+    "title": "2025 SWPO striped marlin assessment meeting",
+    "section": "Prioritized tasks",
+    "text": "Prioritized tasks\n\n\nDevelop alternative relative abundance indices\n\nJP/TW/AU (all region data)\nJP only (sub-region 2 data)\nJP/AU (sub-regions 2 & 3)\nJP only (all region data)\nAU (CSIRO index)\n\nFinalize updated size composition data"
+  },
+  {
+    "objectID": "assets/noaa-spc-model-meeting-pres.html#summary",
+    "href": "assets/noaa-spc-model-meeting-pres.html#summary",
+    "title": "2025 SWPO striped marlin assessment meeting",
+    "section": "Summary",
+    "text": "Summary\n\n\nSuccessfully transitioned assessment model to Stock Synthesis\nAddressed some key technical concerns raised by SC20\nImproved fit to data while maintaining biological realism\nIdentified clear path forward for 2025 assessment"
+  },
+  {
+    "objectID": "assets/noaa-spc-model-meeting-pres.html#thank-you",
+    "href": "assets/noaa-spc-model-meeting-pres.html#thank-you",
+    "title": "2025 SWPO striped marlin assessment meeting",
+    "section": "Thank you",
+    "text": "Thank you\nQuestions or Comments?\n\nProject repository: https://github.com/N-DucharmeBarth-NOAA/2025-swpo-mls"
   }
 ]
