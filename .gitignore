@@ -64,3 +64,4 @@
 !*.bib
 !*.csl
 !*.lua
+!assets/noaa-spc-model-meeting*
