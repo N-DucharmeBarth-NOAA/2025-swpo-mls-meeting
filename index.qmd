@@ -26,8 +26,8 @@ A draft meeting [report](https://n-ducharmebarth-noaa.github.io/2025-swpo-mls-me
   <iframe 
     src="https://connect.fisheries.noaa.gov/2025-swpo-mls-viewer/" 
     height="500px"
-    frameborder="0"
-    allowfullscreen>
+    border="3px solid #dee2e6"
+    width= "100%">
   </iframe>
 </div>
 ```
