@@ -2,7 +2,7 @@
 title: "Home"
 format: 
   html:
-    toc: false
+    toc: true
 ---
 
 This repository contains model developments for 2025 Southwest Pacific Ocean striped marlin stock assessment conducted during the joint Pacific Community ([SPC](https://fame.spc.int/key-work-areas/stock-assessment)) and [NOAA Fisheries](https://www.fisheries.noaa.gov/about/pacific-islands-fisheries-science-center) stock assessment modeling meeting held in Honolulu, Hawai'i from 20-24 January 2025.
