@@ -1,5 +1,154 @@
-# Add this function to your server.R file above the server function
-# Just after the create_cpue_comparison_plot function
+# Function to create comparative length-based selectivity plots
+plot_model_comparison_selex = function(model_ids, model_stem, 
+                                      n_col = 2, model_labels = NULL, custom_colors = NULL) {
+  
+  # Validate inputs
+  if(length(model_ids) < 1) {
+    stop("Please provide at least one model ID")
+  }
+
+  # Handle model_stem as vector or single path
+  if(length(model_stem) == 1) {
+    model_stem = rep(model_stem, length(model_ids))
+  } else if(length(model_stem) != length(model_ids)) {
+    stop("If model_stem is a vector, it must have the same length as model_ids")
+  }
+  
+  # If model_labels is not provided, use model_ids as labels
+  if(is.null(model_labels)) {
+    model_labels = model_ids
+  } else if(length(model_labels) != length(model_ids)) {
+    stop("If model_labels is provided, it must have the same length as model_ids")
+  }
+  
+  # Create vector of model specifications with labels
+  selected_models = data.frame(
+    id = model_ids,
+    path = model_stem,
+    label = model_labels,
+    stringsAsFactors = FALSE
+  )
+  
+  # Read and process selectivity data from each model
+  selex_list = lapply(1:nrow(selected_models), function(i) {
+    # Read selectivity data
+    selex_file = file.path(selected_models$path[i], selected_models$id[i], "selex_l.csv")
+    if (!file.exists(selex_file)) {
+      warning(paste("File not found:", selex_file))
+      return(NULL)
+    }
+    
+    dt = fread(selex_file)
+    dt[, model_id := selected_models$id[i]]
+    dt[, model_label := selected_models$label[i]]
+    return(dt)
+  })
+  
+  # Combine all selectivity data
+  selex_data = rbindlist(selex_list, use.names = TRUE, fill = TRUE)
+  
+  # Check if we have data
+  if(nrow(selex_data) == 0) {
+    stop("No selectivity data found for the specified models")
+  }
+  
+  # Read fleet summary data for each model to get fleet names
+  fleet_list = lapply(1:nrow(selected_models), function(i) {
+    # Read fleet summary data
+    fleet_file = file.path(selected_models$path[i], selected_models$id[i], "fleet_summary.csv")
+    if (!file.exists(fleet_file)) {
+      warning(paste("Fleet summary file not found:", fleet_file))
+      return(NULL)
+    }
+    
+    dt = fread(fleet_file)
+    dt[, model_id := selected_models$id[i]]
+    return(dt)
+  })
+  
+  # Combine all fleet data
+  fleet_data = rbindlist(fleet_list, use.names = TRUE, fill = TRUE)
+  
+  # Check if we have fleet data
+  if(nrow(fleet_data) == 0) {
+    warning("No fleet summary data found, using original Fleet_name")
+  } else {
+    # Map fleet names from fleet_summary to selex_data
+    selex_data = merge(
+      selex_data,
+      fleet_data[, .(fleet, fleetname, model_id)],
+      by.x = c("Fleet", "model_id"),
+      by.y = c("fleet", "model_id"),
+      all.x = TRUE
+    )
+    
+    # Use fleetname from fleet_summary if available, otherwise keep original Fleet_name
+    selex_data[!is.na(fleetname), Fleet_name := fleetname]
+  }
+  
+  # Check if fleet names are consistent across models
+  fleet_consistency = selex_data[, .(
+    unique_names = length(unique(Fleet_name))
+  ), by = .(Fleet)]
+  
+  inconsistent_fleets = fleet_consistency[unique_names > 1, Fleet]
+  if(length(inconsistent_fleets) > 0) {
+    warning(paste("Inconsistent fleet names found for fleet(s):", 
+                 paste(inconsistent_fleets, collapse = ", ")))
+  }
+  
+  # Add sex label for better readability
+  selex_data[Sex == 1, sex_label := "Female"]
+  selex_data[Sex == 2, sex_label := "Male"]
+  selex_data[is.na(sex_label), sex_label := "NA"]
+  
+  # For each Fleet, if there's only one sex, change the label to "Aggregated"
+  fleet_sex_counts <- selex_data[, .(sex_count = uniqueN(Sex)), by = .(Fleet)]
+  single_sex_fleets <- fleet_sex_counts[sex_count == 1, Fleet]
+  
+  if(length(single_sex_fleets) > 0) {
+    selex_data[Fleet %in% single_sex_fleets, sex_label := "Aggregated"]
+  }
+  
+  # Convert labels to factors to ensure consistent ordering
+  selex_data[, model_label := factor(model_label, levels = model_labels)]
+  # Sort unique sex labels alphabetically for factor levels
+  sex_levels <- sort(unique(selex_data$sex_label))
+  selex_data[, sex_label := factor(sex_label, levels = sex_levels)]
+  
+  # Create plot
+  p = ggplot(selex_data, aes(x = variable, y = value, color = model_label, linetype = sex_label)) +
+    geom_line(linewidth = 1.2) +
+    facet_wrap(~ Fleet_name, scales = "free_x", ncol = n_col) +
+    ylim(0, 1) +
+    xlab("Length") +
+    ylab("Selectivity") +
+    labs(color = "Model", linetype = "Sex") +
+    theme(panel.background = element_rect(fill = "white", color = "black", linetype = "solid"),
+          panel.grid.major = element_line(color = 'gray70', linetype = "dotted"),
+          panel.grid.minor = element_line(color = 'gray70', linetype = "dotted"),
+          strip.background = element_rect(fill = "white"),
+          legend.key = element_rect(fill = "white"))
+  
+  # Apply color scales - either custom colors or viridis palette
+  if(!is.null(custom_colors)) {
+    # Validate that enough colors are provided
+    if(length(custom_colors) < length(unique(selex_data$model_label))) {
+      warning("Not enough custom colors provided. Falling back to viridis palette.")
+      p = p + viridis::scale_color_viridis("Model", begin = 0.1, end = 0.8, 
+                                         direction = 1, option = "H", discrete = TRUE)
+    } else {
+      # Use custom colors
+      p = p + scale_color_manual("Model", values = custom_colors)
+    }
+  } else {
+    # Use default viridis palette
+    p = p + viridis::scale_color_viridis("Model", begin = 0.1, end = 0.8, 
+                                       direction = 1, option = "H", discrete = TRUE)
+  }
+
+    return(p)
+}
 
 plot_catch_comparison <- function(model_ids, model_stem = "data", 
                                 fleets = NULL,        
@@ -1001,6 +1150,50 @@ server = function(input, output){
     n_fleets <- length(input$catch_fit_fleets)
     n_rows <- ceiling(n_fleets / input$catch_fit_n_col)
     
+    return(max(height_per_panel * 1.5, height_per_panel * n_rows))
+  })
+
+  # Render the selectivity plot
+  output$selex_plot <- renderPlot({
+    input_models <- unique(filtered_id())
+    
+    if(length(input_models) < 1) {
+      return()
+    }
+    
+    # Create the plot using our function
+    p <- plot_model_comparison_selex(
+      model_ids = input_models,
+      model_stem = model_stem,
+      n_col = input$selex_n_col
+    )
+    
+    return(p)
+  }, height = function() {
+    # Calculate appropriate height based on number of fleets and columns
+    input_models <- unique(filtered_id())
+    
+    if(length(input_models) < 1) {
+      return(height_per_panel * 1.5)
+    }
+    
+    # Try to estimate the number of fleets
+    selected_models <- sapply(input_models, function(x) all_dirs[grep(x, all_dirs, fixed=TRUE)])
+    fleet_count <- 0
+    
+    for(model_path in selected_models) {
+      selex_file <- file.path(model_stem, model_path, "selex_l.csv")
+      if(file.exists(selex_file)) {
+        selex_data <- fread(selex_file)
+        fleet_count <- max(fleet_count, length(unique(selex_data$Fleet)))
+      }
+    }
+    
+    if(fleet_count == 0) {
+      return(height_per_panel * 1.5)
+    }
+    
+    n_rows <- ceiling(fleet_count / input$selex_n_col)
     return(max(height_per_panel * 1.5, height_per_panel * n_rows))
   })
 

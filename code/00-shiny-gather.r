@@ -34,7 +34,7 @@
 # update summary files
     for(i in seq_along(all_dirs)){
         # check for all needed files
-        summary_files= c("cpue.csv","fleet_summary.csv","lik_tbl.csv","est_par.csv","ssb.csv","f.csv","rec.csv","kobe.csv","dyn_dep.csv","srr.csv","bio.csv","selex_l.csv","comp_len.csv","comp_size.csv","summary.csv","catch.csv","bio_age.csv","mature_n.csv","varadj.csv","lambdas.csv","html_parameters.txt","html_parameters_rownames.txt","html_recruitpars.txt","html_recruitpars_rownames.txt","html_estimated_non_dev_parameters.txt","html_estimated_non_dev_parameters_rownames.txt","html_derived_quants.txt","html_derived_quants_rownames.txt")
+        summary_files= c("cpue.csv","fleet_summary.csv","lik_tbl.csv","est_par.csv","ssb.csv","f.csv","rec.csv","kobe.csv","dyn_dep.csv","srr.csv","bio.csv","selex_a.csv","selex_l.csv","comp_len.csv","comp_size.csv","summary.csv","catch.csv","bio_age.csv","mature_n.csv","varadj.csv","lambdas.csv","html_parameters.txt","html_parameters_rownames.txt","html_recruitpars.txt","html_recruitpars_rownames.txt","html_estimated_non_dev_parameters.txt","html_estimated_non_dev_parameters_rownames.txt","html_derived_quants.txt","html_derived_quants_rownames.txt")
 
         if(sum(list.files(file.path(model_stem,all_dirs[i])) %in% summary_files) != length(summary_files)){
             summarize_ss_model(file.path(model_stem,all_dirs[i]))

@@ -19,6 +19,7 @@ ui = dashboardPage(
       menuItem("Time series plots", tabName="ts_plots"),
       menuItem("Biology plots", tabName="bio_plots"),
       menuItem("Catch plots", tabName="catch_plots"),
+      menuItem("Selectivity plots", tabName="selex_plots"),
       menuItem("Catch fit plots", tabName="catch_fit_plots"),
       menuItem("CPUE plots", tabName="cpue_plots")
     ),
@@ -176,6 +177,17 @@ ui = dashboardPage(
       # Fleet selector (will be populated in server)
       uiOutput("catch_fit_fleet_selector")
     ),
+    conditionalPanel(condition="input.sidebarmenu == 'selex_plots'",
+      # Number of columns
+      sliderInput(
+        inputId = "selex_n_col",
+        label = "Number of columns",
+        min = 1,
+        max = 6,
+        value = 3,
+        step = 1
+      )
+    ),
     br(),
     br(),
     tags$footer(
@@ -240,6 +252,15 @@ ui = dashboardPage(
           #   plotOutput("catch_obs_exp_plot", height="auto"))
         )
       ), # End of catch_plots tab
+
+      tabItem(tabName="selex_plots", h2("Selectivity Plots"),
+        fluidRow(
+          box(title="Length-based Selectivity", solidHeader=TRUE, collapsible=TRUE, collapsed=FALSE, status="primary", width=12,
+            p("Select at least one model to compare selectivity patterns."),
+            plotOutput("selex_plot", height="auto")
+          )
+        )
+      ),
 
       tabItem(tabName="catch_fit_plots", h2("Catch Fit Comparison"),
         fluidRow(
