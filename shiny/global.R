@@ -10,6 +10,7 @@ library(magrittr)
 library(ggplot2)
 library(viridis)
 library(ggthemes)
+library(fresh)
 
 # Load data once to improve performance
   summary_dt = fread(file.path("data","summary_dt.csv"))

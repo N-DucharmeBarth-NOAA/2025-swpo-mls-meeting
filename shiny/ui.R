@@ -1,3 +1,86 @@
+# Import Google Fonts to match website
+font_import <- tags$head(
+  tags$link(href="https://fonts.googleapis.com/css2?family=Roboto+Serif:opsz@8..144&display=swap", rel="stylesheet"),
+  tags$link(href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;1,300&display=swap", rel="stylesheet")
+)
+
+# Create a simplified fresh theme with NOAA colors
+noaa_theme <- create_theme(
+  adminlte_color(
+    light_blue = "#0085CA"  # theme-noaa-sea 
+  ),
+  adminlte_sidebar(
+    dark_bg = "#003087",    # theme-noaa-sky
+    dark_color = "#FFFFFF"  # white text
+  )
+)
+
+# Create a separate CSS string for custom styling
+custom_css <- HTML("
+  body {
+    background-color: #fafcfc; 
+    font-family: 'Montserrat', sans-serif;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Roboto Serif', serif;
+  }
+  
+  .navbar {
+    background-color: #003087 !important;
+  }
+  
+  .navbar .navbar-brand {
+    color: #FFFFFF !important;
+  }
+  
+  .logo {
+    background-color: #003087 !important;
+  }
+  
+  .logo:hover {
+    background-color: #0085CA !important;
+  }
+  
+  .box.box-primary {
+    border-top-color: #0085CA;
+  }
+  
+  .btn-primary {
+    background-color: #0085CA; 
+    border-color: #0085CA;
+  }
+  
+  .btn-primary:hover {
+    background-color: #003087; 
+    border-color: #003087;
+  }
+  
+  .irs-bar, .irs-bar-edge {
+    background: #0085CA !important;
+  }
+  
+  .irs-from, .irs-to, .irs-single {
+    background: #0085CA !important;
+  }
+  
+  .bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-success {
+    background: #0085CA !important;
+  }
+  
+  .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    background: #0085CA !important; 
+    color: white !important; 
+    border: none !important;
+  }
+  
+  .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background: #C6E6F0 !important; 
+    color: #323C46 !important; 
+    border: none !important;
+  }
+")
+
 
 css <- htmltools::HTML(
     "#summarytable > .dataTables_wrapper.no-footer > .dataTables_scroll > .dataTables_scrollBody {
@@ -8,7 +91,7 @@ css <- htmltools::HTML(
     }"
 )
 
-ui = dashboardPage(
+ui = dashboardPage( 
   header = dashboardHeader(title="2025-swpo-mls"),
   sidebar = dashboardSidebar(
     br(),
@@ -233,12 +316,14 @@ ui = dashboardPage(
     tags$footer(
       div(style="text-align:center",
         tags$p("version 0.0.1"),
-        tags$p(paste("Copyright", format(Sys.time(),"%Y"), "NOAA Fisheries, PIFSC SAP"))
+        tags$p(paste0("Copyright ", format(Sys.time(),"%Y"), " | NOAA Fisheries | SPC"))
       )
     )
   ), # End of sidebar
 
   body = dashboardBody(
+    font_import,
+    fresh::use_theme(noaa_theme),
     tags$head(tags$style(HTML('.wrapper {height: auto !important; position:relative; overflow-x:hidden; overflow-y:hidden}') )),
     tags$head(tags$style(css)),
     # Start of main tab stuff

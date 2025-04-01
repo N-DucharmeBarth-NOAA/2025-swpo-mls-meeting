@@ -861,6 +861,20 @@
       ],
       "Hash": "81fc09bdeab0077a73927ed1243404b6"
     },
+    "fresh": {
+      "Package": "fresh",
+      "Version": "0.2.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "bslib",
+        "htmltools",
+        "rstudioapi",
+        "sass",
+        "shiny"
+      ],
+      "Hash": "7bdb5c90d4fe3cb14dcefbe837ce01da"
+    },
     "frqit": {
       "Package": "frqit",
       "Version": "0.0.1",
