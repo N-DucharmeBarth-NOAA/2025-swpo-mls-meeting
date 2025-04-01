@@ -5,7 +5,7 @@ project:
 
 website:
   title: "2025 SWPO striped marlin assessment meeting"
-  reader-mode: true
+  reader-mode: false
   site-url: "https://N-DucharmeBarth-NOAA.github.io/2025-swpo-mls-meeting" 
   repo-url: "https://github.com/N-DucharmeBarth-NOAA/2025-swpo-mls-meeting"
   repo-actions: [source, issue]
@@ -34,6 +34,10 @@ website:
         contents:
         - text: "Submit an issue"
           href: https://github.com/N-DucharmeBarth-NOAA/2025-swpo-mls-meeting/issues/new/choose
+  page-footer:
+    center: 
+      - text: "NOAA Fisheries | SPC | 2025"
+    background: primary
 
 format: 
   html:
@@ -41,4 +45,4 @@ format:
     toc-expand: false
     theme:
       - default
-      - assets/customizations/presentation-custom.scss
+      - assets/customizations/website-custom.scss

@@ -49,9 +49,9 @@ First, [clone](https://docs.github.com/en/repositories/creating-and-managing-rep
    renv::restore()
    ```
 
-### Running the Models with GitHub Codespaces
+## Running the Models with GitHub Codespaces
 
-GitHub Codespaces provides a cloud-based development environment with all dependencies pre-configured:
+GitHub Codespaces provides a cloud-based development Linux environment with all dependencies pre-configured:
 
 1. [Open a Codespace](https://docs.github.com/en/codespaces/developing-in-a-codespace/creating-a-codespace-for-a-repository#creating-a-codespace-for-a-repository) for this repository using the default options
 2. Initial Codespace creation may take 15-20 minutes to complete
@@ -61,6 +61,9 @@ GitHub Codespaces provides a cloud-based development environment with all depend
    ```r
    renv::restore()
    ```
+::: {.callout-caution}
+Please note that the Linux version (*3.30.23.1*) of the most recent Stock Synthesis executable distributed with the repository `executables\stock-synthesis\3.30.23.1\ss3_linux` does not work with the flavor of Linux used in GitHub Codespaces so the preceding version (*3.30.22.1*) should be used `executables\stock-synthesis\3.30.22.1\ss3_linux`.
+:::  ```
 
 ## Project Structure
 
