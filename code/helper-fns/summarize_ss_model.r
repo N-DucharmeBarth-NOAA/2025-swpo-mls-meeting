@@ -316,12 +316,30 @@ summarize_ss_model = function(dir,verbose=TRUE)
                    .[,mat_fec:=NULL] %>%
                    .[,.(n=sum(n),n_mature=sum(n_mature),n_pup_produced=sum(n_pup_produced)),by=.(id,time,era)]
     
-    tmp_ctl = SS_readctl(file=file.path(dir,"control.ss"),datlist = file.path(dir,"data.ss"))
+    if(file.exists(file.path(dir,"control.ss_new")) & file.exists(file.path(dir,"data_echo.ss_new"))){
+        tmp_ctl = SS_readctl(file=file.path(dir,"control.ss_new"),datlist = file.path(dir,"data_echo.ss_new"))
+    } else {
+        tmp_ctl = SS_readctl(file=file.path(dir,"control.ss"),datlist = file.path(dir,"data.ss"))
+    }
+    
 
     tmp_varadj = as.data.table(tmp_ctl$Variance_adjustment_list) %>%
                 .[,id:=rep(tmp_dt$id,.N)] %>%
                 .[(factor==1&value!=0)|(factor%in%c(4,7)&(value!=1))] %>%
                 .[,.(id,factor,fleet,value)]
+    
+    
+
+    if(!(1 %in% unique(tmp_varadj$factor)) & length(grep("Q_extraSD",rownames(tmp_ctl$Q_parms)))>0){
+        extra_var_idx = grep("Q_extraSD",rownames(tmp_ctl$Q_parms))
+        extra_var_val = extra_var_fleet = rep(NA,length(extra_var_idx))
+        for(i in seq_along(extra_var_idx)){
+           extra_var_fleet[i] = as.numeric(gsub(")","",strsplit(rownames(tmp_ctl$Q_parms)[extra_var_idx[i]],"(",fixed=TRUE)[[1]][2],fixed=TRUE))
+           extra_var_val[i] = tmp_ctl$Q_parms$INIT[extra_var_idx[i]]
+        }
+        tmp_varadj = rbind(tmp_varadj,data.table(id=rep(unique(tmp_varadj$id),length(extra_var_idx)),factor=rep(1,length(extra_var_idx)),fleet=extra_var_fleet,value=extra_var_val))
+        tmp_varadj = tmp_varadj[order(id,fleet,factor)]
+    }
     
     tmp_lambdas = as.data.table(tmp_ctl$lambdas) %>%
                 .[,id:=rep(tmp_dt$id,.N)] %>%

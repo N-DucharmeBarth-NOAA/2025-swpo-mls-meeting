@@ -1,4 +1,238 @@
+# Add this function to your server.R file above the server function
 
+create_cpue_comparison_plot <- function(model_ids, model_stem = "data", 
+                                      show_se = TRUE, 
+                                      show_fit = TRUE, 
+                                      use_log_scale = FALSE,
+                                      apply_varadj = TRUE,
+                                      filter_lambda = TRUE) {
+  
+  # Validate inputs
+  if(length(model_ids) < 1) {
+    return(NULL)
+  }
+  
+  # Get paths for selected models
+  selected_models <- sapply(model_ids, function(x) all_dirs[grep(x, all_dirs, fixed=TRUE)])
+  
+  # Check if cpue.csv exists for all models
+  keep_selected <- which(sapply(file.path(model_stem, selected_models, "cpue.csv"), file.exists) == TRUE)
+  if(length(keep_selected) == 0) {
+    warning("The file cpue.csv does not exist for any of the files you selected.")
+    return(NULL)
+  } else {
+    selected_models <- selected_models[keep_selected]
+    model_ids <- model_ids[keep_selected]
+  }
+  
+  # Read and combine CPUE data
+  plot_dt <- rbindlist(lapply(seq_along(selected_models), function(i) {
+    model_id <- model_ids[i]
+    model_path <- selected_models[i]
+    cpue_data <- fread(file.path(model_stem, model_path, "cpue.csv"))
+    
+    # Rename columns to be consistent
+    setnames(cpue_data, 
+             c("Fleet", "Fleet_name", "Time", "Obs", "Exp", "SE"), 
+             c("fleet", "fleetname", "time", "obs", "exp", "se"), 
+             skip_absent = TRUE)
+    
+    # Add model identifiers
+    cpue_data[, id := model_id]
+    cpue_data[, model_label := model_id] # Can be customized if needed
+    
+    # Round observed values for consistent comparison
+    cpue_data[, obs := round(obs, digits=3)]
+    cpue_data[, id3 := as.numeric(as.factor(paste0(id, "_", fleetname)))]
+    
+    return(cpue_data)
+  }))
+  
+  # Read variance adjustment and lambda values
+  varlambda_dt <- rbindlist(lapply(seq_along(selected_models), function(i) {
+    model_id <- model_ids[i]
+    model_path <- selected_models[i]
+    
+    # Read variance adjustments
+    tmp_var <- fread(file.path(model_stem, model_path, "varadj.csv"))
+    if(nrow(tmp_var) == 0) {
+      tmp_var <- data.table(
+        fleet = unique(plot_dt[id == model_id]$fleet),
+        id = model_id,
+        factor = 1,
+        value = 0
+      )[, .(id, factor, fleet, value)]
+    } else {
+      tmp_var <- tmp_var[factor == 1]
+      tmp_var2 <- data.table(
+        fleet = unique(plot_dt[id == model_id]$fleet),
+        id = model_id,
+        factor = 1,
+        value = 0
+      )[, .(id, factor, fleet, value)]
+      
+      tmp_var2 <- tmp_var2[!(fleet %in% tmp_var$fleet)]
+      tmp_var <- rbind(tmp_var, tmp_var2)[order(fleet)]
+    }
+    
+    tmp_var <- tmp_var[, .(id, fleet, value)]
+    setnames(tmp_var, "value", "varadj")
+    
+    # Read lambdas
+    tmp_lambda <- fread(file.path(model_stem, model_path, "lambdas.csv"))
+    if(nrow(tmp_lambda) == 0) {
+      tmp_lambda <- data.table(
+        fleet = unique(plot_dt[id == model_id]$fleet),
+        id = model_id,
+        value = 0
+      )[, .(id, fleet, value)]
+    } else {
+      tmp_lambda <- tmp_lambda[like_comp == 1][, .(id, fleet, value)]
+      tmp_lambda2 <- data.table(
+        fleet = unique(plot_dt[id == model_id]$fleet),
+        id = model_id,
+        value = 0
+      )[, .(id, fleet, value)]
+      
+      tmp_lambda2 <- tmp_lambda2[!(fleet %in% tmp_lambda$fleet)]
+      tmp_lambda <- rbind(tmp_lambda, tmp_lambda2)[order(fleet)]
+    }
+    
+    setnames(tmp_lambda, "value", "lambda")
+    
+    return(merge(tmp_var, tmp_lambda, by = c("id", "fleet")))
+  }))
+  
+  # Merge CPUE data with variance adjustment and lambda data
+  plot_dt <- merge(plot_dt, varlambda_dt, by = c("id", "fleet"))
+  
+  # Apply variance adjustment if specified
+  if(!apply_varadj) {
+    plot_dt[, se := se - varadj]
+  }
+  
+  # Consistency checks for observations
+  obs_check <- plot_dt[, .(
+    obs_values = list(unique(obs)),
+    models = list(unique(id))
+  ), by = .(fleetname, time)]
+  
+  obs_inconsistent <- obs_check[sapply(obs_values, length) > 1]
+  if(nrow(obs_inconsistent) > 0) {
+    warning(paste0(
+      "Observed CPUE values differ across models for the same fleet and time point. ",
+      "This may indicate model configuration differences."
+    ))
+  }
+  
+  # Consistency checks for standard errors
+  se_check <- plot_dt[, .(
+    se_values = list(unique(se)),
+    models = list(unique(id))
+  ), by = .(fleetname, time)]
+  
+  se_inconsistent <- se_check[sapply(se_values, length) > 1]
+  if(nrow(se_inconsistent) > 0 && show_se) {
+    warning(paste0(
+      "Standard errors differ across models for the same fleet and time point. ",
+      "Error bars may not be consistent."
+    ))
+  }
+  
+  # Create a version of the data with just the first model's observations
+  # This ensures we only plot the observations once
+  obs_dt <- plot_dt[, .SD[1], by = .(fleetname, time)]
+  
+  # Apply log transformation if requested
+  if(use_log_scale) {
+    plot_dt[, obs := log(obs)]
+    plot_dt[, exp := log(exp)]
+    plot_dt[, lse := obs - se]
+    plot_dt[, use := obs + se]
+    
+    obs_dt[, obs := log(obs)]
+    obs_dt[, lse := obs - se]
+    obs_dt[, use := obs + se]
+    
+    ylab_txt <- "Index (log-scale)"
+    yint <- 0
+  } else {
+    plot_dt[, lse := exp(log(obs) - se)]
+    plot_dt[, use := exp(log(obs) + se)]
+    
+    obs_dt[, lse := exp(log(obs) - se)]
+    obs_dt[, use := exp(log(obs) + se)]
+    
+    ylab_txt <- "Index"
+    yint <- 1
+  }
+  
+  # Filter by lambda if requested
+  if(filter_lambda) {
+    plot_dt <- plot_dt[lambda == 1]
+  }
+  
+  # Check if we still have data to plot after filtering
+  if(nrow(plot_dt) == 0) {
+    warning("No data available after applying filters")
+    return(NULL)
+  }
+  
+    # Set label as factor with correct order
+  plot_dt[, label := factor(model_label, levels = model_ids)]
+  
+  # Create base plot
+  p = ggplot(plot_dt[order(id3, time)])  
+
+  # Set y-axis limits for non-log scale
+  if(!use_log_scale) {
+    p = p + ylim(0, NA)
+  }
+  
+  # Add common elements
+  if(uniqueN(plot_dt$fleetname)>=3){
+    n_col = 3
+  } else {
+    n_col = uniqueN(plot_dt$fleetname)
+  }
+  
+  p = p + 
+    xlab("Time") +
+    ylab(ylab_txt) +
+    geom_hline(yintercept = yint, linetype = "dashed", linewidth = 1) +
+    facet_wrap(~fleetname, ncol = n_col)
+  
+  # Add error bars if requested
+  if(show_se) {
+    p = p + geom_errorbar(data = obs_dt, aes(x = time, ymin = lse, ymax = use), 
+                       width = 0.2, linewidth = 0.7, color = "gray60")
+  }
+  
+  # Add observed points
+  p = p + geom_point(data = obs_dt, aes(x = time, y = obs), 
+                   shape = 21, size = 3, stroke = 0.5, fill = "gray90")
+  
+  # Add fitted lines if requested
+  if(show_fit) {
+    p = p + geom_line(aes(x = time, y = exp, color = label), linewidth = 1)
+  }
+  
+  # Apply consistent theme and color scheme
+  p <- p + 
+    viridis::scale_color_viridis("Model", begin = 0.1, end = 0.8, 
+                               direction = 1, option = "H", discrete = TRUE) +
+    viridis::scale_fill_viridis("Model", begin = 0.1, end = 0.8, 
+                              direction = 1, option = "H", discrete = TRUE) +
+    theme(
+      panel.background = element_rect(fill = "white", color = "black", linetype = "solid"),
+      panel.grid.major = element_line(color = 'gray70', linetype = "dotted"), 
+      panel.grid.minor = element_line(color = 'gray70', linetype = "dotted"),
+      strip.background = element_rect(fill = "white"),
+      legend.key = element_rect(fill = "white")
+    )
+  
+  return(p)
+}
 
 server = function(input, output){
   # pixel height for each panel. i.e row height when plotting by species
@@ -485,199 +719,31 @@ server = function(input, output){
   })
 
 
-  # catch_total_plot
+  # cpue_obs
   output$cpue_obs = renderPlot({
-    input_models = unique(filtered_id())
-    input_se = input$cpue_se
-    input_multi = input$cpue_multi
-    input_fit = input$cpue_fit
-    input_log = input$cpue_log
-    input_varadj = input$cpue_varadj
-    input_lambda = input$cpue_lambda
-
+    input_models <- unique(filtered_id())
+    
     if(length(input_models) < 1){
       return()
     }
-    selected_models = sapply(input_models,function(x)all_dirs[grep(x,all_dirs,fixed=TRUE)])
-    # check to make sure cpue.csv exists for all the selected models and update if needed
-    keep_selected = which(sapply(file.path(model_stem,selected_models,"cpue.csv"),file.exists)==TRUE)
-    if(length(keep_selected)==0){
-      return(warning("The file cpue.csv does not exist for any of the files you selected."))
-    } else {
-      selected_models = selected_models[keep_selected]
-    }
-    plot_dt = rbindlist(lapply(selected_models,function(x)fread(file.path(model_stem,x,"cpue.csv")))) %>%
-             .[,.(id,Fleet,Fleet_name,Time,Obs,Exp,SE)] %>%
-             setnames(.,c("Fleet","Fleet_name","Time","Obs","Exp","SE"),c("fleet","fleetname","time","obs","exp","se")) %>%
-             .[,obs:=round(obs,digits=3)] %>%
-             .[,id2:=as.numeric(as.factor(paste0(fleetname,"_",obs)))] %>%
-             .[,id3:=as.numeric(as.factor(paste0(id,"_",fleetname)))]
     
-    u_id = unique(plot_dt$id)
-    # read in varadj and lambdas
-    varlambda_dt.list = as.list(rep(NA,length(selected_models)))
-    for(i in 1:length(selected_models)){
-      varlambda_dt.list[[i]] = 
-
-      tmp_var = fread(file.path(model_stem,selected_models[i],"varadj.csv"))
-      if(nrow(tmp_var)==0){
-        tmp_var = data.table(fleet=unique(plot_dt[id==u_id[i]]$fleet)) %>%
-                  .[,id:=u_id[i]] %>%
-                  .[,factor:=1] %>%
-                  .[,value:=0] %>%
-                  .[,.(id,factor,fleet,value)]
-      } else {
-        tmp_var = tmp_var[factor==1]
-        tmp_var2 = data.table(fleet=unique(plot_dt[id==u_id[i]]$fleet)) %>%
-                  .[,id:=u_id[i]] %>%
-                  .[,factor:=1] %>%
-                  .[,value:=0] %>%
-                  .[,.(id,factor,fleet,value)] %>%
-                  .[!(fleet%in%tmp_var$fleet)]
-        tmp_var = rbind(tmp_var,tmp_var2) %>% .[order(fleet)]
-      }
-      tmp_var = tmp_var %>%
-                .[,.(id,fleet,value)] %>%
-                setnames(.,c("fleet","value"),c("fleet","varadj"))
-
-      tmp_lambda = fread(file.path(model_stem,selected_models[i],"lambdas.csv")) %>%
-                  .[like_comp==1] %>%
-                  .[,.(id,fleet,value)]
-      if(nrow(tmp_var)==0){
-        tmp_lambda = data.table(fleet=unique(plot_dt[id==u_id[i]]$fleet)) %>%
-                  .[,id:=u_id[i]] %>%
-                  .[,value:=0] %>%
-                  .[,.(id,fleet,value)]
-      }  else {
-        tmp_lambda2 = data.table(fleet=unique(plot_dt[id==u_id[i]]$fleet)) %>%
-                  .[,id:=u_id[i]] %>%
-                  .[,value:=0] %>%
-                  .[,.(id,fleet,value)] %>%
-                  .[!(fleet%in%tmp_lambda$fleet)]
-        tmp_lambda = rbind(tmp_lambda,tmp_lambda2) %>% .[order(fleet)]
-      }
-      tmp_lambda = tmp_lambda %>%
-                setnames(.,c("value"),c("lambda"))        
-
-      varlambda_dt.list[[i]] = merge(tmp_var,tmp_lambda,by=c("id","fleet"))
-    }
-    varlambda_dt = rbindlist(varlambda_dt.list)
-    plot_dt = merge(plot_dt,varlambda_dt,by=c("id","fleet")) 
-
-    if(input_varadj == "FALSE"){
-      plot_dt = plot_dt %>%
-                .[,se:=se-varadj]
-    }
-
-    if(input_log == "TRUE"){
-      plot_dt = plot_dt %>%
-                .[,obs:=log(obs)] %>%
-                .[,exp:=log(exp)] %>%
-                .[,lse:=obs-se] %>%
-                .[,use:=obs+se]
-                ylab_txt = "Index (log-scale)"
-                yint = 0
-    } else {
-      plot_dt = plot_dt %>%
-                .[,lse:=exp(log(obs)-se)] %>%
-                .[,use:=exp(log(obs)+se)]
-                ylab_txt = "Index"
-                yint = 1
-    }
-
-    if(input_lambda == "TRUE"){
-      plot_dt = plot_dt[lambda==1]
-    }
-
-    if(nrow(plot_dt) == 0){
+    p <- create_cpue_comparison_plot(
+      model_ids = input_models,
+      model_stem = model_stem,
+      show_se = input$cpue_se,
+      show_fit = input$cpue_fit,
+      use_log_scale = input$cpue_log,
+      apply_varadj = input$cpue_varadj,
+      filter_lambda = input$cpue_lambda
+    )
+    
+    if(is.null(p)) {
       return()
     }
-
-    # plot if models == 1
-    if(length(selected_models)==1){
-      p = plot_dt %>% .[order(id3,time)] %>%
-        ggplot()
-        if(input_log != "TRUE"){
-          p = p + ylim(0,NA)
-        }
-			  p = p + xlab("Time") +
-        ylab(ylab_txt) +
-        geom_hline(yintercept=yint,linetype="dashed",linewidth=1) 
-      if(input_multi == "TRUE"){
-        p = p + facet_wrap(~fleetname)
-        if(input_se == "TRUE"){
-        p = p + geom_segment(aes(x=time,xend=time,y=lse,yend=use),linewidth=1)
-        }
-        p = p + geom_point(aes(x=time,y=obs),fill="gray50",shape=21,size=3)
-        if(input_fit == "TRUE"){
-          p = p + geom_path(aes(x=time,y=exp,color=id),linewidth=1)
-        }  
-        p = p +  
-            viridis::scale_color_viridis("Model",begin = 0.1,end = 0.8,direction = 1,option = "H",discrete=TRUE) +
-            viridis::scale_fill_viridis("Model",begin = 0.1,end = 0.8,direction = 1,option = "H",discrete=TRUE) +
-            theme(panel.background = element_rect(fill = "white", color = "black", linetype = "solid"),
-                panel.grid.major = element_line(color = 'gray70',linetype = "dotted"), 
-                panel.grid.minor = element_line(color = 'gray70',linetype = "dotted"),
-                strip.background =element_rect(fill="white"),
-                legend.key = element_rect(fill = "white"))
-      } else {
-        p = p + geom_path(aes(x=time,y=obs,group=id3,color=fleetname),linewidth=1)
-        p = p +  
-            viridis::scale_color_viridis("Index",begin = 0.1,end = 0.8,direction = 1,option = "H",discrete=TRUE) +
-            viridis::scale_fill_viridis("Index",begin = 0.1,end = 0.8,direction = 1,option = "H",discrete=TRUE) +
-            theme(panel.background = element_rect(fill = "white", color = "black", linetype = "solid"),
-                panel.grid.major = element_line(color = 'gray70',linetype = "dotted"), 
-                panel.grid.minor = element_line(color = 'gray70',linetype = "dotted"),
-                strip.background =element_rect(fill="white"),
-                legend.key = element_rect(fill = "white"))
-      }
-      return(p)
-    } else {
-        if(length(selected_models)>1&input_multi=="TRUE"& mean(table(plot_dt$id2) %% uniqueN(plot_dt$id) == 0)!= 1){
-            return()
-        }
-        p = plot_dt %>% .[order(id3,time)] %>%
-        ggplot()
-        if(input_log != "TRUE"){
-          p = p + ylim(0,NA)
-        }
-			  p = p + xlab("Time") +
-        ylab(ylab_txt) +
-        geom_hline(yintercept=yint,linetype="dashed",linewidth=1) 
-      if(input_multi == "TRUE"){
-        p = p + facet_wrap(~fleetname)
-        if(input_se == "TRUE"){
-        p = p + geom_segment(aes(x=time,xend=time,y=lse,yend=use,group=id3,color=id),linewidth=1)
-        }
-        p = p + geom_point(aes(x=time,y=obs),fill="gray50",shape=21,size=3)
-        if(input_fit == "TRUE"){
-          p = p + geom_path(aes(x=time,y=exp,color=id),linewidth=1)
-        }  
-        p = p +  
-            viridis::scale_color_viridis("Model",begin = 0.1,end = 0.8,direction = 1,option = "H",discrete=TRUE) +
-            viridis::scale_fill_viridis("Model",begin = 0.1,end = 0.8,direction = 1,option = "H",discrete=TRUE) +
-            theme(panel.background = element_rect(fill = "white", color = "black", linetype = "solid"),
-                panel.grid.major = element_line(color = 'gray70',linetype = "dotted"), 
-                panel.grid.minor = element_line(color = 'gray70',linetype = "dotted"),
-                strip.background =element_rect(fill="white"),
-                legend.key = element_rect(fill = "white"))
-      } else {
-        p = p + geom_path(aes(x=time,y=obs,group=id3,color=fleetname),linewidth=1)
-        p = p +  
-            viridis::scale_color_viridis("Index",begin = 0.1,end = 0.8,direction = 1,option = "H",discrete=TRUE) +
-            viridis::scale_fill_viridis("Index",begin = 0.1,end = 0.8,direction = 1,option = "H",discrete=TRUE) +
-            theme(panel.background = element_rect(fill = "white", color = "black", linetype = "solid"),
-                panel.grid.major = element_line(color = 'gray70',linetype = "dotted"), 
-                panel.grid.minor = element_line(color = 'gray70',linetype = "dotted"),
-                strip.background =element_rect(fill="white"),
-                legend.key = element_rect(fill = "white"))
-      }
-      return(p)
-    }
+    
+    return(p)
   },
-  height=function(){
-
-      return((height_per_panel*1.5))
-
+  height = function() {
+    return(height_per_panel * 1.5)
   })
 } # End of server

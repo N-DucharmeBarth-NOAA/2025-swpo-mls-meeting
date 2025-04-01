@@ -105,15 +105,6 @@ ui = dashboardPage(
       offLabel = "FALSE",
       onStatus = "success", 
       offStatus = "danger"),
-      # multipanel plot
-      switchInput(
-      inputId = "cpue_multi",  
-      label = "Multipanel",
-      value=TRUE,
-      onLabel = "TRUE",
-      offLabel = "FALSE",
-      onStatus = "success", 
-      offStatus = "danger"),
       # show expected
       switchInput(
       inputId = "cpue_fit",  
