@@ -150,11 +150,135 @@
     ]
   },
   {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Home",
+    "section": "",
+    "text": "This repository contains model developments for 2025 Southwest Pacific Ocean striped marlin stock assessment conducted during the joint Pacific Community (SPC) and NOAA Fisheries stock assessment modeling meeting held in Honolulu, Hawai’i from 20-24 January 2025.\nA draft meeting report is available which will be submit to the 21st Scientific Committee (SC21) of the Western and Central Pacific Fisheries Committee (WCPFC) as an information paper. Additionally, a summary presentation of the meeting activities to be presented at the SPC Pre-Assessment Workshop (PAW), and a Shiny application showing outputs of the investigated models are available below.",
+    "crumbs": [
+      "Home"
+    ]
+  },
+  {
+    "objectID": "index.html#presentation",
+    "href": "index.html#presentation",
+    "title": "Home",
+    "section": "Presentation",
+    "text": "Presentation\n    View slides in full screen",
+    "crumbs": [
+      "Home"
+    ]
+  },
+  {
+    "objectID": "index.html#shiny-application",
+    "href": "index.html#shiny-application",
+    "title": "Home",
+    "section": "Shiny application",
+    "text": "Shiny application\nView app in full screen",
+    "crumbs": [
+      "Home"
+    ]
+  },
+  {
+    "objectID": "index.html#disclaimer",
+    "href": "index.html#disclaimer",
+    "title": "Home",
+    "section": "Disclaimer",
+    "text": "Disclaimer\nAny model runs contained within this repository represent preliminary model explorations and should not be used ‘as is’ for the consideration of management advice. Only models that have been presented and accepted to the WCPFC Scientific Committee should be used as the basis for management advice.",
+    "crumbs": [
+      "Home"
+    ]
+  },
+  {
+    "objectID": "shiny/stock-synthesis-model-summary.html",
+    "href": "shiny/stock-synthesis-model-summary.html",
+    "title": "Stock Synthesis Model Summary Elements",
+    "section": "",
+    "text": "This document provides an explanation of the elements in the summary_dt data table created by the summarize_ss_model() function and displayed on the Summary tab. This data table contains key model outputs and diagnostics from Stock Synthesis models.\n\n\n\nid: Model identifier, typically the folder name\nnumber: Number part of the model ID\nname: Name part of the model ID\ntag: Optional tag for the model\n\n\n\n\n\nn_warn: Number of warnings from the Stock Synthesis run\npar_status: Proportion of parameters with “OK” status\npar_afterbound: Proportion of parameters with “OK” after-bound status\nnfleets: Number of fleets in the model\nstartyr: Start year of the model\nendyr: End year of the model\nn_seasons: Number of seasons in the model\nss_version: Version number of Stock Synthesis used\n\n\n\n\n\nn_par_active: Number of active estimated parameters\nn_par_active_nd: Number of active non-deviate parameters\nn_par_total: Total number of parameters\nlog_det_hessian: Log determinant of the Hessian matrix\nmgc: Maximum gradient component\nnll: Total negative log-likelihood value\n\n\n\n\nThe model stores individual likelihood component values taken from tmp_lik[Label!=\"TOTAL\"]: - Catch: Likelihood component for catch data - Equil_catch: Likelihood component for equilibrium catch - Survey: Likelihood component for survey indices - Length_comp: Likelihood component for length composition data - Age_comp: Likelihood component for age composition data - SizeFreq: Likelihood component for size frequency data - Recruitment: Likelihood component for recruitment deviations - InitEQ_Regime: Likelihood component for initial equilibrium regime - Forecast_Recruitment: Likelihood component for forecast recruitment - Parm_priors: Likelihood component for parameter priors - Parm_softbounds: Likelihood component for parameter soft bounds - Parm_devs: Likelihood component for parameter deviations - Crash_Pen: Likelihood component for crash penalty\n\n\n\n\nltrend: P-value from trend test on main recruitment deviations\nruns: P-value from runs test on main recruitment deviations\nar: P-value from Durbin-Watson test for autocorrelation\nsdr: Standard deviation of recruitment deviations\nsigmaR: Input sigma R value (recruitment variability parameter)\n\n\n\n\n\nsteepness: Stock-recruitment steepness parameter\n\n\n\n\nM_m: Mean natural mortality for males\nL0_m: Mean length at age 0 for males\nLinf_m: Mean asymptotic length for males\nk_m: Mean growth coefficient for males\n\n\n\n\n\nM_f: Mean natural mortality for females\nL0_f: Mean length at age 0 for females\nLinf_f: Mean asymptotic length for females\nk_f: Mean growth coefficient for females\n\n\n\n\n\n\n\n\nF_2016: Fishing mortality in 2016\nF_2022: Fishing mortality in 2022\nF_MSY: Fishing mortality at Maximum Sustainable Yield\nF_Fmsy_2016: F/F_MSY ratio in 2016\nF_Fmsy_2022: F/F_MSY ratio in 2022\n\n\n\n\n\nSSB_virgin: Virgin spawning stock biomass\nSSB_Initial: Initial spawning stock biomass\nSSB_2016: Spawning stock biomass in 2016\nSSB_2022: Spawning stock biomass in 2022\nSSB_MSY: Spawning stock biomass at Maximum Sustainable Yield\nB_Bmsy_2016: B/B_MSY ratio in 2016\nB_Bmsy_2022: B/B_MSY ratio in 2022\n\n\n\n\n\ndep_st: Current depletion (static)\ndep_dyn_2016: Dynamic depletion in 2016 (SSB/unfished SSB)\ndep_dyn_2022: Dynamic depletion in 2022 (SSB/unfished SSB)\n\n\n\n\n\nR_virgin: Virgin recruitment\nR_initial: Initial recruitment\n\n\n\n\n\nMSY: Maximum Sustainable Yield\n\n\n\n\n\n\nmohns_rho_ssb: Mohn’s rho for SSB (measure of retrospective bias)\nmohns_rho_f: Mohn’s rho for F (measure of retrospective bias)\n\n\n\n\n\naverage_xval_cpue_mase: Average cross-validation MASE for CPUE\naverage_xval_len_mase: Average cross-validation MASE for length compositions\n\n\n\n\n\nThe function handles potential differences between Stock Synthesis versions (e.g., 3.24U vs. later versions)\nSome metrics may be NA if certain model components are missing (e.g., retrospective or hindcast analyses)\nTime-specific reference points are calculated for 2016 and 2022\nAll calculations are based on the Stock Synthesis model outputs generated by the SS_output() function"
+  },
+  {
+    "objectID": "shiny/stock-synthesis-model-summary.html#model-identification",
+    "href": "shiny/stock-synthesis-model-summary.html#model-identification",
+    "title": "Stock Synthesis Model Summary Elements",
+    "section": "",
+    "text": "id: Model identifier, typically the folder name\nnumber: Number part of the model ID\nname: Name part of the model ID\ntag: Optional tag for the model"
+  },
+  {
+    "objectID": "shiny/stock-synthesis-model-summary.html#model-configuration",
+    "href": "shiny/stock-synthesis-model-summary.html#model-configuration",
+    "title": "Stock Synthesis Model Summary Elements",
+    "section": "",
+    "text": "n_warn: Number of warnings from the Stock Synthesis run\npar_status: Proportion of parameters with “OK” status\npar_afterbound: Proportion of parameters with “OK” after-bound status\nnfleets: Number of fleets in the model\nstartyr: Start year of the model\nendyr: End year of the model\nn_seasons: Number of seasons in the model\nss_version: Version number of Stock Synthesis used"
+  },
+  {
+    "objectID": "shiny/stock-synthesis-model-summary.html#parameters-and-fit-statistics",
+    "href": "shiny/stock-synthesis-model-summary.html#parameters-and-fit-statistics",
+    "title": "Stock Synthesis Model Summary Elements",
+    "section": "",
+    "text": "n_par_active: Number of active estimated parameters\nn_par_active_nd: Number of active non-deviate parameters\nn_par_total: Total number of parameters\nlog_det_hessian: Log determinant of the Hessian matrix\nmgc: Maximum gradient component\nnll: Total negative log-likelihood value"
+  },
+  {
+    "objectID": "shiny/stock-synthesis-model-summary.html#likelihood-components",
+    "href": "shiny/stock-synthesis-model-summary.html#likelihood-components",
+    "title": "Stock Synthesis Model Summary Elements",
+    "section": "",
+    "text": "The model stores individual likelihood component values taken from tmp_lik[Label!=\"TOTAL\"]: - Catch: Likelihood component for catch data - Equil_catch: Likelihood component for equilibrium catch - Survey: Likelihood component for survey indices - Length_comp: Likelihood component for length composition data - Age_comp: Likelihood component for age composition data - SizeFreq: Likelihood component for size frequency data - Recruitment: Likelihood component for recruitment deviations - InitEQ_Regime: Likelihood component for initial equilibrium regime - Forecast_Recruitment: Likelihood component for forecast recruitment - Parm_priors: Likelihood component for parameter priors - Parm_softbounds: Likelihood component for parameter soft bounds - Parm_devs: Likelihood component for parameter deviations - Crash_Pen: Likelihood component for crash penalty"
+  },
+  {
+    "objectID": "shiny/stock-synthesis-model-summary.html#recruitment-metrics",
+    "href": "shiny/stock-synthesis-model-summary.html#recruitment-metrics",
+    "title": "Stock Synthesis Model Summary Elements",
+    "section": "",
+    "text": "ltrend: P-value from trend test on main recruitment deviations\nruns: P-value from runs test on main recruitment deviations\nar: P-value from Durbin-Watson test for autocorrelation\nsdr: Standard deviation of recruitment deviations\nsigmaR: Input sigma R value (recruitment variability parameter)"
+  },
+  {
+    "objectID": "shiny/stock-synthesis-model-summary.html#model-parameters",
+    "href": "shiny/stock-synthesis-model-summary.html#model-parameters",
+    "title": "Stock Synthesis Model Summary Elements",
+    "section": "",
+    "text": "steepness: Stock-recruitment steepness parameter\n\n\n\n\nM_m: Mean natural mortality for males\nL0_m: Mean length at age 0 for males\nLinf_m: Mean asymptotic length for males\nk_m: Mean growth coefficient for males\n\n\n\n\n\nM_f: Mean natural mortality for females\nL0_f: Mean length at age 0 for females\nLinf_f: Mean asymptotic length for females\nk_f: Mean growth coefficient for females"
+  },
+  {
+    "objectID": "shiny/stock-synthesis-model-summary.html#stock-status-indicators",
+    "href": "shiny/stock-synthesis-model-summary.html#stock-status-indicators",
+    "title": "Stock Synthesis Model Summary Elements",
+    "section": "",
+    "text": "F_2016: Fishing mortality in 2016\nF_2022: Fishing mortality in 2022\nF_MSY: Fishing mortality at Maximum Sustainable Yield\nF_Fmsy_2016: F/F_MSY ratio in 2016\nF_Fmsy_2022: F/F_MSY ratio in 2022\n\n\n\n\n\nSSB_virgin: Virgin spawning stock biomass\nSSB_Initial: Initial spawning stock biomass\nSSB_2016: Spawning stock biomass in 2016\nSSB_2022: Spawning stock biomass in 2022\nSSB_MSY: Spawning stock biomass at Maximum Sustainable Yield\nB_Bmsy_2016: B/B_MSY ratio in 2016\nB_Bmsy_2022: B/B_MSY ratio in 2022\n\n\n\n\n\ndep_st: Current depletion (static)\ndep_dyn_2016: Dynamic depletion in 2016 (SSB/unfished SSB)\ndep_dyn_2022: Dynamic depletion in 2022 (SSB/unfished SSB)\n\n\n\n\n\nR_virgin: Virgin recruitment\nR_initial: Initial recruitment\n\n\n\n\n\nMSY: Maximum Sustainable Yield"
+  },
+  {
+    "objectID": "shiny/stock-synthesis-model-summary.html#retrospective-analysis",
+    "href": "shiny/stock-synthesis-model-summary.html#retrospective-analysis",
+    "title": "Stock Synthesis Model Summary Elements",
+    "section": "",
+    "text": "mohns_rho_ssb: Mohn’s rho for SSB (measure of retrospective bias)\nmohns_rho_f: Mohn’s rho for F (measure of retrospective bias)"
+  },
+  {
+    "objectID": "shiny/stock-synthesis-model-summary.html#cross-validation",
+    "href": "shiny/stock-synthesis-model-summary.html#cross-validation",
+    "title": "Stock Synthesis Model Summary Elements",
+    "section": "",
+    "text": "average_xval_cpue_mase: Average cross-validation MASE for CPUE\naverage_xval_len_mase: Average cross-validation MASE for length compositions"
+  },
+  {
+    "objectID": "shiny/stock-synthesis-model-summary.html#notes",
+    "href": "shiny/stock-synthesis-model-summary.html#notes",
+    "title": "Stock Synthesis Model Summary Elements",
+    "section": "",
+    "text": "The function handles potential differences between Stock Synthesis versions (e.g., 3.24U vs. later versions)\nSome metrics may be NA if certain model components are missing (e.g., retrospective or hindcast analyses)\nTime-specific reference points are calculated for 2016 and 2022\nAll calculations are based on the Stock Synthesis model outputs generated by the SS_output() function"
+  },
+  {
+    "objectID": "shiny/introduction_index.html",
+    "href": "shiny/introduction_index.html",
+    "title": "2025 SWPO striped marlin assessment meeting",
+    "section": "",
+    "text": "Shiny app to compare Stock Synthesis model runs for 2025 Southwest Pacific Ocean striped marlin stock assessment conducted during the joint Pacific Community (SPC) and NOAA Fisheries stock assessment modeling meeting held in Honolulu, Hawai’i from 20-24 January 2025.\nAny model runs contained within this repository represent preliminary model explorations and should not be used ‘as is’ for the consideration of management advice. Only models that have been presented and accepted to the Western and Central Pacific Fisheries Commission (WCPFC) Scientific Committee should be used as the basis for management advice.\nReturn to the repository webpage: https://n-ducharmebarth-noaa.github.io/2025-swpo-mls-meeting/\n\n\n\n Back to top"
+  },
+  {
     "objectID": "assets/instructions.html",
     "href": "assets/instructions.html",
     "title": "Respository instructions",
     "section": "",
-    "text": "This project uses renv for package management to ensure reproducibility across environments. The repository is also configured to work with GitHub Codespaces for cloud-based development.\n\n\nFirst, clone this repository to your local machine.\n\n\n\nOpen an R terminal (recommended version 4.4.0 with RTools 4.4 installed)\nSet your working directory to the cloned repository:\nsetwd(\"path/to/repository/\")\nSource the .Rprofile file to bootstrap renv:\nsource(\".Rprofile\")\nIf renv doesn’t bootstrap automatically, run:\nrenv::restore()\nFollow the prompts to install all required packages (including data.table, magrittr, ggplot2, r4ss, FLR4MFCL, and other dependencies)\n\n\n\n\n\nOpen the repository as an RStudio Project\nRStudio should automatically detect the renv configuration and prompt for package installation\nIf renv doesn’t bootstrap automatically, run:\nrenv::restore()\n\n\n\n\n\nConfigure VS Code to work with R using the R extension\nFollow the specific configuration steps for renv projects\nOpen the repository folder in VS Code\nOpen an R terminal, which should prompt renv to bootstrap\nIf renv doesn’t bootstrap automatically, run:\nrenv::restore()\n\n\n\n\n\nGitHub Codespaces provides a cloud-based development environment with all dependencies pre-configured:\n\nOpen a Codespace for this repository using the default options\nInitial Codespace creation may take 15-20 minutes to complete\nOnce ready, open an R terminal in the Codespace\nThe renv package should bootstrap automatically\nIf renv doesn’t bootstrap automatically, run:\nrenv::restore()",
+    "text": "This project uses renv for package management to ensure reproducibility across environments. The repository is also configured to work with GitHub Codespaces for cloud-based development.\n\n\nFirst, clone this repository to your local machine.\n\n\n\nOpen an R terminal (recommended version 4.4.0 with RTools 4.4 installed)\nSet your working directory to the cloned repository:\nsetwd(\"path/to/repository/\")\nSource the .Rprofile file to bootstrap renv:\nsource(\".Rprofile\")\nIf renv doesn’t bootstrap automatically, run:\nrenv::restore()\nFollow the prompts to install all required packages (including data.table, magrittr, ggplot2, r4ss, FLR4MFCL, and other dependencies)\n\n\n\n\n\nOpen the repository as an RStudio Project\nRStudio should automatically detect the renv configuration and prompt for package installation\nIf renv doesn’t bootstrap automatically, run:\nrenv::restore()\n\n\n\n\n\nConfigure VS Code to work with R using the R extension\nFollow the specific configuration steps for renv projects\nOpen the repository folder in VS Code\nOpen an R terminal, which should prompt renv to bootstrap\nIf renv doesn’t bootstrap automatically, run:\nrenv::restore()\n\n\n\n\n\nGitHub Codespaces provides a cloud-based development Linux environment with all dependencies pre-configured:\n\nOpen a Codespace for this repository using the default options\nInitial Codespace creation may take 15-20 minutes to complete\nOnce ready, open an R terminal in the Codespace\nThe renv package should bootstrap automatically\nIf renv doesn’t bootstrap automatically, run:\nrenv::restore()\n\n\n\n\n\n\nCaution\n\n\n\nPlease note that the Linux version (3.30.23.1) of the most recent Stock Synthesis executable distributed with the repository executables\\stock-synthesis\\3.30.23.1\\ss3_linux does not work with the flavor of Linux used in GitHub Codespaces so the preceding version (3.30.22.1) should be used executables\\stock-synthesis\\3.30.22.1\\ss3_linux.",
     "crumbs": [
       "Repository instructions"
     ]
@@ -174,7 +298,7 @@
     "href": "assets/instructions.html#running-the-models-with-github-codespaces",
     "title": "Respository instructions",
     "section": "",
-    "text": "GitHub Codespaces provides a cloud-based development environment with all dependencies pre-configured:\n\nOpen a Codespace for this repository using the default options\nInitial Codespace creation may take 15-20 minutes to complete\nOnce ready, open an R terminal in the Codespace\nThe renv package should bootstrap automatically\nIf renv doesn’t bootstrap automatically, run:\nrenv::restore()",
+    "text": "GitHub Codespaces provides a cloud-based development Linux environment with all dependencies pre-configured:\n\nOpen a Codespace for this repository using the default options\nInitial Codespace creation may take 15-20 minutes to complete\nOnce ready, open an R terminal in the Codespace\nThe renv package should bootstrap automatically\nIf renv doesn’t bootstrap automatically, run:\nrenv::restore()\n\n\n\n\n\n\nCaution\n\n\n\nPlease note that the Linux version (3.30.23.1) of the most recent Stock Synthesis executable distributed with the repository executables\\stock-synthesis\\3.30.23.1\\ss3_linux does not work with the flavor of Linux used in GitHub Codespaces so the preceding version (3.30.22.1) should be used executables\\stock-synthesis\\3.30.22.1\\ss3_linux.",
     "crumbs": [
       "Repository instructions"
     ]
@@ -278,179 +402,6 @@
     "crumbs": [
       "Repository instructions"
     ]
-  },
-  {
-    "objectID": "shiny/introduction_index.html",
-    "href": "shiny/introduction_index.html",
-    "title": "2025 SWPO striped marlin assessment meeting",
-    "section": "",
-    "text": "Shiny app to compare Stock Synthesis model runs for 2025 Southwest Pacific Ocean striped marlin stock assessment conducted during the joint Pacific Community (SPC) and NOAA Fisheries stock assessment modeling meeting held in Honolulu, Hawai’i from 20-24 January 2025.\nAny model runs contained within this repository represent preliminary model explorations and should not be used ‘as is’ for the consideration of management advice. Only models that have been presented and accepted to the Western and Central Pacific Fisheries Commission (WCPFC) Scientific Committee should be used as the basis for management advice.\nReturn to the repository webpage: https://n-ducharmebarth-noaa.github.io/2025-swpo-mls-meeting/\n\n\n\n Back to top"
-  },
-  {
-    "objectID": "shiny/stock-synthesis-model-summary.html",
-    "href": "shiny/stock-synthesis-model-summary.html",
-    "title": "Stock Synthesis Model Summary Elements",
-    "section": "",
-    "text": "This document provides an explanation of the elements in the summary_dt data table created by the summarize_ss_model() function and displayed on the Summary tab. This data table contains key model outputs and diagnostics from Stock Synthesis models.\n\n\n\nid: Model identifier, typically the folder name\nnumber: Number part of the model ID\nname: Name part of the model ID\ntag: Optional tag for the model\n\n\n\n\n\nn_warn: Number of warnings from the Stock Synthesis run\npar_status: Proportion of parameters with “OK” status\npar_afterbound: Proportion of parameters with “OK” after-bound status\nnfleets: Number of fleets in the model\nstartyr: Start year of the model\nendyr: End year of the model\nn_seasons: Number of seasons in the model\nss_version: Version number of Stock Synthesis used\n\n\n\n\n\nn_par_active: Number of active estimated parameters\nn_par_active_nd: Number of active non-deviate parameters\nn_par_total: Total number of parameters\nlog_det_hessian: Log determinant of the Hessian matrix\nmgc: Maximum gradient component\nnll: Total negative log-likelihood value\n\n\n\n\nThe model stores individual likelihood component values taken from tmp_lik[Label!=\"TOTAL\"]: - Catch: Likelihood component for catch data - Equil_catch: Likelihood component for equilibrium catch - Survey: Likelihood component for survey indices - Length_comp: Likelihood component for length composition data - Age_comp: Likelihood component for age composition data - SizeFreq: Likelihood component for size frequency data - Recruitment: Likelihood component for recruitment deviations - InitEQ_Regime: Likelihood component for initial equilibrium regime - Forecast_Recruitment: Likelihood component for forecast recruitment - Parm_priors: Likelihood component for parameter priors - Parm_softbounds: Likelihood component for parameter soft bounds - Parm_devs: Likelihood component for parameter deviations - Crash_Pen: Likelihood component for crash penalty\n\n\n\n\nltrend: P-value from trend test on main recruitment deviations\nruns: P-value from runs test on main recruitment deviations\nar: P-value from Durbin-Watson test for autocorrelation\nsdr: Standard deviation of recruitment deviations\nsigmaR: Input sigma R value (recruitment variability parameter)\n\n\n\n\n\nsteepness: Stock-recruitment steepness parameter\n\n\n\n\nM_m: Mean natural mortality for males\nL0_m: Mean length at age 0 for males\nLinf_m: Mean asymptotic length for males\nk_m: Mean growth coefficient for males\n\n\n\n\n\nM_f: Mean natural mortality for females\nL0_f: Mean length at age 0 for females\nLinf_f: Mean asymptotic length for females\nk_f: Mean growth coefficient for females\n\n\n\n\n\n\n\n\nF_2016: Fishing mortality in 2016\nF_2022: Fishing mortality in 2022\nF_MSY: Fishing mortality at Maximum Sustainable Yield\nF_Fmsy_2016: F/F_MSY ratio in 2016\nF_Fmsy_2022: F/F_MSY ratio in 2022\n\n\n\n\n\nSSB_virgin: Virgin spawning stock biomass\nSSB_Initial: Initial spawning stock biomass\nSSB_2016: Spawning stock biomass in 2016\nSSB_2022: Spawning stock biomass in 2022\nSSB_MSY: Spawning stock biomass at Maximum Sustainable Yield\nB_Bmsy_2016: B/B_MSY ratio in 2016\nB_Bmsy_2022: B/B_MSY ratio in 2022\n\n\n\n\n\ndep_st: Current depletion (static)\ndep_dyn_2016: Dynamic depletion in 2016 (SSB/unfished SSB)\ndep_dyn_2022: Dynamic depletion in 2022 (SSB/unfished SSB)\n\n\n\n\n\nR_virgin: Virgin recruitment\nR_initial: Initial recruitment\n\n\n\n\n\nMSY: Maximum Sustainable Yield\n\n\n\n\n\n\nmohns_rho_ssb: Mohn’s rho for SSB (measure of retrospective bias)\nmohns_rho_f: Mohn’s rho for F (measure of retrospective bias)\n\n\n\n\n\naverage_xval_cpue_mase: Average cross-validation MASE for CPUE\naverage_xval_len_mase: Average cross-validation MASE for length compositions\n\n\n\n\n\nThe function handles potential differences between Stock Synthesis versions (e.g., 3.24U vs. later versions)\nSome metrics may be NA if certain model components are missing (e.g., retrospective or hindcast analyses)\nTime-specific reference points are calculated for 2016 and 2022\nAll calculations are based on the Stock Synthesis model outputs generated by the SS_output() function"
-  },
-  {
-    "objectID": "shiny/stock-synthesis-model-summary.html#model-identification",
-    "href": "shiny/stock-synthesis-model-summary.html#model-identification",
-    "title": "Stock Synthesis Model Summary Elements",
-    "section": "",
-    "text": "id: Model identifier, typically the folder name\nnumber: Number part of the model ID\nname: Name part of the model ID\ntag: Optional tag for the model"
-  },
-  {
-    "objectID": "shiny/stock-synthesis-model-summary.html#model-configuration",
-    "href": "shiny/stock-synthesis-model-summary.html#model-configuration",
-    "title": "Stock Synthesis Model Summary Elements",
-    "section": "",
-    "text": "n_warn: Number of warnings from the Stock Synthesis run\npar_status: Proportion of parameters with “OK” status\npar_afterbound: Proportion of parameters with “OK” after-bound status\nnfleets: Number of fleets in the model\nstartyr: Start year of the model\nendyr: End year of the model\nn_seasons: Number of seasons in the model\nss_version: Version number of Stock Synthesis used"
-  },
-  {
-    "objectID": "shiny/stock-synthesis-model-summary.html#parameters-and-fit-statistics",
-    "href": "shiny/stock-synthesis-model-summary.html#parameters-and-fit-statistics",
-    "title": "Stock Synthesis Model Summary Elements",
-    "section": "",
-    "text": "n_par_active: Number of active estimated parameters\nn_par_active_nd: Number of active non-deviate parameters\nn_par_total: Total number of parameters\nlog_det_hessian: Log determinant of the Hessian matrix\nmgc: Maximum gradient component\nnll: Total negative log-likelihood value"
-  },
-  {
-    "objectID": "shiny/stock-synthesis-model-summary.html#likelihood-components",
-    "href": "shiny/stock-synthesis-model-summary.html#likelihood-components",
-    "title": "Stock Synthesis Model Summary Elements",
-    "section": "",
-    "text": "The model stores individual likelihood component values taken from tmp_lik[Label!=\"TOTAL\"]: - Catch: Likelihood component for catch data - Equil_catch: Likelihood component for equilibrium catch - Survey: Likelihood component for survey indices - Length_comp: Likelihood component for length composition data - Age_comp: Likelihood component for age composition data - SizeFreq: Likelihood component for size frequency data - Recruitment: Likelihood component for recruitment deviations - InitEQ_Regime: Likelihood component for initial equilibrium regime - Forecast_Recruitment: Likelihood component for forecast recruitment - Parm_priors: Likelihood component for parameter priors - Parm_softbounds: Likelihood component for parameter soft bounds - Parm_devs: Likelihood component for parameter deviations - Crash_Pen: Likelihood component for crash penalty"
-  },
-  {
-    "objectID": "shiny/stock-synthesis-model-summary.html#recruitment-metrics",
-    "href": "shiny/stock-synthesis-model-summary.html#recruitment-metrics",
-    "title": "Stock Synthesis Model Summary Elements",
-    "section": "",
-    "text": "ltrend: P-value from trend test on main recruitment deviations\nruns: P-value from runs test on main recruitment deviations\nar: P-value from Durbin-Watson test for autocorrelation\nsdr: Standard deviation of recruitment deviations\nsigmaR: Input sigma R value (recruitment variability parameter)"
-  },
-  {
-    "objectID": "shiny/stock-synthesis-model-summary.html#model-parameters",
-    "href": "shiny/stock-synthesis-model-summary.html#model-parameters",
-    "title": "Stock Synthesis Model Summary Elements",
-    "section": "",
-    "text": "steepness: Stock-recruitment steepness parameter\n\n\n\n\nM_m: Mean natural mortality for males\nL0_m: Mean length at age 0 for males\nLinf_m: Mean asymptotic length for males\nk_m: Mean growth coefficient for males\n\n\n\n\n\nM_f: Mean natural mortality for females\nL0_f: Mean length at age 0 for females\nLinf_f: Mean asymptotic length for females\nk_f: Mean growth coefficient for females"
-  },
-  {
-    "objectID": "shiny/stock-synthesis-model-summary.html#stock-status-indicators",
-    "href": "shiny/stock-synthesis-model-summary.html#stock-status-indicators",
-    "title": "Stock Synthesis Model Summary Elements",
-    "section": "",
-    "text": "F_2016: Fishing mortality in 2016\nF_2022: Fishing mortality in 2022\nF_MSY: Fishing mortality at Maximum Sustainable Yield\nF_Fmsy_2016: F/F_MSY ratio in 2016\nF_Fmsy_2022: F/F_MSY ratio in 2022\n\n\n\n\n\nSSB_virgin: Virgin spawning stock biomass\nSSB_Initial: Initial spawning stock biomass\nSSB_2016: Spawning stock biomass in 2016\nSSB_2022: Spawning stock biomass in 2022\nSSB_MSY: Spawning stock biomass at Maximum Sustainable Yield\nB_Bmsy_2016: B/B_MSY ratio in 2016\nB_Bmsy_2022: B/B_MSY ratio in 2022\n\n\n\n\n\ndep_st: Current depletion (static)\ndep_dyn_2016: Dynamic depletion in 2016 (SSB/unfished SSB)\ndep_dyn_2022: Dynamic depletion in 2022 (SSB/unfished SSB)\n\n\n\n\n\nR_virgin: Virgin recruitment\nR_initial: Initial recruitment\n\n\n\n\n\nMSY: Maximum Sustainable Yield"
-  },
-  {
-    "objectID": "shiny/stock-synthesis-model-summary.html#retrospective-analysis",
-    "href": "shiny/stock-synthesis-model-summary.html#retrospective-analysis",
-    "title": "Stock Synthesis Model Summary Elements",
-    "section": "",
-    "text": "mohns_rho_ssb: Mohn’s rho for SSB (measure of retrospective bias)\nmohns_rho_f: Mohn’s rho for F (measure of retrospective bias)"
-  },
-  {
-    "objectID": "shiny/stock-synthesis-model-summary.html#cross-validation",
-    "href": "shiny/stock-synthesis-model-summary.html#cross-validation",
-    "title": "Stock Synthesis Model Summary Elements",
-    "section": "",
-    "text": "average_xval_cpue_mase: Average cross-validation MASE for CPUE\naverage_xval_len_mase: Average cross-validation MASE for length compositions"
-  },
-  {
-    "objectID": "shiny/stock-synthesis-model-summary.html#notes",
-    "href": "shiny/stock-synthesis-model-summary.html#notes",
-    "title": "Stock Synthesis Model Summary Elements",
-    "section": "",
-    "text": "The function handles potential differences between Stock Synthesis versions (e.g., 3.24U vs. later versions)\nSome metrics may be NA if certain model components are missing (e.g., retrospective or hindcast analyses)\nTime-specific reference points are calculated for 2016 and 2022\nAll calculations are based on the Stock Synthesis model outputs generated by the SS_output() function"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Home",
-    "section": "",
-    "text": "This repository contains model developments for 2025 Southwest Pacific Ocean striped marlin stock assessment conducted during the joint Pacific Community (SPC) and NOAA Fisheries stock assessment modeling meeting held in Honolulu, Hawai’i from 20-24 January 2025.\nA draft meeting report is available which will be submit to the 21st Scientific Committee (SC21) of the Western and Central Pacific Fisheries Committee (WCPFC) as an information paper. Additionally, a summary presentation of the meeting activities to be presented at the SPC Pre-Assessment Workshop (PAW), and a Shiny application showing outputs of the investigated models are available below.",
-    "crumbs": [
-      "Home"
-    ]
-  },
-  {
-    "objectID": "index.html#presentation",
-    "href": "index.html#presentation",
-    "title": "Home",
-    "section": "Presentation",
-    "text": "Presentation\n    View slides in full screen",
-    "crumbs": [
-      "Home"
-    ]
-  },
-  {
-    "objectID": "index.html#shiny-application",
-    "href": "index.html#shiny-application",
-    "title": "Home",
-    "section": "Shiny application",
-    "text": "Shiny application\nView app in full screen",
-    "crumbs": [
-      "Home"
-    ]
-  },
-  {
-    "objectID": "index.html#disclaimer",
-    "href": "index.html#disclaimer",
-    "title": "Home",
-    "section": "Disclaimer",
-    "text": "Disclaimer\nAny model runs contained within this repository represent preliminary model explorations and should not be used ‘as is’ for the consideration of management advice. Only models that have been presented and accepted to the WCPFC Scientific Committee should be used as the basis for management advice.",
-    "crumbs": [
-      "Home"
-    ]
-  },
-  {
-    "objectID": "assets/overview-pres.html#section",
-    "href": "assets/overview-pres.html#section",
-    "title": "2025 SWPO striped marlin assessment meeting",
-    "section": "",
-    "text": "2025 SWPO striped marlin stock assessment modelling workshop\nJanuary 2025"
-  },
-  {
-    "objectID": "assets/overview-pres.html#overview",
-    "href": "assets/overview-pres.html#overview",
-    "title": "2025 SWPO striped marlin assessment meeting",
-    "section": "Overview",
-    "text": "Overview\n\n\n\nSPC presented the 2024 SWPO striped marlin stock assessment to SC20 and identified issues with fits to the index and size composition data.\nSC20 requested these issues be addressed and presented to SC21\nThe US offered to assist in the redevelopment of the stock assessment and host SPC staff for a modelling workshop."
-  },
-  {
-    "objectID": "assets/overview-pres.html#developments-since-sc20",
-    "href": "assets/overview-pres.html#developments-since-sc20",
-    "title": "2025 SWPO striped marlin assessment meeting",
-    "section": "Developments since SC20",
-    "text": "Developments since SC20\nImproving the fit to the size composition data\n\n\n\nMultifan-CL can only implement selectivity at age, and spline selectivity nodes can only be on age points\nImproving the resolution of the selectivity curve was accomplished by moving to a quarterly population dynamics model\nUnfortunately this results in seasonal recruitment dynamics which are inconsistent with our understanding of striped marlin biology"
-  },
-  {
-    "objectID": "assets/overview-pres.html#transition-to-stock-synthesis",
-    "href": "assets/overview-pres.html#transition-to-stock-synthesis",
-    "title": "2025 SWPO striped marlin assessment meeting",
-    "section": "Transition to Stock Synthesis",
-    "text": "Transition to Stock Synthesis\n\n\n\n\nStock Synthesis can model selectivity at length\nImproves the resolution of the selectivity curve and fit to the composition data while maintaining annual population dynamics"
-  },
-  {
-    "objectID": "assets/overview-pres.html#remaining-issues",
-    "href": "assets/overview-pres.html#remaining-issues",
-    "title": "2025 SWPO striped marlin assessment meeting",
-    "section": "Remaining issues",
-    "text": "Remaining issues\n\n\nData\n\nConflict between AU length/weight data\nNon-representative composition data (mixed flag fisheries)\nRepresentativeness of the CPUE index (large spike)\nInclusion of TW size composition data\n\n\nModel structure\n\nModel start year (1952 v. 1979)\nData-weighting\nRefine growth parameterization (estimate internally using CAAL)\nRefine selectivities (time-blocks or seasonal selectivity)\n2 sex model\nDealing with large catch in 1954"
-  },
-  {
-    "objectID": "assets/overview-pres.html#workshop-workplan",
-    "href": "assets/overview-pres.html#workshop-workplan",
-    "title": "2025 SWPO striped marlin assessment meeting",
-    "section": "Workshop workplan",
-    "text": "Workshop workplan\n\n\nAcknowledging that it may be difficult to progress on data issues at this stage, progress on identified issues where possible\nHelp prioritize a workplan for SPC to undertake prior to PAW\nIdentify how the US can continue to provide support\nBegin documenting workshop activities"
-  },
-  {
-    "objectID": "assets/overview-pres.html#running-models",
-    "href": "assets/overview-pres.html#running-models",
-    "title": "2025 SWPO striped marlin assessment meeting",
-    "section": "Running models",
-    "text": "Running models\nPlease conduct model developments in your own branch of the repository\ngit checkout -b &lt;branch-name&gt;\nUse 00-test-stock-synthesis-workflow.r as a template for script based model development."
   },
   {
     "objectID": "assets/noaa-spc-model-meeting-pres.html#section",

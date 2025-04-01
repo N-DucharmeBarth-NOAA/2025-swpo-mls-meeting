@@ -72,7 +72,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-48ffa3e5b9d089919c6712c39e5b00f2.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-6a828ca2fb837163c7380193ffea110b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-8fdfd81ec893ef7f5a02e55a20eb02f2.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -131,11 +131,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <a href="../">2025 SWPO striped marlin assessment meeting</a> 
         <div class="sidebar-tools-main">
     <a href="https://github.com/N-DucharmeBarth-NOAA/2025-swpo-mls-meeting" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-github"></i></a>
-  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
-  <div class="quarto-reader-toggle-btn">
-  <i class="bi"></i>
-  </div>
-</a>
 </div>
     </div>
       </div>
@@ -306,14 +301,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="running-the-models-with-github-codespaces" class="level2">
 <h2 class="anchored" data-anchor-id="running-the-models-with-github-codespaces">Running the Models with GitHub Codespaces</h2>
-<p>GitHub Codespaces provides a cloud-based development environment with all dependencies pre-configured:</p>
+<p>GitHub Codespaces provides a cloud-based development Linux environment with all dependencies pre-configured:</p>
 <ol type="1">
 <li><p><a href="https://docs.github.com/en/codespaces/developing-in-a-codespace/creating-a-codespace-for-a-repository#creating-a-codespace-for-a-repository">Open a Codespace</a> for this repository using the default options</p></li>
 <li><p>Initial Codespace creation may take 15-20 minutes to complete</p></li>
 <li><p>Once ready, open an R terminal in the Codespace</p></li>
 <li><p>The <code>renv</code> package should bootstrap automatically</p></li>
 <li><p>If <code>renv</code> doesn’t bootstrap automatically, run:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>renv<span class="sc">::</span><span class="fu">restore</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>renv<span class="sc">::</span><span class="fu">restore</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Caution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Please note that the Linux version (<em>3.30.23.1</em>) of the most recent Stock Synthesis executable distributed with the repository <code>executables\stock-synthesis\3.30.23.1\ss3_linux</code> does not work with the flavor of Linux used in GitHub Codespaces so the preceding version (<em>3.30.22.1</em>) should be used <code>executables\stock-synthesis\3.30.22.1\ss3_linux</code>.</p>
+</div>
+</div></li>
 </ol>
 </section>
 </section>
@@ -932,8 +940,25 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+ NOAA Fisheries | SPC | 2025
+  </li>  
+</ul>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/N-DucharmeBarth-NOAA/2025-swpo-mls-meeting/blob/main/assets/instructions.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/N-DucharmeBarth-NOAA/2025-swpo-mls-meeting/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
 
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/N-DucharmeBarth-NOAA/2025-swpo-mls-meeting/blob/main/assets/instructions.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/N-DucharmeBarth-NOAA/2025-swpo-mls-meeting/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+</body></html>
