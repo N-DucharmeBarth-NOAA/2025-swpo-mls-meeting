@@ -211,7 +211,7 @@ ui = dashboardPage(
       tabItem(tabName="cpue_plots", h2("CPUE plots"),
         fluidRow(
           box(title="Observed CPUE", solidHeader=TRUE, collapsible=TRUE, collapsed=FALSE, status="primary", width=12,
-            p("Select at least one model."),
+            p("Select at least one model. Note that if multiple models are selected, any variance adjustment to the standard errors will be based off of the first model."),
             plotOutput("cpue_obs", height="auto"))
           # box(title="Catch residuals", solidHeader=TRUE, collapsible=TRUE, collapsed=TRUE, status="primary", width=12,
           #   p("Select at least one model."),
