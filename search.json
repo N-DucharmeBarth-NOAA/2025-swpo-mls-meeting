@@ -13,7 +13,7 @@
     "section": "",
     "text": "DRAFT",
     "crumbs": [
-      "Report",
+      "WCPFC-SC report",
       "HTML"
     ]
   },
@@ -24,7 +24,7 @@
     "section": "3.1 Pre-meeting",
     "text": "3.1 Pre-meeting\nFollowing SC20 and prior to the modeling meeting, SPC continued development on the stock assessment model to try and improve the fit to the size composition data. These additional investigations focused on how selectivity was defined in the model. In the 2024 stock assessment (Castillo-Jordan et al., 2024), cubic-splines were used to define flexible selectivity curves as a function of age noting that implementation in restricts placement of nodes to age class values. Since the 2024 assessment assumed 10 annual age classes this placed a severe constraint on the shape of the selectivity curve (Figure 1), particularly at the youngest ages when growth was assumed to be quite rapid. A new model mfcl-1979-20p3 (Figure 2) was reparametrized in using quarterly age in order to provide greater resolution in age-specific selectivity at the youngest sizes (Figure 3). The new quarterly age model also included a separate index for each of the four quarters which shared a stationary catchability, and selectivity curve. Additionally, time-varying observation error for each index was not activated and instead assumed a \\(\\sigma = 0.17\\).\nWhile this new model mfcl-1979-20p3 had the desired effect of improving the resolution of selectivity and fits to size composition data, it introduced a new problem into the population dynamics. are not known to spawn year-round like tropical tunas, but rather have a restricted spawning season in the late austral spring and early austral summer where they form multiple discrete spawning aggregations (Kopf et al., 2012). However, in it is difficult to restrict recruitment in a quarterly model to occur in a single quarter of the calendar year. An orthogonal polynomial parametrization for recruitment was applied to restrict recruitment to the first quarter of the calendar year (following spawning in the early austral summer), however the model still introduced recruits into the model in all quarters of the year (Figure 4).",
     "crumbs": [
-      "Report",
+      "WCPFC-SC report",
       "HTML"
     ]
   },
@@ -35,7 +35,7 @@
     "section": "3.2 January 2025 meeting",
     "text": "3.2 January 2025 meeting\nModel investigations during the January 2025 stock assessment modeling meeting used the mfcl-1979-20p3 model provided by SPC as a starting point. A table of key model convergence and fit metrics is provided in Table 1.\nModel configuration files, output, and analytic code are available on GitHub1 : https://n-ducharmebarth-noaa.github.io/2025-swpo-mls-meeting/.\n\n3.2.1 Transition to Stock Synthesis\nDiscussions in the lead up to the January 2025 meeting identified that switching the modeling framework from to Stock Synthesis (Methot & Wetzel, 2013) could help resolve some of the issues identified by SC20 that the mfcl-1979-20p3 model sought to address without compromising key population dynamics assumptions (e.g., annual population dynamics and recruitment). One of the key benefits to is that it can model selectivity as a function of length and/or age. This improves the resolution of the selectivity curve and fit to the size data while maintaining annual population dynamics.\nAn initial model 01-mls-base-1979 was configured to approximate the available mfcl-1979-20p3 model. 01-mls-base-1979 implements a single-sex model spanning 1979-2023 with annual age-structure and quarterly population and fishing dynamics. An early recruitment period from 1969-1978 was used to set-up the initial population age structure, and the initial level of fishing mortality (initF2) was fixed to match the mfcl-1979-20p3. Fishery definitions and selectivity groupings were maintained with selectivity defined as a function of length assuming a double-normal functional form. All length and weight3 composition were reformatted using the bin structure. To initialize the model, the input effective sample sizes for the weight and length composition matched the sum of the input observations from the mfcl-1979-20p3 for each quarterly fishing instance. Rather than use the four quarterly indices, a single quarterly index corresponding to quarter 4 was used in the Stock Synthesis model. Quarter 4 was selected as this was the one most likely to represent changes in the spawning component of the population given the temporal reproductive dynamics described by Kopf et al. (2012). The time-varying observation error specified, but not used, in the mfcl-1979-20p3 model were applied in this case.\nBiological parameters were converted from the mfcl-1979-20p3 model. Growth followed a von Bertalanffy function characterized by explicit parameter values: \\(L_1\\) = 88.38 cm at age 0.25 years, \\(L_2\\) = 210.96 cm at age 10 years, and \\(k\\) = 0.84, with CV structure following a length-at-age pattern. Reproduction dynamics incorporated a Beverton-Holt stock-recruitment relationship with steepness fixed at 0.8 and recruitment variance (\\(\\sigma_R\\)) set to 0.2, while the maturity ogive was logistically parameterized with length at 50% maturity at 181.21 cm and a slope parameter of -0.20.\nInitial results from the 01-mls-base-1979 (or 25-mls-base-1979-corrected) models did not show particularly close agreement with the mfcl-1979-20p3 temporal dynamics or spawning biomass scale, however estimates of population numbers were more comparable (Figure 5). However, this model was not expected to show good agreement as it assumed naïve sample sizes for the size composition data and the difference in treatment of observation error for the index. Most importantly, the model ran and could form the basis for further refinements to model structure in order to improve the fit to various data components.\n\n\n3.2.2 Early refinements\nFollowing the successful run of the 01-mls-base-1979 model, a pair of follow-on models were developed in a stepwise manner to address model fit and statistical treatment of data inputs. These modifications resulted in the 02-mls-ss3-1979 and 03-chg-selex-1979 model configurations.\nThe 02-mls-ss3-1979 modifications focused on improving model performance while preserving the fundamental assumptions of the baseline model. Selectivity parameterization was modified through three key adjustments: (1) converting fixed end logit parameters to estimated parameters for fleets using double-normal selectivity; (2) fixing top logit parameters enforce dome-shaped selection where empirically supported; and (3) replacing the New Zealand recreational fishery’s double-normal selectivity with a simpler logistic function. These changes provided greater flexibility in fitting length composition data while maintaining biologically plausible selection patterns. Statistical treatment of composition data was refined by increasing the minimum tail compression value to 1e-02 and implementing fleet-specific effective sample size adjustments (down-weighting factors of 0.03-0.10) to match the level of down-weighting seen in the mfcl-1979-20p3 model. Additionally, the CPUE index error structure was augmented with an observation error component (0.191) derived from loess smoother residual analysis. These modifications collectively addressed potential over-dispersion in composition data and explicitly accounted for potential un-modeled observation error in the standardized index.\nFollowing the implementation of the 02-mls-ss3-1979 model, further adjustments focusing specifically on selectivity were explored in the 03-chg-selex-1979 model. For Fishery 2 (Japanese longline in sub-region 2), Fishery 9 (Australian recreational), Fishery 12 (aggregated longline in sub-region 2), and the standardized abundance index (Fleet 15), the top logit parameters were changed from fixed values to estimated parameters. Concurrently, for these same fleets, the end logit parameters were reverted from estimated parameters to fixed values (-999) to maintain parameter identifiability. This adjustment effectively allowed the peak of the selectivity curve to be estimated while allowing its right-hand tail behavior to decline gradually.\nModifiying selectivity modeling and size composition data weighting in the 02-mls-ss3-1979 model improved the fit to the index (Figure 6) and resulted in somewhat more reasonable selectivity curves. However, issues remained, noticeably for Fleets 2 (Japanese LL; sub-region 2) and 15 (Index). Further tweaking the selectivity in model 03-chg-selex-1979 degraded the fit to the index slightly but resolved some of the existing selectivity issues and generally improved fit to length (Figure 8) and weight (Figure 9) data.\n\n\n3.2.3 Reverting model start year to 1952\nOne of the issues raised at SC20 was the lack of ability of the diagnostic-2024 model to estimate initial conditions in 1979, rather than begin the model at an unfished equilibrium in 1952 as was done in the diagnostic-2019 model. Initial conditions in 1979 in the diagnostic-2024 model were tuned (assuming initial total mortality \\(Z\\) to be \\(1.7 \\times M\\), natural mortality) to match the level of depletion (\\(\\sim 0.35\\)) seen in 1979 from the diagnostic-2019 model. Rationale given for changing the start year to 1979 in the diagnostic-2024 model was to include vessel random effect in the standardized index, and to avoid the issue of implausibly high estimated recruitments in the early years that arose after switching to the updated growth curve.\nFollowing the switch to , a new model beginning in 1952 04-start-1952 was developed from the 03-chg-selex-1979 model to address the initial conditions issue raised with the diagnostic-2024 model, and to see if the alternative selectivity formulation as length-based alleviated the issue of implausibly high estimated recruitments in the early years. The extended model incorporates historical catch data from 1952-1978 extracted from the diagnostic-2019 model. The only size composition data that was included was the New Zealand recreational (Fleet 10) weight composition data. Given that this fishery assumed a logistic selectivity shape, observed declines in average weight could provide information about adult abundance trend and total mortality \\(Z\\) during the years prior to the start of the standardized index. Treatment of the initial condition (e.g., no longer including steepness effects in the initial equilibrium calculations and removal of initF parameter) was also changed to accommodate starting at an unfished condition. Lastly, the recruitment dynamics were reconfigured to accommodate the longer time series. Specifically, the recruitment deviation framework was expanded to span 1952-2021 (recruitment in the last year of the model was not estimated), with early recruitment deviations beginning in 1942 and bias adjustment parameters recalibrated for the extended time series.\nSwitching back to a 1952 start from an unfished condition in the 04-start-1952 model resulted in dynamics that were much similar to the diagnostic-2019 model (Figure 10), especially in terms of more recent estimates of spawning biomass scale and depletion. The change in how recruitment is modeled between and with the use of the early recruitment period and recruitment bias-adjustment ramp eliminates the large spike in recruitment seen in the diagnostic-2019 model and overall recruitment variability in the 04-start-1952 is moderated relative to the two models. Changing to the 04-start-1952 model did degrade fit to the index in later years (Figure 11).\n\n\n3.2.4 Excluding size composition data\nThe next phase of developments considered the effect of removing size composition data from the model that were believed to be unsuitable for use in the model for either data quality, or sampling concerns. Prior to the meeting start, the SPC spent considerable time reviewing the size composition data for each fishery and provided guidance (P. Hamer, pers. comm.) on which data should be excluded. Based on this information, two additional models 05-exclude-bad-comp and 06-exclude-more-comp were sequentially developed from 04-start-1952 to remove un-representative data, minimize data conflicts, and improve the fit to the remaining data (index and size composition). Note that these exclusions were largely exploratory and does not necessarily reflect final decisions on the inclusion/exclusion of data for a proposed 2025 stock assessment model. The cumulative changes leading to the 06-exclude-more-comp are described below.\n\nLength composition changes\n\nFleet 1 (JP LL; sub-region 1): Eliminated all length composition due to small sample sizes and temporal patchiness.\nFleet 2 (JP LL; sub-region 2): Eliminated all length compositions due to conflict with corresponding weight data and temporal patchiness.\nFleet 6 & 7 (AU LL): Excluded all length compositions due to internal conflict with corresponding weight composition data and temporal patchiness relative to more comprehensive weight data.\nFleet 8 (NZ LL): Removed all length compositions based on inadequate sample sizes and temporal patchiness.\nFleet 11 (Aggregate LL; sub-region 1): Targeted removal of 2006-2014 length composition data to exclude TWDW data which may have data quality issues.\nFleet 12 (Aggregate LL; sub-region 2): Eliminated all length compositions. Mixed-flag fishery compositions are spatiotemporally patchy and may fail to representatively capture aggregate fishery dynamics despite potentially having adequate sampling of individual fleet components.\nFleet 13 (Aggregate LL; sub-region 3): Same as for Fleet 12.\nFleet 14 (Aggregate LL; sub-region 4): Removed pre-2006 data that demonstrated anomalously small size observations.\nFleet 15 (Index): Complete removal of length composition due to conflict with weight composition data and evidence of less comprehensive temporal sampling compared to the weight data.\n\n\n\nWeight composition changes\n\nFleet 1 (JP longline; sub-region 1): Removed all weight composition data due to small sample sizes and temporal inconsistencies\nFleet 2 (JP longline; sub-region 2): Specifically removed 1979 weight composition data due to apparent sampling anomalies\nFleet 10 (NZ recreational): Excluded post-1988 weight composition due to management-induced changes in size selectivity (encouraging non-retention of small individuals) that may bias post-1988 samples\n\n\n\nSelectivity changes\nThe selectivity grouping for Fleet 12 was shared with Fleet 2, given the removal of all composition data for Fleet 12 (see Table 2 for updated fishery definitions).\nFits to the index (Figure 12) as well as the remaining composition data (length: Figure 13 and weight: Figure 14) were predictably improved when un-representative and conflicting composition data were removed.\n\n\n\n3.2.5 Catch uncertainty\nOne of the concerns raised during development of the diagnostic-2024 model was the influence of large catch event by the Fleet 2 (Japanese LL; sub-region 2) in 1954. This was also a concern in the diagnostic-2019 model, and sensitivity to the starting year was explored in that previous assessment to exclude that large catch observation (Ducharme-Barth et al., 2019). A different approach was taken in the current explorations, and the 07-catch-uncertainty was developed to account for potential uncertainty in the historical catch.\nThe 07-catch-uncertainty model built on the 06-exclude-more-comp model and bifurcated Fleet 2 (Japanese LL; sub-region 2) into two temporal components. This created a distinct fleet (F15_LL.JP.2_early) for pre-1979 data while maintaining the original fleet for more recent observations. Selectivity was shared between the two fleets. However, moving to F_Method = 4 allowed some fleets (Fleets 1 - 14) to stay defined as catch-conditioned, where fishing mortality is calculated to fit the catch exactly, and have Fleet 15 estimate the fishing mortality (F) needed to fit to the catch with observation error. This structural modification also enabled differential parameterization of catch uncertainty, with higher standard errors (SE=0.2) assigned to quarters with higher catch observations (quarters 3-4) and lower uncertainty (SE=0.05) to quarters with lower catch observations (quarters 1-2). Additionally, the catch-conditioned F values for Fleet 15 were used as initial values in the estimation of F. The index fishery stayed the same but became Fleet 16. Parameterizing the model in this way allowed for potential uncertainty in historical catch to be propagated in model estimates in a computationally efficient manner.\nAdding in catch uncertainty (Figure 15) did not greatly change time series estimates of key stock assessment outputs (Figure 16) though it did appear to improve fits to the index (Figure 17).\n\n\n3.2.6 Treatment of growth\nUsing the 07-catch-uncertainty as a baseline, a number of additional models were developed to explore alternative ways of dealing with growth. Growth was a major source of discussion as some of the issues identified in development of the diagnostic-2024 model became more pronounced after switching to a new growth curve provided by Farley et al. (2021), with the new curve showing exceptionally rapid growth through the first year of life. This was flagged as a concern given the opportunistic nature of sampling for the otoliths from longline landed individuals which has reduced selectivity at smaller sizes and would only capture the most rapid growing individuals in the youngest age classes. In an effort to improve model fits and alleviate any potential mis-specification in the growth curve, two classes of models were developed.\nModels 08-relax-growth and 09-relax-growth-v2 attempted to improve the fit by defining variability in growth using CV as a function of length at age, rather than as a standard deviation, and setting the CV for yound and old fish to be 0.15. In the 08-relax-growth model \\(L_1\\) was set to 59.9 cm and assumed an age at \\(L_1\\) of 0, while in the 09-relax-growth-v2 model \\(L_1\\) was set to 88.3822 cm and assumed an age at \\(L_1\\) of 0.25. These models ended up describing functionally identical growth curves, though it was initially unclear from the documentation that this would be the case.\nModels 10-CAAL, 11-CAAL-no-ageerr, 12-CAAL-old-growth-SD, and 13-CAAL-noAgeerr-OGsd all attempted to improve fit by estimating growth internally using the aging data from the Farley et al. (2021) study as conditional age-at-length data. Data were associated with the appropriate fleet definition based on sampling location and flag of vessel sampled from. Though the aging data recorded decimal age, age was entered in the model as the nearest model age less than or equal to the decimal age. Given that model ages were annual, this meant integer age values. For all models \\(L_1\\), \\(L_2\\) and \\(k\\) were freely estimated.\nModels 10-CAAL and 11-CAAL-no-ageerr both defined variability in growth using CV as a function of length at age in the same way as models 08-relax-growth and 09-relax-growth-v2. Model 10-CAAL included an aging error matrix with standard deviations of aging error standard deviation ranging from \\(\\sigma_{Age} = 0.35\\) at age 0 to \\(\\sigma_{Age} = 2\\) at age 10. This was done to account for both actual aging error and for converting from decimal age to integer age to match the model structure.\nModels 12-CAAL-old-growth-SD and 13-CAAL-noAgeerr-OGsd both defined variability in growth using standard deviation as a function of length at age in the same way as model 07-catch-uncertainty, where the standard deviations at the youngest and oldest model ages were \\(\\sim10\\). Model 12-CAAL-old-growth-SD included the same aging error matrix as 10-CAAL while model 13-CAAL-noAgeerr-OGsd did not.\nEstimation of growth internally using conditionaly age-at-length data and size composition slowed growth (lower \\(k\\)) and increased \\(L_2\\) (Figure 18), which had a small effect on recent time-series estimates (Figure 19). It also improved fits to the index (Figure 20), length composition (Figure 21) and weight composition (Figure 22) overall though some fisheries noticeably deteriorated (e.g., the S01_INDEX weight composition data). We note that although the variability in length at age between the formulations using CV vs. standard deviation were approximately the same, the models showed greater stability when variability in growth was defined using a standard deviation as a function of length at age.\n\n\n3.2.7 Additional investigations\nThe 12-CAAL-old-growth-SD model emerged from this process as a reasonable candidate from which a numer of additional investigations were attempted. These are briefly described below.\n\n14-CAAL-target-earlyF: Built off 13-CAAL-noAgeerr-OGsd to implement a targeted approach to historical catch uncertainty by specifically isolating Japanese longline catches from 1954-1978 with values greater than 1 into a separate fleet (Fleet 15) with elevated uncertainty (0.2), while maintaining lower uncertainty (0.01) for all other fleet 2 catches. This refinement built directly upon 13-CAAL-noAgeerr-OGsd but applied a more focused treatment of uncertainty to historical catch. This had negligible impacts on estimated quantities.\n15-CAAL-qtrAge: Attempted to input the conditional age-at-length data as quarterly ages but this was unsuccessful.\n16-CAAL-rm-spike: This model modified 12-CAAL-old-growth-SD to remove the index observation in 1998 to see if attempting to fit this high point was driving the misfit to the index seen in 2000 - 2002. Assessment results with that observation removed showed little meaningful difference with the 12-CAAL-old-growth-SD model results indicating that it is not likely to be the source of the index misfit.\n17-CAAL-noAU-ASPM: This model modified 12-CAAL-old-growth-SD to keep the selectivity values for Fleet 6 (Australian LL; sub-region 2) fixed at the values estimated from model 12-CAAL-old-growth-SD and removed all of the Fleet 6 weight composition data from the likelihood to see if the weight composition data from this fishery was driving the misfit to the index seen in 2000 - 2002. Fit to the index was substantially improved without the inclusion of this data indicating that conflict with this data source is likely the cause of the misfit.\n18-CAAL-cUnc-cv40: Built directly off of 12-CAAL-old-growth-SD to evaluate assessment sensitivity to increased historical catch uncertainty by doubling the standard error values for Fleet 15 (early Japanese longline) from 0.2 to 0.4 (seasons 3-4) and from 0.05 to 0.1 (seasons 1-2). This targeted modification tested the sensitivity of model results to assumptions on historical variability in catch. This had a slight impact to biomass estimates in the early model period showing some sensitivity to this assumption.\n19-CAAL-1979: This model attempted to merge 03-chg-selex-1979 with 12-CAAL-old-growth-SD by begining the model in 1979 with fixed initF, excluding all of the non-representative size composition data, and including the estimation of growth using conditional age-at-length data with an aging error matrix. This model ran but produced biomass estimates that were almost double 03-chg-selex-1979.\n20-CAAL-1979-estInitF: Structurally identical to 19-CAAL-1979 except that initF is estimated. This model was unsuccesful as biomass estimates became unrealistically large.\n21-CAAL-NZrecwtQtr: Built off 12-CAAL-old-growth-SD and re-allocated the New Zealand recreational fishery weight composition data from annual observations in the first quarter of the calendar year to the quarterly periods in which they were observed. This is a more appropriate treatment of the data, but did not result in percievable differences in model estimates.\n22-1979-estInitF-v2: Built off 03-chg-selex-1979 and successfully estimated initF. Time series estimates of recruitment, depletion, and spawning biomass appeared similar to the 2024-diagnostic model.\n23-CAAL-2sex: This model implemented a 2-sex version of the 12-CAAL-old-growth-SD model and estimated sex-specific growth as a proof of concept model. Other biological parameters were assumed to be equivalent between sexes for the sake of this example model. The model ran and produced similar estimates to the single-sex model however with a higher than desired maximum gradient indicating that estimating sex-specific growth internal to the model may be ambitious.\n24-CAAL-Richards: This model implemented a Richards growth model version of the 12-CAAL-old-growth-SD model. Growth was very slightly more rapid with the estimation of a fourth growth parameter but stock status estimates were largely unchanged.\n\nThe key take-aways from these investigations were:\n\nthe misfit to the index seen in 2000 - 2002 is driven by conflict with the Fleet 6 (Australian LL; sub-region 2) weight frequency data which suggests an increasing trend in mean size over the period 1998 - 2002, rather than a decline as seen in the index (Figure 23),\na two sex model is technically feasible though estimation of sex-specific growth parameters may not be (Figure 24 & Figure 25),\ngrowth estimates are slightly sensitive to the functional form used, either von Bertalanffy or Richards (Figure 26),\nre-allocating New Zealand recreational fishing weight composition data to quarters is more correct but doesn’t impact results (Figure 27) and,\nmodel estimates are slightly sensitive to the choice of uncertainty given to the early period catch (Figure 28 & Figure 29).\n\nSingle-sex model development could progress using either 12-CAAL-old-growth-SD or 21-CAAL-NZrecwtQtr as a starting point. Two-sex model development could progress using 23-CAAL-2sex as a starting point noting that may need to be modified to match the quarterly treatment of New Zealand recreational fishery weight composition data used in 21-CAAL-NZrecwtQtr.",
     "crumbs": [
-      "Report",
+      "WCPFC-SC report",
       "HTML"
     ]
   },
@@ -46,7 +46,7 @@
     "section": "4.1 Abundance index construction challenges",
     "text": "4.1 Abundance index construction challenges\nA fundamental constraint in developing a reliable abundance index is the absence of any single fleet that samples consistently across all spatiotemporal strata within the model domain. Historical fishing operations exhibit significant heterogeneity in spatial coverage, with distinct patterns by flag (Figure 30):\n\nJapanese longline vessels initially operated throughout regions 1-3 but have progressively retreated, maintaining operations primarily in region 1 and high-seas pockets of regions 2 and 3.\nTaiwanese longline vessels operate predominantly in regions 1 and 4.\nAustralian longline vessels operate exclusively within their national EEZ in regions 2 and 3.\n\nThis spatial heterogeneity creates a situation where the abundance information provided by any standardized index derives from different spatial strata during different time periods. Without sufficient spatiotemporal overlap between fleets to properly estimate contrasts, systematic biases could be introduced into the abundance trends. This is particularly problematic if localized population dynamics exist, as the varying spatial coverage could potentially detect different segments of the population over time rather than providing a consistent measure of overall abundance.\nFurthermore, this spatial heterogeneity creates potential conflicts between the index and the most informative size composition data, which in recent periods comes primarily from Australian fleets operating in regions 2 and 3. These data-type conflicts could manifest as competing signals in the likelihood function, creating challenges for appropriate model fitting and parameter estimation.\nLastly, the historical period lacks informative covariates, particularly vessel identifiers, prior to 1979 for Japanese vessels that were the primary fleet operating in the region. Without these covariates, there is reduced ability to account for vessel-specific catchability effects in the abundance standardization process.",
     "crumbs": [
-      "Report",
+      "WCPFC-SC report",
       "HTML"
     ]
   },
@@ -57,7 +57,7 @@
     "section": "4.2 Size composition data limitations",
     "text": "4.2 Size composition data limitations\nThe size composition data present several technical challenges that affect their integration into the assessment model. Mixed-fishery composition data are particularly problematic due to their spatiotemporally patchy nature (P. Hamer, pers. comm.). Even when individual fleets are representatively sampled, these samples may not accurately characterize the aggregate fishery dynamics, especially when the proportion of catch by different fleets changes over time.\nFor a fast-growing species like striped marlin, variability in composition data can be artificially inflated relative to the true population variability, particularly for younger individuals. This inflation could occur when samples are combined across broad spatial areas within quarterly time steps if underlying migratory patterns exist, which is believed to be the case for this species. Such artificial inflation of variability can lead to model misspecification and consequent poor fits to composition data, potentially biasing key model parameters including selectivity, recruitment, and fishing mortality.",
     "crumbs": [
-      "Report",
+      "WCPFC-SC report",
       "HTML"
     ]
   },
@@ -68,7 +68,7 @@
     "section": "4.3 Age data constraints",
     "text": "4.3 Age data constraints\nWhile the aging data available for SWPO striped marlin represents the best available information for the region and species, it comes with important limitations that affect growth parameter estimation. The sample size is relatively small and derives from opportunistic collection rather than a systematic sampling design, raising questions about how representative these data are of the overall population.\nA particular concern is the potential for sampling bias in younger fish, where samples are likely to represent only the fastest-growing individuals within each age class due to size-selective sampling methods. This sampling bias can lead to significant overestimation of growth parameters, particularly \\(L_1\\) and \\(k\\). Such biases in growth estimation have cascading effects throughout the assessment, potentially affecting estimates of natural mortality, maturity-at-age, selectivity, and ultimately stock status and reference points. Estimating growth parameters internally using the conditional age-at-length data does not fully resolve this issue.",
     "crumbs": [
-      "Report",
+      "WCPFC-SC report",
       "HTML"
     ]
   },
@@ -79,7 +79,7 @@
     "section": "4.4 Data-weighting considerations",
     "text": "4.4 Data-weighting considerations\nThe presence of evident conflicts between different data sources necessitates careful consideration of data-weighting approaches. Appropriate data-weighting is crucial for balancing the model likelihood, but automated approaches (such as the Francis method) may not produce the desired results with sparse and potentially un-representative data.\nFor example, in the current model configuration, the weight composition data from Fleet 6 (Australian longline in region 2) dominates the likelihood. Paradoxically, application of the Francis weighting method would suggest giving this data source even more influence, potentially exacerbating rather than resolving data conflicts. This highlights the need for careful, considered approaches to data-weighting that balance statistical principles with expert judgment about data quality and representativeness.\nIn summary, these technical challenges collectively necessitate careful attention to uncertainty characterization in the assessment results. The model explorations described in this report represent initial steps toward addressing these challenges through alternative model configurations and data treatments, and a series of additional recommendations are made.",
     "crumbs": [
-      "Report",
+      "WCPFC-SC report",
       "HTML"
     ]
   },
@@ -90,7 +90,7 @@
     "section": "5.1 Modeling framework",
     "text": "5.1 Modeling framework\nThe transition from MULTIFAN-CL to Stock Synthesis demonstrated clear advantages in addressing several key technical issues identified by SC20. Therefore, further development of the SWPO striped marlin assessment model is recommended to continue in the Stock Synthesis framework. This platform provides greater flexibility in defining length-based selectivity while maintaining annual population dynamics, which helps resolve the conflict between model structural assumptions and observed biological patterns of striped marlin reproduction.",
     "crumbs": [
-      "Report",
+      "WCPFC-SC report",
       "HTML"
     ]
   },
@@ -101,7 +101,7 @@
     "section": "5.2 Model configuration",
     "text": "5.2 Model configuration\n\n5.2.1 Historical period and initial conditions\nThe exploratory models demonstrated that extending the model start year to 1952 (assuming unfished conditions) improved the ability to estimate initial population age-structure, addressing one of the key concerns from SC20. The inclusion of New Zealand recreational weight composition data, particularly from the earlier period, provided useful information on adult abundance trends during the historical period. To properly account for population dynamics throughout the assessment period, it is recommended to:\n\nBegin the model from 1952 assuming unfished initial conditions\nEstimate early recruitment deviations to appropriately configure the initial age structure\nUtilize available historical catch records to inform fishing mortality during the period 1952-1978\n\n\n\n5.2.2 Growth parameterization\nGrowth remains a challenging component of the assessment. If model convergence allows, internal estimation of growth parameters using the conditional age-at-length data is recommended rather than fixing these values based on external information. Specific recommendations include:\n\nTest sensitivity to conditional age-at-length effective sample size weighting schemes\nExplore alternative ageing error assumptions\nIf growth estimation proves problematic, consider a sensitivity analysis with fixed growth parameters\n\nAdditionally, the development of a two-sex model should be explored as a potential sensitivity to better capture sexually dimorphic growth patterns in striped marlin, though this should be considered a lower priority if it complicates model convergence.",
     "crumbs": [
-      "Report",
+      "WCPFC-SC report",
       "HTML"
     ]
   },
@@ -112,7 +112,7 @@
     "section": "5.3 Data components",
     "text": "5.3 Data components\n\n5.3.1 Abundance indices\nThe abundance index is a critical component of the assessment, as fit to the index is prioritized. In order to properly integrate over potential uncertainties in the index, multiple alternative indices should be developed to evaluate sensitivity to different data sources and spatial configurations. A brief justification for each of these alternative indices is also provided.\n\nJapanese longline data only (all regions)\n\nHistorically, Japanese longline fishing had the largest spatial coverage (Figure 30; particularly in sub-regions 1-3) with a high concentration of effort in sub-region 2 during the austral spring and summer which coincides with known perceived striped marlin spawning aggregations (Kopf et al., 2012). Modeling a single flag may alleviate issues that could arise when combining data across flags (e.g., catchability and selectivity differences).\n\nCombined Japanese/Taiwanese/Australian data (all regions)\n\nAs previously mentioned, though the Japanese longling fishery historically had broad spatial coverage no fishery consistently samples across the entire assessment domain or stock spatial distribution. Combining data from the three major fleets will improve spatiotemporal coverage at the risk of violating shared catchability and selectivity assumptions.\n\nAustralian data only (utilizing the existing CSIRO index)\n\nHaving an index and the majority of the weight composition data come from the same fishery may reduce data conflicts within the model. However, if stock dynamics are not well mixed across the model domain this may not representatively index the entire stock.\n\nJapanese data only (restricted to sub-region 2)\n\nA more focused version of the first option to index the spawning component of the population.\n\nCombined Japanese/Australian data (restricted to sub-regions 2 and 3)\n\nA more focused version of the second option to index the spawning component of the population, while augmenting the spatiotemporal coverage of samples.\n\n\nWhen combining data from multiple flags, flag identity should be incorporated as a covariate (fixed effect) in the standardization model. To better understand the sources of variance in the standardized index, particularly the 1998 spike in CPUE, it is recommended to plot nominal CPUE and all predicted quantities (standardized CPUE, encounter rate, positive catch rate) by space and time.\nThe integration of multiple models fitting to different individual indices in an ensemble approach should be considered to better characterize uncertainty in abundance trends. This approach would help address the concern about index-composition data conflicts by explicitly acknowledging potential inconsistencies between data sources.\n\n\n5.3.2 Size composition data\nSelective exclusion of problematic size composition data predictably improved model fit to the remaining data throughout the exploratory phase. The following guidelines should be applied when deciding which composition data to retain:\n\nExclude data from mixed-flag fisheries where sampling is spatiotemporally patchy and there is a severe mismatch between countries providing composition samples and countries taking catch\nRemove Taiwanese length data not measured by observers due to potential quality concerns\nExclude data that shows internal conflict between length and weight compositions from the same fishery (particularly evident in Australian and Japanese data). Only fit to one data type per fishery or selectivity grouping.\nRemove New Zealand recreational weight data following the 1988 policy change encouraging voluntary release of smaller individuals, as this could create a selectivity shift that is difficult to model.\n\n\n\n5.3.3 Data weighting\nThe appropriate statistical treatment of composition data remains challenging for this assessment. The following approaches should be considered:\n\nFrancis weighting may only be reliable for large sample sizes, in any case other assessments (e.g., ISC) only down-weight data based on Francis.\nThe Dirichlet-multinomial approach may be more appropriate for fisheries with small sample sizes\nIf neither approach provides satisfactory results, setting effective sample sizes based on the number of fishing trips rather than the number of individual fish sampled may provide a more realistic weighting scheme",
     "crumbs": [
-      "Report",
+      "WCPFC-SC report",
       "HTML"
     ]
   },
@@ -123,7 +123,7 @@
     "section": "5.4 Selectivity parameterization",
     "text": "5.4 Selectivity parameterization\nThe length-based selectivity approach in Stock Synthesis provides greater resolution than the age-based approach in MULTIFAN-CL, but careful consideration of parameterization is still required:\n\nFor mixed-flag fisheries, define a selectivity that approximately removes fish at the appropriate size by either:\n\nMirroring the selectivity to a representative single-flag fishery operating in the same area\nSelecting composition data from a single flag considered representative of the aggregated fleet\n\nAvoid combining data from different flags or sampling programs unless it can be demonstrated that they share similar selectivity patterns\nThis recommendation presents a particular challenge for developing an appropriate selectivity curve for the abundance index when it represents a mixed-flag fishery",
     "crumbs": [
-      "Report",
+      "WCPFC-SC report",
       "HTML"
     ]
   },
@@ -134,7 +134,7 @@
     "section": "5.5 Further exploration and sensitivities",
     "text": "5.5 Further exploration and sensitivities\nSeveral additional model configurations should be explored to fully characterize uncertainty in the assessment and evaluate the robustness of results:\n\n5.5.1 Two-sex model\nDevelopment of a two-sex model structure would provide a more biologically realistic representation of striped marlin population dynamics, particularly given evidence of sexually dimorphic growth patterns. This approach would require: - Further refinement of sex-specific biological assumptions - Careful evaluation of sex-specific selectivity patterns - If two-sex growth estimation remains problematic, implementation with fixed sex-specific growth parameters should be considered\n\n\n5.5.2 1979 model start year\nWhile the 1952 start year is recommended for the base model, a comparative model beginning in 1979 should be developed to evaluate sensitivity to historical assumptions. This model should: - Attempt to estimate initial fishing mortality (initF) rather than fixing it based on external information - Provide a direct comparison with previous assessment configurations - Evaluate whether concerns about implausibly high early recruitments persist with the revised growth and selectivity parameterization\n\n\n5.5.3 Growth parameterization sensitivities\nAdditional targeted sensitivities around growth estimation should be conducted: - Testing alternative weighting schemes for conditional age-at-length data - Exploring different ageing error matrices\nThese explorations will provide information about structural uncertainty in the assessment and help identify parameters or assumptions that exert significant influence on model outcomes.",
     "crumbs": [
-      "Report",
+      "WCPFC-SC report",
       "HTML"
     ]
   },
@@ -145,9 +145,223 @@
     "section": "Footnotes",
     "text": "Footnotes\n\n\nThis repository will be made public following the 2025 SPC Pre-Assessment Workshop, noting that these represent preliminary model explorations and should not be used as the basis for management advice.↩︎\nThe mfcl-1979-20p3 model used total mortality, \\(Z\\) to set initial population depletion and conditions where \\(Z = 1.7\\times M\\), \\(M\\) being natural mortality. In initial population conditions are set using initial fishing mortality \\(F\\) or initF. Initially initF was incorrectly set in 01-mls-base-1979 as \\(1.7 \\times M\\). intF was subsequently corrected to be \\(0.7 \\times M\\) in 25-mls-base-1979-corrected.↩︎\nWeight bins \\(&gt;139 kg\\) were aggregated from \\(2 kg\\) to \\(4 kg\\) bins as in they can not be smaller than the length bins.↩︎",
     "crumbs": [
-      "Report",
+      "WCPFC-SC report",
       "HTML"
     ]
+  },
+  {
+    "objectID": "assets/instructions.html",
+    "href": "assets/instructions.html",
+    "title": "Respository instructions",
+    "section": "",
+    "text": "This project uses renv for package management to ensure reproducibility across environments. The repository is also configured to work with GitHub Codespaces for cloud-based development.\n\n\nFirst, clone this repository to your local machine.\n\n\n\nOpen an R terminal (recommended version 4.4.0 with RTools 4.4 installed)\nSet your working directory to the cloned repository:\nsetwd(\"path/to/repository/\")\nSource the .Rprofile file to bootstrap renv:\nsource(\".Rprofile\")\nIf renv doesn’t bootstrap automatically, run:\nrenv::restore()\nFollow the prompts to install all required packages (including data.table, magrittr, ggplot2, r4ss, FLR4MFCL, and other dependencies)\n\n\n\n\n\nOpen the repository as an RStudio Project\nRStudio should automatically detect the renv configuration and prompt for package installation\nIf renv doesn’t bootstrap automatically, run:\nrenv::restore()\n\n\n\n\n\nConfigure VS Code to work with R using the R extension\nFollow the specific configuration steps for renv projects\nOpen the repository folder in VS Code\nOpen an R terminal, which should prompt renv to bootstrap\nIf renv doesn’t bootstrap automatically, run:\nrenv::restore()\n\n\n\n\n\nGitHub Codespaces provides a cloud-based development environment with all dependencies pre-configured:\n\nOpen a Codespace for this repository using the default options\nInitial Codespace creation may take 15-20 minutes to complete\nOnce ready, open an R terminal in the Codespace\nThe renv package should bootstrap automatically\nIf renv doesn’t bootstrap automatically, run:\nrenv::restore()",
+    "crumbs": [
+      "Repository instructions"
+    ]
+  },
+  {
+    "objectID": "assets/instructions.html#running-the-models-locally",
+    "href": "assets/instructions.html#running-the-models-locally",
+    "title": "Respository instructions",
+    "section": "",
+    "text": "First, clone this repository to your local machine.\n\n\n\nOpen an R terminal (recommended version 4.4.0 with RTools 4.4 installed)\nSet your working directory to the cloned repository:\nsetwd(\"path/to/repository/\")\nSource the .Rprofile file to bootstrap renv:\nsource(\".Rprofile\")\nIf renv doesn’t bootstrap automatically, run:\nrenv::restore()\nFollow the prompts to install all required packages (including data.table, magrittr, ggplot2, r4ss, FLR4MFCL, and other dependencies)\n\n\n\n\n\nOpen the repository as an RStudio Project\nRStudio should automatically detect the renv configuration and prompt for package installation\nIf renv doesn’t bootstrap automatically, run:\nrenv::restore()\n\n\n\n\n\nConfigure VS Code to work with R using the R extension\nFollow the specific configuration steps for renv projects\nOpen the repository folder in VS Code\nOpen an R terminal, which should prompt renv to bootstrap\nIf renv doesn’t bootstrap automatically, run:\nrenv::restore()",
+    "crumbs": [
+      "Repository instructions"
+    ]
+  },
+  {
+    "objectID": "assets/instructions.html#running-the-models-with-github-codespaces",
+    "href": "assets/instructions.html#running-the-models-with-github-codespaces",
+    "title": "Respository instructions",
+    "section": "",
+    "text": "GitHub Codespaces provides a cloud-based development environment with all dependencies pre-configured:\n\nOpen a Codespace for this repository using the default options\nInitial Codespace creation may take 15-20 minutes to complete\nOnce ready, open an R terminal in the Codespace\nThe renv package should bootstrap automatically\nIf renv doesn’t bootstrap automatically, run:\nrenv::restore()",
+    "crumbs": [
+      "Repository instructions"
+    ]
+  },
+  {
+    "objectID": "assets/instructions.html#model-workflow-and-scripts",
+    "href": "assets/instructions.html#model-workflow-and-scripts",
+    "title": "Respository instructions",
+    "section": "Model Workflow and Scripts",
+    "text": "Model Workflow and Scripts\nThe main workflow scripts are located in the code/ directory. These scripts progress from initial model conversion through refinement stages to the final model implementation.",
+    "crumbs": [
+      "Repository instructions"
+    ]
+  },
+  {
+    "objectID": "assets/instructions.html#model-development-scripts",
+    "href": "assets/instructions.html#model-development-scripts",
+    "title": "Respository instructions",
+    "section": "Model Development Scripts",
+    "text": "Model Development Scripts\n\n01-make-baseline-stock-synthesis-model.r: Creates the baseline Stock Synthesis model from MFCL model version “1979_20p3”.\n\nConverts from MFCL to annual model with length-based selectivity\nMaintains single sex configuration and fixes initial F\nPreserves seasonal index for Q4\n\n02-mls-ss3-1979.r: Updates the initial MLS model with:\n\nResolves NZ recreational selectivity by sharing terminal bins\nAdds tail compression\nAdds extra observation standard error for CPUE index\nEstimates end logit parameter for selectivity\nDownweights size composition data\n\n03-chg-selex-1979.r: Adjusts selectivity parameters for specific fleets (LL 2, AU REC 9, Index 15)\n04-start-1952.r: Extends the model period back to 1952\n\nAdds historical catch data\nIncludes NZ recreational weight composition data\nChanges parameterization of extra index observation error\n\n06-exclude-more-comp.r: Excludes additional composition data:\n\nDrops index (15) length composition\nDrops fishery 2 length composition\nDrops fishery 2 weight composition for 1979\n\n07-catch-uncertainty.r: Incorporates catch uncertainty for pre-1979 Fleet 2\n12-CAAL-old-growth-SD.r: Implements conditional age-at-length (CAAL) model\n\nIncorporates age data\nAdds ageing error matrix\nEnables estimation of growth parameters L1, L2, K",
+    "crumbs": [
+      "Repository instructions"
+    ]
+  },
+  {
+    "objectID": "assets/instructions.html#visualization-and-analysis",
+    "href": "assets/instructions.html#visualization-and-analysis",
+    "title": "Respository instructions",
+    "section": "Visualization and Analysis",
+    "text": "Visualization and Analysis\n\n00-html-viewer.r: Generates HTML files for viewing individual model results, creating interactive dashboards that display model fits, parameter estimates, and diagnostic plots.\n00-pres-plots.r: Creates plots for presentation, focusing on model comparison time series. Generates sequential comparisons of depletion estimates across different model configurations to illustrate how each modeling decision affects population trajectory estimates.\n00-report-plots.r: Produces comprehensive plots for report documents, including:\n\nTime series comparisons (SSB, depletion, recruitment)\nSelectivity curve visualization by fleet\nIndex fit diagnostics with variance adjustments\nLength and weight composition fits across time periods and fleets\nBiological parameter visualization (growth, maturity)\nCatch history and model fits to observed catch\n\n00-shiny-gather.r: Collects summary files from all models for the Shiny application, standardizing outputs for cross-model comparison.\n00-shiny-viewer.r: Script to launch the Shiny app for interactive model exploration, allowing users to dynamically filter and compare results across all model configurations.",
+    "crumbs": [
+      "Repository instructions"
+    ]
+  },
+  {
+    "objectID": "assets/instructions.html#model-management",
+    "href": "assets/instructions.html#model-management",
+    "title": "Respository instructions",
+    "section": "Model Management",
+    "text": "Model Management\n\nclean_dir.r: Cleans unnecessary files from model directories to save disk space, keeping only essential files needed for analysis.\nis_linux_os.r: Detects the operating system to ensure compatibility with the appropriate Stock Synthesis executable.\nmake_ss_output.r: Generates Stock Synthesis output files in a controlled environment, facilitating consistent results across different systems.\nss_transfer.r: Transfers model files between directories with appropriate executable selection based on the operating system.",
+    "crumbs": [
+      "Repository instructions"
+    ]
+  },
+  {
+    "objectID": "assets/instructions.html#data-processing",
+    "href": "assets/instructions.html#data-processing",
+    "title": "Respository instructions",
+    "section": "Data Processing",
+    "text": "Data Processing\n\nparse-frq.r: Parses MFCL frequency (.frq) files into a simplified S4 class object, extracting catch, effort, penalty, length frequency, and weight frequency data.\nmake-selex-par.r: Contains helper functions to define different selectivity parameter configurations, including:\n\nmake_size_selex_par_24: For double-normal selectivity\nmake_size_selex_par_5: For mirrored selectivity\nmake_size_selex_par_1: For logistic selectivity\nmake_age_selex_par_11: For non-parametric age-based selectivity",
+    "crumbs": [
+      "Repository instructions"
+    ]
+  },
+  {
+    "objectID": "assets/instructions.html#reporting-and-visualization",
+    "href": "assets/instructions.html#reporting-and-visualization",
+    "title": "Respository instructions",
+    "section": "Reporting and Visualization",
+    "text": "Reporting and Visualization\n\nss_model_html_viewer.r: Generates an HTML dashboard for interactive model exploration, creating a comprehensive visual representation of model outputs.\nsummarize_ss_model.r: Extracts key model parameters, diagnostics, and estimates into standardized CSV files for easier analysis and comparison.\nsummarize_fleets.r: Summarizes fleet structure, selectivity, and data components for each fishery in the model.\nreport-helpers.r: Contains specialized functions for data extraction and visualization:\n\nextract_mfcl_quantities: Extracts population metrics from MFCL models\nget_population_numbers: Extracts numbers-at-age from Stock Synthesis models\nplot_model_comparison_ts: Creates time series comparison plots across models\nplot_model_comparison_selex: Visualizes selectivity patterns across models\nplot_index_comparison: Compares fits to abundance indices\nplot_composition_comparison: Displays fits to length and weight composition data\nplot_catch_comparison: Shows catch fits across models\nplot_model_comparison_bio: Compares biological parameters like growth and maturity",
+    "crumbs": [
+      "Repository instructions"
+    ]
+  },
+  {
+    "objectID": "assets/instructions.html#generating-html-dashboard-for-a-model",
+    "href": "assets/instructions.html#generating-html-dashboard-for-a-model",
+    "title": "Respository instructions",
+    "section": "Generating HTML Dashboard for a Model",
+    "text": "Generating HTML Dashboard for a Model\n# Create HTML dashboard for model \"12-CAAL-old-growth-SD\"\nmodel_dir &lt;- file.path(\"models\", \"stock-synthesis\", \"12-CAAL-old-growth-SD\")\nsource(\"code/00-html-viewer.r\")\nss_model_html_viewer(model_dir)",
+    "crumbs": [
+      "Repository instructions"
+    ]
+  },
+  {
+    "objectID": "assets/instructions.html#comparing-models-with-time-series-plots",
+    "href": "assets/instructions.html#comparing-models-with-time-series-plots",
+    "title": "Respository instructions",
+    "section": "Comparing Models with Time Series Plots",
+    "text": "Comparing Models with Time Series Plots\n# Compare depletion time series across multiple models\nsource(\"code/00-report-plots.r\")\nplot_model_comparison_ts(\n  model_ids = c(\"07-catch-uncertainty\", \"12-CAAL-old-growth-SD\"),\n  model_stem = file.path(\"models\", \"stock-synthesis\"),\n  categories = c(\"Depletion (D)\"),\n  show_se = TRUE,\n  save_plot = TRUE,\n  save_dir = file.path(\"assets\", \"static\"),\n  plot_name = \"depletion_comparison\"\n)",
+    "crumbs": [
+      "Repository instructions"
+    ]
+  },
+  {
+    "objectID": "assets/instructions.html#using-the-interactive-shiny-app",
+    "href": "assets/instructions.html#using-the-interactive-shiny-app",
+    "title": "Respository instructions",
+    "section": "Using the Interactive Shiny App",
+    "text": "Using the Interactive Shiny App\n# First gather model summary data\n# Note that this step is only needed if you have added new models to the repository\nsource(\"code/00-shiny-gather.r\")\n\n# Then launch the Shiny app\nsource(\"code/00-shiny-viewer.r\")",
+    "crumbs": [
+      "Repository instructions"
+    ]
+  },
+  {
+    "objectID": "assets/instructions.html#creating-a-new-model-from-an-existing-one",
+    "href": "assets/instructions.html#creating-a-new-model-from-an-existing-one",
+    "title": "Respository instructions",
+    "section": "Creating a New Model from an Existing One",
+    "text": "Creating a New Model from an Existing One\n# Transfer base model to a new directory and make modifications\nfrom_dir &lt;- file.path(\"models\", \"stock-synthesis\", \"12-CAAL-old-growth-SD\")\nto_dir &lt;- file.path(\"models\", \"stock-synthesis\", \"my-new-model\")\nsource(\"code/helper-fns/ss_transfer.r\")\nss_transfer(from_dir, to_dir, file.path(\"executables\", \"stock-synthesis\"))\n\n# Make modifications to data or control files\n# ...\n\n# Run the model\nrun(dir = to_dir, exe = \"ss3.exe\")\n\n# Summarize the results\nsource(\"code/helper-fns/summarize_ss_model.r\")\nsummarize_ss_model(to_dir)",
+    "crumbs": [
+      "Repository instructions"
+    ]
+  },
+  {
+    "objectID": "shiny/introduction_index.html",
+    "href": "shiny/introduction_index.html",
+    "title": "2025 SWPO striped marlin assessment meeting",
+    "section": "",
+    "text": "Shiny app to compare Stock Synthesis model runs for 2025 Southwest Pacific Ocean striped marlin stock assessment conducted during the joint Pacific Community (SPC) and NOAA Fisheries stock assessment modeling meeting held in Honolulu, Hawai’i from 20-24 January 2025.\nAny model runs contained within this repository represent preliminary model explorations and should not be used ‘as is’ for the consideration of management advice. Only models that have been presented and accepted to the Western and Central Pacific Fisheries Commission (WCPFC) Scientific Committee should be used as the basis for management advice.\nReturn to the repository webpage: https://n-ducharmebarth-noaa.github.io/2025-swpo-mls-meeting/\n\n\n\n Back to top"
+  },
+  {
+    "objectID": "shiny/stock-synthesis-model-summary.html",
+    "href": "shiny/stock-synthesis-model-summary.html",
+    "title": "Stock Synthesis Model Summary Elements",
+    "section": "",
+    "text": "This document provides an explanation of the elements in the summary_dt data table created by the summarize_ss_model() function and displayed on the Summary tab. This data table contains key model outputs and diagnostics from Stock Synthesis models.\n\n\n\nid: Model identifier, typically the folder name\nnumber: Number part of the model ID\nname: Name part of the model ID\ntag: Optional tag for the model\n\n\n\n\n\nn_warn: Number of warnings from the Stock Synthesis run\npar_status: Proportion of parameters with “OK” status\npar_afterbound: Proportion of parameters with “OK” after-bound status\nnfleets: Number of fleets in the model\nstartyr: Start year of the model\nendyr: End year of the model\nn_seasons: Number of seasons in the model\nss_version: Version number of Stock Synthesis used\n\n\n\n\n\nn_par_active: Number of active estimated parameters\nn_par_active_nd: Number of active non-deviate parameters\nn_par_total: Total number of parameters\nlog_det_hessian: Log determinant of the Hessian matrix\nmgc: Maximum gradient component\nnll: Total negative log-likelihood value\n\n\n\n\nThe model stores individual likelihood component values taken from tmp_lik[Label!=\"TOTAL\"]: - Catch: Likelihood component for catch data - Equil_catch: Likelihood component for equilibrium catch - Survey: Likelihood component for survey indices - Length_comp: Likelihood component for length composition data - Age_comp: Likelihood component for age composition data - SizeFreq: Likelihood component for size frequency data - Recruitment: Likelihood component for recruitment deviations - InitEQ_Regime: Likelihood component for initial equilibrium regime - Forecast_Recruitment: Likelihood component for forecast recruitment - Parm_priors: Likelihood component for parameter priors - Parm_softbounds: Likelihood component for parameter soft bounds - Parm_devs: Likelihood component for parameter deviations - Crash_Pen: Likelihood component for crash penalty\n\n\n\n\nltrend: P-value from trend test on main recruitment deviations\nruns: P-value from runs test on main recruitment deviations\nar: P-value from Durbin-Watson test for autocorrelation\nsdr: Standard deviation of recruitment deviations\nsigmaR: Input sigma R value (recruitment variability parameter)\n\n\n\n\n\nsteepness: Stock-recruitment steepness parameter\n\n\n\n\nM_m: Mean natural mortality for males\nL0_m: Mean length at age 0 for males\nLinf_m: Mean asymptotic length for males\nk_m: Mean growth coefficient for males\n\n\n\n\n\nM_f: Mean natural mortality for females\nL0_f: Mean length at age 0 for females\nLinf_f: Mean asymptotic length for females\nk_f: Mean growth coefficient for females\n\n\n\n\n\n\n\n\nF_2016: Fishing mortality in 2016\nF_2022: Fishing mortality in 2022\nF_MSY: Fishing mortality at Maximum Sustainable Yield\nF_Fmsy_2016: F/F_MSY ratio in 2016\nF_Fmsy_2022: F/F_MSY ratio in 2022\n\n\n\n\n\nSSB_virgin: Virgin spawning stock biomass\nSSB_Initial: Initial spawning stock biomass\nSSB_2016: Spawning stock biomass in 2016\nSSB_2022: Spawning stock biomass in 2022\nSSB_MSY: Spawning stock biomass at Maximum Sustainable Yield\nB_Bmsy_2016: B/B_MSY ratio in 2016\nB_Bmsy_2022: B/B_MSY ratio in 2022\n\n\n\n\n\ndep_st: Current depletion (static)\ndep_dyn_2016: Dynamic depletion in 2016 (SSB/unfished SSB)\ndep_dyn_2022: Dynamic depletion in 2022 (SSB/unfished SSB)\n\n\n\n\n\nR_virgin: Virgin recruitment\nR_initial: Initial recruitment\n\n\n\n\n\nMSY: Maximum Sustainable Yield\n\n\n\n\n\n\nmohns_rho_ssb: Mohn’s rho for SSB (measure of retrospective bias)\nmohns_rho_f: Mohn’s rho for F (measure of retrospective bias)\n\n\n\n\n\naverage_xval_cpue_mase: Average cross-validation MASE for CPUE\naverage_xval_len_mase: Average cross-validation MASE for length compositions\n\n\n\n\n\nThe function handles potential differences between Stock Synthesis versions (e.g., 3.24U vs. later versions)\nSome metrics may be NA if certain model components are missing (e.g., retrospective or hindcast analyses)\nTime-specific reference points are calculated for 2016 and 2022\nAll calculations are based on the Stock Synthesis model outputs generated by the SS_output() function"
+  },
+  {
+    "objectID": "shiny/stock-synthesis-model-summary.html#model-identification",
+    "href": "shiny/stock-synthesis-model-summary.html#model-identification",
+    "title": "Stock Synthesis Model Summary Elements",
+    "section": "",
+    "text": "id: Model identifier, typically the folder name\nnumber: Number part of the model ID\nname: Name part of the model ID\ntag: Optional tag for the model"
+  },
+  {
+    "objectID": "shiny/stock-synthesis-model-summary.html#model-configuration",
+    "href": "shiny/stock-synthesis-model-summary.html#model-configuration",
+    "title": "Stock Synthesis Model Summary Elements",
+    "section": "",
+    "text": "n_warn: Number of warnings from the Stock Synthesis run\npar_status: Proportion of parameters with “OK” status\npar_afterbound: Proportion of parameters with “OK” after-bound status\nnfleets: Number of fleets in the model\nstartyr: Start year of the model\nendyr: End year of the model\nn_seasons: Number of seasons in the model\nss_version: Version number of Stock Synthesis used"
+  },
+  {
+    "objectID": "shiny/stock-synthesis-model-summary.html#parameters-and-fit-statistics",
+    "href": "shiny/stock-synthesis-model-summary.html#parameters-and-fit-statistics",
+    "title": "Stock Synthesis Model Summary Elements",
+    "section": "",
+    "text": "n_par_active: Number of active estimated parameters\nn_par_active_nd: Number of active non-deviate parameters\nn_par_total: Total number of parameters\nlog_det_hessian: Log determinant of the Hessian matrix\nmgc: Maximum gradient component\nnll: Total negative log-likelihood value"
+  },
+  {
+    "objectID": "shiny/stock-synthesis-model-summary.html#likelihood-components",
+    "href": "shiny/stock-synthesis-model-summary.html#likelihood-components",
+    "title": "Stock Synthesis Model Summary Elements",
+    "section": "",
+    "text": "The model stores individual likelihood component values taken from tmp_lik[Label!=\"TOTAL\"]: - Catch: Likelihood component for catch data - Equil_catch: Likelihood component for equilibrium catch - Survey: Likelihood component for survey indices - Length_comp: Likelihood component for length composition data - Age_comp: Likelihood component for age composition data - SizeFreq: Likelihood component for size frequency data - Recruitment: Likelihood component for recruitment deviations - InitEQ_Regime: Likelihood component for initial equilibrium regime - Forecast_Recruitment: Likelihood component for forecast recruitment - Parm_priors: Likelihood component for parameter priors - Parm_softbounds: Likelihood component for parameter soft bounds - Parm_devs: Likelihood component for parameter deviations - Crash_Pen: Likelihood component for crash penalty"
+  },
+  {
+    "objectID": "shiny/stock-synthesis-model-summary.html#recruitment-metrics",
+    "href": "shiny/stock-synthesis-model-summary.html#recruitment-metrics",
+    "title": "Stock Synthesis Model Summary Elements",
+    "section": "",
+    "text": "ltrend: P-value from trend test on main recruitment deviations\nruns: P-value from runs test on main recruitment deviations\nar: P-value from Durbin-Watson test for autocorrelation\nsdr: Standard deviation of recruitment deviations\nsigmaR: Input sigma R value (recruitment variability parameter)"
+  },
+  {
+    "objectID": "shiny/stock-synthesis-model-summary.html#model-parameters",
+    "href": "shiny/stock-synthesis-model-summary.html#model-parameters",
+    "title": "Stock Synthesis Model Summary Elements",
+    "section": "",
+    "text": "steepness: Stock-recruitment steepness parameter\n\n\n\n\nM_m: Mean natural mortality for males\nL0_m: Mean length at age 0 for males\nLinf_m: Mean asymptotic length for males\nk_m: Mean growth coefficient for males\n\n\n\n\n\nM_f: Mean natural mortality for females\nL0_f: Mean length at age 0 for females\nLinf_f: Mean asymptotic length for females\nk_f: Mean growth coefficient for females"
+  },
+  {
+    "objectID": "shiny/stock-synthesis-model-summary.html#stock-status-indicators",
+    "href": "shiny/stock-synthesis-model-summary.html#stock-status-indicators",
+    "title": "Stock Synthesis Model Summary Elements",
+    "section": "",
+    "text": "F_2016: Fishing mortality in 2016\nF_2022: Fishing mortality in 2022\nF_MSY: Fishing mortality at Maximum Sustainable Yield\nF_Fmsy_2016: F/F_MSY ratio in 2016\nF_Fmsy_2022: F/F_MSY ratio in 2022\n\n\n\n\n\nSSB_virgin: Virgin spawning stock biomass\nSSB_Initial: Initial spawning stock biomass\nSSB_2016: Spawning stock biomass in 2016\nSSB_2022: Spawning stock biomass in 2022\nSSB_MSY: Spawning stock biomass at Maximum Sustainable Yield\nB_Bmsy_2016: B/B_MSY ratio in 2016\nB_Bmsy_2022: B/B_MSY ratio in 2022\n\n\n\n\n\ndep_st: Current depletion (static)\ndep_dyn_2016: Dynamic depletion in 2016 (SSB/unfished SSB)\ndep_dyn_2022: Dynamic depletion in 2022 (SSB/unfished SSB)\n\n\n\n\n\nR_virgin: Virgin recruitment\nR_initial: Initial recruitment\n\n\n\n\n\nMSY: Maximum Sustainable Yield"
+  },
+  {
+    "objectID": "shiny/stock-synthesis-model-summary.html#retrospective-analysis",
+    "href": "shiny/stock-synthesis-model-summary.html#retrospective-analysis",
+    "title": "Stock Synthesis Model Summary Elements",
+    "section": "",
+    "text": "mohns_rho_ssb: Mohn’s rho for SSB (measure of retrospective bias)\nmohns_rho_f: Mohn’s rho for F (measure of retrospective bias)"
+  },
+  {
+    "objectID": "shiny/stock-synthesis-model-summary.html#cross-validation",
+    "href": "shiny/stock-synthesis-model-summary.html#cross-validation",
+    "title": "Stock Synthesis Model Summary Elements",
+    "section": "",
+    "text": "average_xval_cpue_mase: Average cross-validation MASE for CPUE\naverage_xval_len_mase: Average cross-validation MASE for length compositions"
+  },
+  {
+    "objectID": "shiny/stock-synthesis-model-summary.html#notes",
+    "href": "shiny/stock-synthesis-model-summary.html#notes",
+    "title": "Stock Synthesis Model Summary Elements",
+    "section": "",
+    "text": "The function handles potential differences between Stock Synthesis versions (e.g., 3.24U vs. later versions)\nSome metrics may be NA if certain model components are missing (e.g., retrospective or hindcast analyses)\nTime-specific reference points are calculated for 2016 and 2022\nAll calculations are based on the Stock Synthesis model outputs generated by the SS_output() function"
   },
   {
     "objectID": "index.html",
@@ -184,17 +398,10 @@
     "href": "index.html#disclaimer",
     "title": "Home",
     "section": "Disclaimer",
-    "text": "Disclaimer\nAny model runs contained within this repository represent preliminary model explorations and should not be used ‘as is’ for the consideration of management advice. Only models that have been presented and accepted to the WCPFC Scientific Committee can be used as the basis for management advice.",
+    "text": "Disclaimer\nAny model runs contained within this repository represent preliminary model explorations and should not be used ‘as is’ for the consideration of management advice. Only models that have been presented and accepted to the WCPFC Scientific Committee should be used as the basis for management advice.",
     "crumbs": [
       "Home"
     ]
-  },
-  {
-    "objectID": "shiny/introduction_index.html",
-    "href": "shiny/introduction_index.html",
-    "title": "2025 SWPO striped marlin assessment meeting",
-    "section": "",
-    "text": "Shiny app to compare Stock Synthesis model runs for 2025 Southwest Pacific Ocean striped marlin stock assessment conducted during the joint Pacific Community (SPC) and NOAA Fisheries stock assessment modeling meeting held in Honolulu, Hawai’i from 20-24 January 2025.\nAny model runs contained within this repository represent preliminary model explorations and should not be used ‘as is’ for the consideration of management advice. Only models that have been presented and accepted to the Western and Central Pacific Fisheries Commission (WCPFC) Scientific Committee can be used as the basis for management advice.\nReturn to the repository webpage: https://n-ducharmebarth-noaa.github.io/2025-swpo-mls-meeting/\n\n\n\n Back to top"
   },
   {
     "objectID": "assets/overview-pres.html#section",
@@ -369,6 +576,6 @@
     "href": "assets/noaa-spc-model-meeting-pres.html#thank-you",
     "title": "2025 SWPO striped marlin assessment meeting",
     "section": "Thank you",
-    "text": "Thank you\nQuestions or Comments?\n\nProject repository: https://github.com/N-DucharmeBarth-NOAA/2025-swpo-mls"
+    "text": "Thank you\nQuestions or Comments?\n\nRepository website: https://n-ducharmebarth-noaa.github.io/2025-swpo-mls-meeting/"
   }
 ]

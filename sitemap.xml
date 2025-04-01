@@ -2,26 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://N-DucharmeBarth-NOAA.github.io/2025-swpo-mls-meeting/DISCLAIMER.html</loc>
-    <lastmod>2025-04-01T15:02:57.247Z</lastmod>
+    <lastmod>2025-04-01T20:41:21.981Z</lastmod>
   </url>
   <url>
     <loc>https://N-DucharmeBarth-NOAA.github.io/2025-swpo-mls-meeting/assets/noaa-spc-model-meeting-report.html</loc>
-    <lastmod>2025-04-01T15:02:57.249Z</lastmod>
+    <lastmod>2025-04-01T20:41:21.983Z</lastmod>
   </url>
   <url>
-    <loc>https://N-DucharmeBarth-NOAA.github.io/2025-swpo-mls-meeting/index.html</loc>
-    <lastmod>2025-04-01T15:02:57.441Z</lastmod>
+    <loc>https://N-DucharmeBarth-NOAA.github.io/2025-swpo-mls-meeting/assets/instructions.html</loc>
+    <lastmod>2025-04-01T20:41:21.982Z</lastmod>
   </url>
   <url>
     <loc>https://N-DucharmeBarth-NOAA.github.io/2025-swpo-mls-meeting/shiny/introduction_index.html</loc>
-    <lastmod>2025-04-01T15:02:58.467Z</lastmod>
+    <lastmod>2025-04-01T20:41:23.231Z</lastmod>
+  </url>
+  <url>
+    <loc>https://N-DucharmeBarth-NOAA.github.io/2025-swpo-mls-meeting/shiny/stock-synthesis-model-summary.html</loc>
+    <lastmod>2025-04-01T20:41:23.231Z</lastmod>
+  </url>
+  <url>
+    <loc>https://N-DucharmeBarth-NOAA.github.io/2025-swpo-mls-meeting/index.html</loc>
+    <lastmod>2025-04-01T20:41:22.180Z</lastmod>
   </url>
   <url>
     <loc>https://N-DucharmeBarth-NOAA.github.io/2025-swpo-mls-meeting/assets/overview-pres.html</loc>
-    <lastmod>2025-04-01T15:02:57.249Z</lastmod>
+    <lastmod>2025-04-01T20:41:21.983Z</lastmod>
   </url>
   <url>
     <loc>https://N-DucharmeBarth-NOAA.github.io/2025-swpo-mls-meeting/assets/noaa-spc-model-meeting-pres.html</loc>
-    <lastmod>2025-04-01T15:02:57.249Z</lastmod>
+    <lastmod>2025-04-01T20:41:21.982Z</lastmod>
   </url>
 </urlset>
