@@ -55,6 +55,7 @@
 !*.csv
 !*.txt
 !introduction_index.md
+!stock-synthesis-model-summary.md
 !*.qmd
 !*.cls
 !*.tex

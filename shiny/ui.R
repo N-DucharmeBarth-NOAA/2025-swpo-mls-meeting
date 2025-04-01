@@ -16,12 +16,14 @@ ui = dashboardPage(
     sidebarMenu(id="sidebarmenu",
       menuItem("Introduction", tabName="introduction"),
       menuItem("Summary table", tabName="table"),
+      menuItem("Summary table info", tabName="table_info"),
       menuItem("Time series plots", tabName="ts_plots"),
       menuItem("Biology plots", tabName="bio_plots"),
       menuItem("Catch plots", tabName="catch_plots"),
       menuItem("Selectivity plots", tabName="selex_plots"),
-      menuItem("Catch fit plots", tabName="catch_fit_plots"),
-      menuItem("CPUE plots", tabName="cpue_plots")
+      menuItem("Fit to catch", tabName="catch_fit_plots"),
+      menuItem("Fit to size composition", tabName="comp_plots"),
+      menuItem("Fit to CPUE", tabName="cpue_plots")
     ),
 
     # Only show these on the plotting tabs - not Introduction and Summary table tabs
@@ -188,6 +190,44 @@ ui = dashboardPage(
         step = 1
       )
     ),
+    conditionalPanel(condition="input.sidebarmenu == 'comp_plots'",
+      # Type selection
+      awesomeRadio(
+        inputId = "comp_type",
+        label = "Composition type", 
+        choices = c("Length", "Weight"),
+        selected = "Length"
+      ),
+      # Show fitted lines
+      switchInput(
+        inputId = "comp_show_fit",  
+        label = "Show fitted lines",
+        value = TRUE,
+        onLabel = "TRUE",
+        offLabel = "FALSE",
+        onStatus = "success", 
+        offStatus = "danger"
+      ),
+      # Free Y scale
+      switchInput(
+        inputId = "comp_free_y",  
+        label = "Free Y-axis scales",
+        value = TRUE,
+        onLabel = "TRUE",
+        offLabel = "FALSE",
+        onStatus = "success", 
+        offStatus = "danger"
+      ),
+      # Number of columns
+      sliderInput(
+        inputId = "comp_n_col",
+        label = "Number of columns",
+        min = 1,
+        max = 4,
+        value = 2,
+        step = 1
+      )
+    ),
     br(),
     br(),
     tags$footer(
@@ -213,6 +253,10 @@ ui = dashboardPage(
         fluidRow(box(title="Model metrics", collapsed=FALSE, solidHeader=TRUE, collapsible=TRUE, status="primary", width=12,
          DT::dataTableOutput("summarytable")))
       ), # End of table tab
+
+      tabItem(tabName="table_info", h2("Summary table information"),
+        fluidRow(column(12, includeMarkdown(file.path("stock-synthesis-model-summary.md"))))
+      ), # End of introduction tab
 
       # **** Time series plots ****
       tabItem(tabName="ts_plots", h2("Time series plots"),
@@ -267,6 +311,15 @@ ui = dashboardPage(
           box(title="Catch Observation vs. Fitted Values", solidHeader=TRUE, collapsible=TRUE, collapsed=FALSE, status="primary", width=12,
             p("Select at least one model to compare catch fits."),
             plotOutput("catch_fit_plot", height="auto")
+          )
+        )
+      ),
+
+      tabItem(tabName="comp_plots", h2("Size Composition Plots"),
+        fluidRow(
+          box(title="Size Composition", solidHeader=TRUE, collapsible=TRUE, collapsed=FALSE, status="primary", width=12,
+            p("Select at least one model to compare size composition data."),
+            plotOutput("comp_plot", height="auto")
           )
         )
       ),

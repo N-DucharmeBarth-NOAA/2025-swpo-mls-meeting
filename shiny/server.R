@@ -1,3 +1,218 @@
+
+# Function to create comparative composition plots (length or weight) across multiple models
+plot_composition_comparison = function(model_ids, model_stem, 
+                                    comp_type = "length", # Can be "length" or "weight"
+                                    show_fit = TRUE, 
+                                    n_col = 2, 
+                                    free_y_scale = TRUE,  # Option to have free y scales
+                                    model_labels = NULL, 
+                                    custom_colors = NULL) {
+  
+  # Required packages
+  required_packages <- c("data.table", "ggplot2", "viridis")
+  for(pkg in required_packages) {
+    if(!requireNamespace(pkg, quietly = TRUE)) {
+      stop(paste("Package", pkg, "is needed for this function to work. Please install it."))
+    }
+  }
+  
+  # Set comp_type to lowercase for consistent handling
+  comp_type = tolower(comp_type)
+  
+  # Validate comp_type
+  if(!comp_type %in% c("length", "weight")) {
+    stop("comp_type must be either 'length' or 'weight'")
+  }
+  
+  # Set file names and plot titles based on comp_type
+  if(comp_type == "length") {
+    file_name = "comp_len.csv"
+    kind_filter = "LEN"
+    x_label = "Length bin"
+    y_label = "Proportion"
+    plot_title = "Length Composition Comparison"
+  } else { # weight
+    file_name = "comp_size.csv"
+    kind_filter = "SIZE"
+    x_label = "Weight bin"
+    y_label = "Proportion"
+    plot_title = "Weight Composition Comparison"
+  }
+  
+  # Validate inputs
+  if(length(model_ids) < 1) {
+    stop("Please provide at least one model ID")
+  }
+  
+  # Handle model_stem as vector or single path
+  if(length(model_stem) == 1) {
+    model_stem = rep(model_stem, length(model_ids))
+  } else if(length(model_stem) != length(model_ids)) {
+    stop("If model_stem is a vector, it must have the same length as model_ids")
+  }
+  
+  # If model_labels is not provided, use model_ids as labels
+  if(is.null(model_labels)) {
+    model_labels = model_ids
+  } else if(length(model_labels) != length(model_ids)) {
+    stop("If model_labels is provided, it must have the same length as model_ids")
+  }
+  
+  # Create vector of model specifications with labels
+  selected_models = data.frame(
+    id = model_ids,
+    path = model_stem,
+    label = model_labels,
+    stringsAsFactors = FALSE
+  )
+  
+  # Check if composition file exists for all models
+  file_exists = sapply(1:nrow(selected_models), function(i) {
+    file.exists(file.path(selected_models$path[i], selected_models$id[i], file_name))
+  })
+  
+  if(sum(file_exists) == 0) {
+    stop(paste0("The file ", file_name, " does not exist for any of the models you selected."))
+  } else if(sum(file_exists) < length(file_exists)) {
+    warning(paste0("The file ", file_name, " does not exist for some models. These models will be excluded."))
+    selected_models = selected_models[file_exists, ]
+  }
+  
+  # Read and compile composition data
+  comp_data_list = lapply(1:nrow(selected_models), function(i) {
+    # Read composition data
+    comp_file = file.path(selected_models$path[i], selected_models$id[i], file_name)
+    comp_dt = fread(comp_file)
+    
+    # Filter by Kind
+    comp_dt = comp_dt[Kind == kind_filter]
+    
+    # Add model identifiers
+    comp_dt[, model_id := selected_models$id[i]]
+    comp_dt[, model_label := selected_models$label[i]]
+    
+    # Round observed values for consistent ID generation
+    comp_dt[, Obs := round(Obs, digits=6)]
+    
+    return(comp_dt)
+  })
+  
+  # Combine all composition data
+  plot_dt = rbindlist(comp_data_list, fill = TRUE)
+  
+  # Check if we have any data after filtering
+  if(nrow(plot_dt) == 0) {
+    stop(paste0("No ", comp_type, " composition data found with Kind = ", kind_filter))
+  }
+  
+  # Calculate bin widths for each fleet
+  bin_info = plot_dt[, .(
+    Bin = sort(unique(Bin))
+  ), by = .(Fleet_name)]
+  
+  # Calculate bin widths as differences between consecutive bins
+  # For the last bin, use the width of the previous bin
+  bin_info[, bin_width := c(diff(Bin), tail(diff(Bin), 1)), by = .(Fleet_name)]
+  
+  # Calculate bin centers and edges for plotting
+  bin_info[, bin_center := Bin + bin_width/2]
+  
+  # Merge bin widths back to the main data table
+  plot_dt = merge(plot_dt, bin_info, by = c("Fleet_name", "Bin"))
+  
+  # Check consistency of observed values across models for the same fleet/bin
+  consistency_check = plot_dt[, .(
+    obs_values = list(unique(Obs)),
+    models = list(unique(model_label))
+  ), by = .(Fleet_name, Bin)]
+  
+  # Check if observed values are consistent
+  obs_inconsistent = consistency_check[sapply(obs_values, length) > 1]
+  if(nrow(obs_inconsistent) > 0) {
+    error_msg = paste0(
+      "Observed ", comp_type, " composition values differ across models for the same fleet and bin:\n",
+      paste(
+        apply(obs_inconsistent[, .(Fleet_name, Bin)], 1, function(row) {
+          return(paste0("  - Fleet: ", row[1], ", Bin: ", row[2]))
+        }),
+        collapse = "\n"
+      )
+    )
+    stop(error_msg)
+  }
+  
+  # Create a version of the data with just the first model's observations
+  # This ensures we only plot the observations once
+  obs_dt = plot_dt[, .SD[1], by = .(Fleet_name, Bin)]
+  
+  # Check if we have data to plot
+  if(nrow(plot_dt) == 0) {
+    stop("No data available after applying filters")
+  }
+  
+  # Set model_label as factor with correct order
+  plot_dt[, model_label := factor(model_label, levels = model_labels)]
+  
+  # Use Fleet_name as facet label
+  plot_dt[, facet_label := Fleet_name]
+  obs_dt[, facet_label := Fleet_name]
+  
+  # Combine data for plotting
+  combined_obs = obs_dt[, .(Fleet_name, Bin, bin_width, bin_center, Obs, facet_label)]
+  combined_exp = plot_dt[, .(Fleet_name, Bin, bin_width, bin_center, Exp, model_label, facet_label)]
+  
+  # Create a combined plot with facets
+  combined_plot = ggplot() +
+    # Add bars for observed data using geom_rect
+    geom_rect(data = combined_obs, 
+              aes(xmin = Bin, xmax = Bin + bin_width, 
+                  ymin = 0, ymax = Obs),
+              fill = "gray80", color = "gray40", alpha = 0.7) +
+    # Add fitted lines if requested
+    {if(show_fit) geom_line(data = combined_exp, 
+                           aes(x = bin_center, y = Exp, color = model_label, group = model_label),
+                           linewidth = 1)} +
+    # Facet by fleet, with option for free y scales
+    facet_wrap(~ facet_label, ncol = n_col, scales = if(free_y_scale) "free_y" else "fixed") +
+    # Labels
+    labs(x = x_label, y = y_label, title = plot_title)
+  
+  # Apply color scales - either custom colors or viridis palette
+  color_count = length(unique(plot_dt$model_label))
+  color_legend = "Model"
+  
+  if(!is.null(custom_colors)) {
+    # Validate that enough colors are provided
+    if(length(custom_colors) < color_count) {
+      warning("Not enough custom colors provided. Falling back to viridis palette.")
+      combined_plot = combined_plot + 
+        viridis::scale_color_viridis(color_legend, begin = 0.1, end = 0.8, 
+                                   direction = 1, option = "H", discrete = TRUE)
+    } else {
+      # Use custom colors
+      combined_plot = combined_plot + scale_color_manual(color_legend, values = custom_colors)
+    }
+  } else {
+    # Use default viridis palette
+    combined_plot = combined_plot + 
+      viridis::scale_color_viridis(color_legend, begin = 0.1, end = 0.8, 
+                                 direction = 1, option = "H", discrete = TRUE)
+  }
+  
+  # Apply consistent theme elements
+  combined_plot = combined_plot + theme(
+    panel.background = element_rect(fill = "white", color = "black", linetype = "solid"),
+    panel.grid.major = element_line(color = 'gray70', linetype = "dotted"),
+    panel.grid.minor = element_line(color = 'gray70', linetype = "dotted"),
+    strip.background = element_rect(fill = "white"),
+    legend.key = element_rect(fill = "white")
+  )
+  
+    return(combined_plot)
+
+}
+
+
 # Function to create comparative length-based selectivity plots
 plot_model_comparison_selex = function(model_ids, model_stem, 
                                       n_col = 2, model_labels = NULL, custom_colors = NULL) {
@@ -1194,6 +1409,69 @@ server = function(input, output){
     }
     
     n_rows <- ceiling(fleet_count / input$selex_n_col)
+    return(max(height_per_panel * 1.5, height_per_panel * n_rows))
+  })
+
+  output$comp_plot <- renderPlot({
+    input_models <- unique(filtered_id())
+    
+    if(length(input_models) < 1) {
+      return()
+    }
+    
+    # Convert input$comp_type to lowercase for function
+    comp_type <- tolower(input$comp_type)
+    
+    # Create the plot using the provided function
+    tryCatch({
+      p <- plot_composition_comparison(
+        model_ids = input_models,
+        model_stem = model_stem,
+        comp_type = comp_type,
+        show_fit = input$comp_show_fit,
+        n_col = input$comp_n_col,
+        free_y_scale = input$comp_free_y
+      )
+      
+      return(p)
+    }, error = function(e) {
+      # Create empty plot with error message
+      p <- ggplot() + 
+        annotate("text", x = 0.5, y = 0.5, 
+                label = paste("No composition data available:", e$message), 
+                hjust = 0.5, vjust = 0.5) +
+        theme_void()
+      return(p)
+    })
+  }, height = function() {
+    input_models <- unique(filtered_id())
+    
+    if(length(input_models) < 1) {
+      return(height_per_panel * 1.5)
+    }
+    
+    # Try to estimate the number of fleets with composition data
+    selected_models <- sapply(input_models, function(x) all_dirs[grep(x, all_dirs, fixed=TRUE)])
+    fleet_count <- 0
+    
+    comp_type <- tolower(input$comp_type)
+    file_name <- if(comp_type == "length") "comp_len.csv" else "comp_size.csv"
+    kind_filter <- if(comp_type == "length") "LEN" else "SIZE"
+    
+    for(model_path in selected_models) {
+      comp_file <- file.path(model_stem, model_path, file_name)
+      if(file.exists(comp_file)) {
+        comp_data <- fread(comp_file)
+        comp_data <- comp_data[Kind == kind_filter]
+        fleet_count <- max(fleet_count, length(unique(comp_data$Fleet_name)))
+      }
+    }
+    
+    if(fleet_count == 0) {
+      return(height_per_panel * 1.5)
+    }
+    
+    n_rows <- ceiling(fleet_count / input$comp_n_col)
     return(max(height_per_panel * 1.5, height_per_panel * n_rows))
   })
 
