@@ -22,12 +22,14 @@ website:
     contents: 
       - text: "Home"
         file: index.qmd
-      - section: "Report"
+      - section: "WCPFC-SC report"
         contents:
         - text: "HTML"
           file: assets/noaa-spc-model-meeting-report.qmd
         - text: "PDF"
           file: assets/noaa-spc-model-meeting-report.pdf
+      - text: "Repository instructions"
+        file: assets/instructions.qmd
       - section: "Support"
         contents:
         - text: "Submit an issue"
