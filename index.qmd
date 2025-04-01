@@ -9,6 +9,8 @@ This repository contains model developments for 2025 Southwest Pacific Ocean str
 
 A draft meeting [report](https://n-ducharmebarth-noaa.github.io/2025-swpo-mls-meeting/assets/noaa-spc-model-meeting-report.html) is available which will be submit to the 21st Scientific Committee ([SC21](https://meetings.wcpfc.int/meetings/sc21)) of the Western and Central Pacific Fisheries Committee ([WCPFC](https://www.wcpfc.int/)) as an information paper. Additionally, a summary presentation of the meeting activities to be presented at the SPC Pre-Assessment Workshop (PAW), and a [Shiny application](https://connect.fisheries.noaa.gov/2025-swpo-mls-viewer/) showing outputs of the investigated models are available below.
 
+[Repository instructions](https://n-ducharmebarth-noaa.github.io/2025-swpo-mls-meeting/assets/instructions.html) for working with and running the assessment models are also available.
+
 <br>
 
 ## Presentation
