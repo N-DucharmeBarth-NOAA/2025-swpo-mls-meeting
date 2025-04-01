@@ -237,6 +237,7 @@ ss_transfer(from_dir, to_dir, file.path("executables", "stock-synthesis"))
 
 # Make modifications to data or control files
 # ...
+# Write out the files ...
 
 # Run the model
 run(dir = to_dir, exe = "ss3.exe")

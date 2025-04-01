@@ -154,7 +154,7 @@
     "href": "index.html",
     "title": "Home",
     "section": "",
-    "text": "This repository contains model developments for 2025 Southwest Pacific Ocean striped marlin stock assessment conducted during the joint Pacific Community (SPC) and NOAA Fisheries stock assessment modeling meeting held in Honolulu, Hawai’i from 20-24 January 2025.\nA draft meeting report is available which will be submit to the 21st Scientific Committee (SC21) of the Western and Central Pacific Fisheries Committee (WCPFC) as an information paper. Additionally, a summary presentation of the meeting activities to be presented at the SPC Pre-Assessment Workshop (PAW), and a Shiny application showing outputs of the investigated models are available below.",
+    "text": "This repository contains model developments for 2025 Southwest Pacific Ocean striped marlin stock assessment conducted during the joint Pacific Community (SPC) and NOAA Fisheries stock assessment modeling meeting held in Honolulu, Hawai’i from 20-24 January 2025.\nA draft meeting report is available which will be submit to the 21st Scientific Committee (SC21) of the Western and Central Pacific Fisheries Committee (WCPFC) as an information paper. Additionally, a summary presentation of the meeting activities to be presented at the SPC Pre-Assessment Workshop (PAW), and a Shiny application showing outputs of the investigated models are available below.\nRepository instructions for working with and running the assessment models are also available.",
     "crumbs": [
       "Home"
     ]
@@ -398,7 +398,7 @@
     "href": "assets/instructions.html#creating-a-new-model-from-an-existing-one",
     "title": "Respository instructions",
     "section": "Creating a New Model from an Existing One",
-    "text": "Creating a New Model from an Existing One\n# Transfer base model to a new directory and make modifications\nfrom_dir &lt;- file.path(\"models\", \"stock-synthesis\", \"12-CAAL-old-growth-SD\")\nto_dir &lt;- file.path(\"models\", \"stock-synthesis\", \"my-new-model\")\nsource(\"code/helper-fns/ss_transfer.r\")\nss_transfer(from_dir, to_dir, file.path(\"executables\", \"stock-synthesis\"))\n\n# Make modifications to data or control files\n# ...\n\n# Run the model\nrun(dir = to_dir, exe = \"ss3.exe\")\n\n# Summarize the results\nsource(\"code/helper-fns/summarize_ss_model.r\")\nsummarize_ss_model(to_dir)",
+    "text": "Creating a New Model from an Existing One\n# Transfer base model to a new directory and make modifications\nfrom_dir &lt;- file.path(\"models\", \"stock-synthesis\", \"12-CAAL-old-growth-SD\")\nto_dir &lt;- file.path(\"models\", \"stock-synthesis\", \"my-new-model\")\nsource(\"code/helper-fns/ss_transfer.r\")\nss_transfer(from_dir, to_dir, file.path(\"executables\", \"stock-synthesis\"))\n\n# Make modifications to data or control files\n# ...\n# Write out the files ...\n\n# Run the model\nrun(dir = to_dir, exe = \"ss3.exe\")\n\n# Summarize the results\nsource(\"code/helper-fns/summarize_ss_model.r\")\nsummarize_ss_model(to_dir)",
     "crumbs": [
       "Repository instructions"
     ]
