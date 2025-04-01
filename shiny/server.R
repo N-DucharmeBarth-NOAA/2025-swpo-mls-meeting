@@ -1,4 +1,161 @@
 # Add this function to your server.R file above the server function
+# Just after the create_cpue_comparison_plot function
+
+plot_catch_comparison <- function(model_ids, model_stem = "data", 
+                                fleets = NULL,        
+                                show_fit = TRUE,
+                                n_col = 2,
+                                free_y_scale = TRUE,  
+                                model_labels = NULL) {
+  
+  # Validate inputs
+  if(length(model_ids) < 1) {
+    return(NULL)
+  }
+  
+  # Get paths for selected models
+  selected_models <- sapply(model_ids, function(x) all_dirs[grep(x, all_dirs, fixed=TRUE)])
+  
+  # Check if catch.csv exists for all models
+  keep_selected <- which(sapply(file.path(model_stem, selected_models, "catch.csv"), file.exists) == TRUE)
+  if(length(keep_selected) == 0) {
+    warning("The file catch.csv does not exist for any of the files you selected.")
+    return(NULL)
+  } else {
+    selected_models <- selected_models[keep_selected]
+    model_ids <- model_ids[keep_selected]
+  }
+  
+  # If model_labels is not provided, use model_ids
+  if(is.null(model_labels)) {
+    model_labels <- model_ids
+  }
+  
+  # Read and combine catch data
+  plot_dt <- rbindlist(lapply(seq_along(selected_models), function(i) {
+    model_id <- model_ids[i]
+    model_path <- selected_models[i]
+    catch_data <- fread(file.path(model_stem, model_path, "catch.csv"))
+    
+    # Add model identifiers
+    catch_data[, id := model_id]
+    catch_data[, model_label := model_labels[i]]
+    
+    # Round values for consistent comparison
+    catch_data[, Obs := round(Obs, digits=6)]
+    catch_data[, Exp := round(Exp, digits=6)]
+    
+    return(catch_data)
+  }))
+  
+  # If no fleet names, create them
+  if(!"Fleet_name" %in% names(plot_dt)) {
+    # Try to read fleet names from fleet_summary.csv if available
+    fleet_names <- lapply(seq_along(selected_models), function(i) {
+      model_id <- model_ids[i]
+      model_path <- selected_models[i]
+      fleet_path <- file.path(model_stem, model_path, "fleet_summary.csv")
+      
+      if(file.exists(fleet_path)) {
+        fleet_data <- fread(fleet_path) %>%
+                      .[,id:=model_ids[i]] %>%
+                      .[, .(id,fleet, fleetname)]
+        return(fleet_data)
+      } else {
+        return(NULL)
+      }
+    })
+    
+    # Combine all fleet names or create default names
+    if(all(sapply(fleet_names, is.null))) {
+      plot_dt[, Fleet_name := paste("Fleet", Fleet)]
+    } else {
+      fleet_dt <- rbindlist(fleet_names[!sapply(fleet_names, is.null)])
+      setnames(fleet_dt, c("fleet", "fleetname"), c("Fleet", "Fleet_name"))
+      
+      # Merge fleet names with catch data
+      plot_dt <- merge(plot_dt, fleet_dt, by = c("id","Fleet"), all.x = TRUE)
+      
+      # For any missing fleet names, create default
+      plot_dt[is.na(Fleet_name), Fleet_name := paste("Fleet", Fleet)]
+    }
+  }
+  
+  # Filter by fleet if specified
+  if(!is.null(fleets) && length(fleets) > 0) {
+    plot_dt <- plot_dt[Fleet %in% fleets]
+    
+    # Check if we still have data after filtering
+    if(nrow(plot_dt) == 0) {
+      warning("No data available after filtering for the specified fleets")
+      return(NULL)
+    }
+  }
+  
+  # Check for consistency in observed values across models
+  consistency_check <- plot_dt[, .(
+    obs_values = list(unique(Obs)),
+    models = list(unique(model_label))
+  ), by = .(Fleet, Time)]
+  
+  # Warn about inconsistencies if found
+  obs_inconsistent <- consistency_check[sapply(obs_values, length) > 1]
+  if(nrow(obs_inconsistent) > 0) {
+    warning("Observed catch values differ across models for some fleet/time combinations.")
+  }
+  
+  # Create a version of the data with just the first model's observations
+  # This ensures we only plot the observations once
+  obs_dt <- plot_dt[, .SD[1], by = .(Fleet, Fleet_name, Time)]
+  
+  # Calculate bins for bar width
+  unique_times <- sort(unique(plot_dt$Time))
+  time_diffs <- diff(unique_times)
+  non_zero_diffs <- time_diffs[time_diffs > 0]
+  bin_width <- if(length(non_zero_diffs) > 0) min(non_zero_diffs) else 1
+  
+  # Add bin information for plotting
+  plot_dt[, bin_start := Time]
+  plot_dt[, bin_end := Time + bin_width]
+  plot_dt[, bin_center := Time + bin_width/2]
+  
+  obs_dt[, bin_start := Time]
+  obs_dt[, bin_end := Time + bin_width]
+  obs_dt[, bin_center := Time + bin_width/2]
+  
+  # Set model_label as factor with correct order
+  plot_dt[, model_label := factor(model_label, levels = model_labels)]
+  
+  # Create the plot
+  p <- ggplot() +
+    # Add bars for observed data
+    geom_rect(data = obs_dt, 
+              aes(xmin = bin_start, xmax = bin_end, 
+                  ymin = 0, ymax = Obs),
+              fill = "gray80", color = "gray40", alpha = 0.7) +
+    # Add fitted lines if requested
+    {if(show_fit) geom_line(data = plot_dt, 
+                           aes(x = bin_center, y = Exp, color = model_label, group = model_label),
+                           linewidth = 1)} +
+    # Facet by fleet
+    facet_wrap(~ Fleet_name, ncol = n_col, scales = if(free_y_scale) "free_y" else "fixed") +
+    # Labels
+    labs(x = "Year", y = "Catch", title = "Observed vs. Fitted Catch")
+  
+  # Apply consistent theme and color scheme
+  p <- p + 
+    viridis::scale_color_viridis("Model", begin = 0.1, end = 0.8, 
+                               direction = 1, option = "H", discrete = TRUE) +
+    theme(
+      panel.background = element_rect(fill = "white", color = "black", linetype = "solid"),
+      panel.grid.major = element_line(color = 'gray70', linetype = "dotted"), 
+      panel.grid.minor = element_line(color = 'gray70', linetype = "dotted"),
+      strip.background = element_rect(fill = "white"),
+      legend.key = element_rect(fill = "white")
+    )
+  
+  return(p)
+}
 
 create_cpue_comparison_plot <- function(model_ids, model_stem = "data", 
                                       show_se = TRUE, 
@@ -746,4 +903,105 @@ server = function(input, output){
   height = function() {
     return(height_per_panel * 1.5)
   })
+
+  # Dynamic UI for fleet selection using shinyWidgets
+  output$catch_fit_fleet_selector <- renderUI({
+    input_models <- unique(filtered_id())
+    
+    if(length(input_models) < 1) {
+      return(NULL)
+    }
+    
+    # Get paths for selected models
+    selected_models <- sapply(input_models, function(x) all_dirs[grep(x, all_dirs, fixed=TRUE)])
+    
+    # Check if catch.csv exists for models
+    keep_selected <- which(sapply(file.path(model_stem, selected_models, "catch.csv"), file.exists) == TRUE)
+    if(length(keep_selected) == 0) {
+      return(NULL)
+    } else {
+      selected_models <- selected_models[keep_selected]
+      input_models <- input_models[keep_selected]
+    }
+    
+    # Read fleet information from all selected models
+    all_fleets <- lapply(seq_along(selected_models), function(i) {
+      model_path <- selected_models[i]
+      catch_file <- file.path(model_stem, model_path, "catch.csv")
+      
+      if(file.exists(catch_file)) {
+        catch_data <- fread(catch_file)
+        
+        # Try to get fleet names if available
+        fleet_summary_file <- file.path(model_stem, model_path, "fleet_summary.csv")
+        if(file.exists(fleet_summary_file)) {
+          fleet_data <- fread(fleet_summary_file)
+          return(data.table(Fleet = fleet_data$fleet, Fleet_name = fleet_data$fleetname))
+        } else {
+          return(data.table(Fleet = unique(catch_data$Fleet), 
+                            Fleet_name = paste("Fleet", unique(catch_data$Fleet))))
+        }
+      } else {
+        return(NULL)
+      }
+    })
+    
+    # Combine all fleet information
+    all_fleets_dt <- rbindlist(all_fleets[!sapply(all_fleets, is.null)])
+    
+    # Get unique fleets with names
+    unique_fleets <- unique(all_fleets_dt[, .(Fleet, Fleet_name)])
+    
+    # Store the fleet choices in a named vector
+    fleet_choices <- setNames(unique_fleets$Fleet, unique_fleets$Fleet_name)
+    
+    # Create picker input with buttons for select/deselect all
+    shinyWidgets::pickerInput(
+      inputId = "catch_fit_fleets",
+      label = "Select fleets to display",
+      choices = fleet_choices,
+      selected = unique_fleets$Fleet,
+      multiple = TRUE,
+      options = list(
+        `actions-box` = TRUE,
+        size = 10,
+        `selected-text-format` = "count > 3"
+      )
+    )
+  })
+
+  # Render the catch fit plot
+  output$catch_fit_plot <- renderPlot({
+    input_models <- unique(filtered_id())
+    
+    if(length(input_models) < 1) {
+      return()
+    }
+    
+    # Get selected fleets (if any)
+    selected_fleets <- input$catch_fit_fleets
+    
+    # Create the plot using our function
+    p <- plot_catch_comparison(
+      model_ids = input_models,
+      model_stem = model_stem,
+      fleets = selected_fleets,
+      show_fit = input$catch_fit_show_lines,
+      n_col = input$catch_fit_n_col,
+      free_y_scale = input$catch_fit_free_y
+    )
+    
+    return(p)
+  }, height = function() {
+    # Calculate appropriate height based on number of fleets and columns
+    if(is.null(input$catch_fit_fleets)) {
+      return(height_per_panel * 1.5)
+    }
+    
+    n_fleets <- length(input$catch_fit_fleets)
+    n_rows <- ceiling(n_fleets / input$catch_fit_n_col)
+    
+    return(max(height_per_panel * 1.5, height_per_panel * n_rows))
+  })
+
 } # End of server

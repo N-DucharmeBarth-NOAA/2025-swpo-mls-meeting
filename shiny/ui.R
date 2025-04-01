@@ -19,6 +19,7 @@ ui = dashboardPage(
       menuItem("Time series plots", tabName="ts_plots"),
       menuItem("Biology plots", tabName="bio_plots"),
       menuItem("Catch plots", tabName="catch_plots"),
+      menuItem("Catch fit plots", tabName="catch_fit_plots"),
       menuItem("CPUE plots", tabName="cpue_plots")
     ),
 
@@ -142,6 +143,39 @@ ui = dashboardPage(
       onStatus = "success", 
       offStatus = "danger")
     ),
+    conditionalPanel(condition="input.sidebarmenu == 'catch_fit_plots'",
+      # Show fitted lines
+      switchInput(
+        inputId = "catch_fit_show_lines",  
+        label = "Show fitted lines",
+        value=TRUE,
+        onLabel = "TRUE",
+        offLabel = "FALSE",
+        onStatus = "success", 
+        offStatus = "danger"
+      ),
+      # Free Y scale
+      switchInput(
+        inputId = "catch_fit_free_y",  
+        label = "Free Y-axis scales",
+        value=TRUE,
+        onLabel = "TRUE",
+        offLabel = "FALSE",
+        onStatus = "success", 
+        offStatus = "danger"
+      ),
+      # Number of columns
+      sliderInput(
+        inputId = "catch_fit_n_col",
+        label = "Number of columns",
+        min = 1,
+        max = 4,
+        value = 1,
+        step = 1
+      ),
+      # Fleet selector (will be populated in server)
+      uiOutput("catch_fit_fleet_selector")
+    ),
     br(),
     br(),
     tags$footer(
@@ -206,6 +240,15 @@ ui = dashboardPage(
           #   plotOutput("catch_obs_exp_plot", height="auto"))
         )
       ), # End of catch_plots tab
+
+      tabItem(tabName="catch_fit_plots", h2("Catch Fit Comparison"),
+        fluidRow(
+          box(title="Catch Observation vs. Fitted Values", solidHeader=TRUE, collapsible=TRUE, collapsed=FALSE, status="primary", width=12,
+            p("Select at least one model to compare catch fits."),
+            plotOutput("catch_fit_plot", height="auto")
+          )
+        )
+      ),
 
       # **** CPUE plots ****
       tabItem(tabName="cpue_plots", h2("CPUE plots"),
