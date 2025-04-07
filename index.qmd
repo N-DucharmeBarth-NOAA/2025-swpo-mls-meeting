@@ -11,6 +11,10 @@ A draft meeting [report](https://n-ducharmebarth-noaa.github.io/2025-swpo-mls-me
 
 [Repository instructions](https://n-ducharmebarth-noaa.github.io/2025-swpo-mls-meeting/assets/instructions.html) for working with and running the assessment models are also available.
 
+::: {.callout-note}
+Note that models `01-mls-base-1979` through `25-mls-base-1979-corrected` were run during the January 2025 meeting. Models `26-CAAL-maxAge-15` through `27-CAAL-NZdblnorm` were investigated during the April 2025 PAW.
+:::
+
 <br>
 
 ## Presentation
