@@ -1,0 +1,5 @@
+ reading from starter.ss
+ reading from data file
+Warning 1 Fatal Error! Age D-M must refer to existing comp_err definition, or increment by 1:  6
+Also see warning.sso
+Exiting SS3! 

@@ -5,7 +5,7 @@
 #_User_info_available_at:https://vlab.noaa.gov/group/stock-synthesis
 #_Source_code_at:_https://github.com/nmfs-ost/ss3-source-code
 
-#_Start_time: Thu Jan  9 17:14:06 2025
+#_Start_time: Fri Apr  4 19:31:14 2025
 #_echo_input_data
 #C No comments
 #C file created using an r4ss function
@@ -3168,15 +3168,15 @@
 #_minsamplesize: minimum sample size; set to 1 to match 3.24, minimum value is 0.001
 #
 #_mintailcomp addtocomp combM+F CompressBins CompError ParmSelect minsamplesize
-# 0 0 1 1 0 0 0 #_fleet:1_F01_LL.JP.1
+# 0 0 0 0 0 0 0 #_fleet:1_F01_LL.JP.1
 # 0 0 0 0 0 0 0 #_fleet:2_F02_LL.JP.2
-# 0 0 32 32 0 0 0 #_fleet:3_F03_LL.JP.3
+# 0 0 0 0 0 0 0 #_fleet:3_F03_LL.JP.3
 # 0 0 0 0 0 0 0 #_fleet:4_F04_LL.JP.4
-# 0 0 -1 -1 0 0 0 #_fleet:5_F05_LL.TW.4
+# 0 0 0 0 0 0 0 #_fleet:5_F05_LL.TW.4
 # 0 0 0 0 0 0 0 #_fleet:6_F06_LL.AU.2
-# 0 0 892862512 842137648 0 0 0 #_fleet:7_F07_LL.AU.3
-# 0 0 926299953 858994232 0 0 0 #_fleet:8_F08_LL.NZ.3
-# 0 0 13876 3354880 0 0 0 #_fleet:9_F09.REC.AU.3
+# 0 0 0 0 0 0 0 #_fleet:7_F07_LL.AU.3
+# 0 0 0 0 0 0 0 #_fleet:8_F08_LL.NZ.3
+# 0 0 0 0 0 0 0 #_fleet:9_F09.REC.AU.3
 # 0 0 0 0 0 0 0 #_fleet:10_F10_REC.NZ.3
 # 0 0 0 0 0 0 0 #_fleet:11_F11_LL.ALL.1
 # 0 0 0 0 0 0 0 #_fleet:12_F12_LL.ALL.2

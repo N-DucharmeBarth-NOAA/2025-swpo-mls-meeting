@@ -399,7 +399,7 @@ Warning 397 : 1 1warn in first call: Nil selected fish for year, seas, fleet 202
 Warning 398 : 1 1warn in first call: Nil selected fish for year, seas, fleet 2022 3 6; SS may recover; suggest check initial parm. values for selectivity and growth
 Warning 399 : 1st iteration warning: ssb(endyr)/ssb(styr)= 4.53455e-10; suggest start with larger R0 to get near 0.4; or use depletion fleet option
 Warning 400 : 1st iteration warning: catch logL > 50% total logL; check configuration; suggest start with larger R0
-Warning 401 : Final gradient: 0.000738088 is larger than final_conv: 1e-05
+Warning 401 : Final gradient: 0.000143826 is larger than final_conv: 1e-05
 Note 2 Information: A revised protocol for the Fcast_yr specification is available and recommended.
 Note 3 Information:  N parameters that are on or within 1% of min-max bound: 5; check results, variance may be suspect
  401 warnings  and 3 notes 

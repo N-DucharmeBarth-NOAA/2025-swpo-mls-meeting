@@ -1,0 +1,4 @@
+
+
+ Error: Estimated variance of parameter 1 is -5.10093e-11, failed to invert Hessian.
+        No uncertainty estimates available. Fix model structure and reoptimize.
