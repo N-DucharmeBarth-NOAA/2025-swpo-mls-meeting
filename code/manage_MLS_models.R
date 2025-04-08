@@ -118,6 +118,48 @@ tune_comps(tmp_out, option = 'Francis')
 
 #######################################################
 
+r26b <- list()
+r26b$dir <- paste0(basedir, "26-CAAL-maxAge-15")
+r26b$dat = SS_readdat(file = file.path(r26b$dir, 'data.ss'))
+r26b$ctl = SS_readctl(file = file.path(r26b$dir, 'control.ss_new'), datlist = r12$dat)
+r26b$fore = SS_readforecast(file = file.path(r26b$dir, 'forecast.ss'))
+r26b$start = SS_readstarter(file = file.path(r26b$dir, 'starter.ss'))
+dir.create(r26b$dir)
+f_no0 <- c(2,3,5,6,11,14,16)
+r26b$ctl$age_selex_parms[f_no0 * 2 - 1,"INIT"] <- 2
+
+
+SS_writedat(r26b$dat, outfile = file.path(r26b$dir, 'data.ss'), overwrite = T)
+SS_writectl(r26b$ctl, outfile = file.path(r26b$dir, 'control.ss'), overwrite = T)
+SS_writeforecast(r26b$fore, dir = r26b$dir, overwrite = T)
+SS_writestarter(r26b$start, dir = r26b$dir, overwrite = T)
+
+# Run model:
+setwd(r26b$dir)
+tmp_out = r4ss::SS_output(r26b$dir, covar = FALSE)
+r4ss::SS_plots(tmp_out)
+
+job <- r_bg(
+  func = function(ss_exe, dir) {
+    setwd(dir)
+    system2(ss_exe, stdout = "ss_out.txt", stderr = "ss_err.txt")
+  },
+  args = list(ss_exe = ss_exe, dir = r26b$dir)
+)
+job$is_alive()
+job$get_exit_status()
+job$read_output_lines()
+
+setwd(paste0(r26b$dir, "/checkF/"))
+tmp_out = r4ss::SS_output(paste0(r26b$dir, "/checkF/"), covar = FALSE)
+r4ss::SS_plots(tmp_out)
+
+setwd(paste0(r26b$dir, "/checkF2/"))
+tmp_out = r4ss::SS_output(paste0(r26b$dir, "/checkF2/"), covar = FALSE)
+r4ss::SS_plots(tmp_out)
+
+#######################################################
+
 r27 <- r12
 r27$dir <- paste0(basedir, "27-CAAL-agesel10")
 dir.create(r27$dir)
