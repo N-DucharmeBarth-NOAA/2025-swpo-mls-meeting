@@ -1,0 +1,2 @@
+id,Count,Yr,Sex,Platoon,A1,A2,L_a_A1,L_a_A2,K,A_a_L0,Linf,CVmin,CVmax,natM_amin,natM_max,M_age0,M_nages,WtLen1,WtLen2,Mat1,Mat2,Fec1,Fec2
+62-CAAL-NZdblnormV2-5,1,1952,1,1,0,10,5,219.844,0.309569,-0.0709906,230.025,9.9314,11.0517,0,0,0.707867,0.36,5.39942e-07,3.58378,181.205,-0.197458,1,1

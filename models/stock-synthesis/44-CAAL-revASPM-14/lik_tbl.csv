@@ -1,0 +1,15 @@
+id,Label,values,lambdas
+44-CAAL-revASPM-14,TOTAL,-28.1381,
+44-CAAL-revASPM-14,Catch,0.0117983,
+44-CAAL-revASPM-14,Equil_catch,0,
+44-CAAL-revASPM-14,Survey,-31.7188,
+44-CAAL-revASPM-14,Length_comp,28.6211,
+44-CAAL-revASPM-14,Age_comp,0,
+44-CAAL-revASPM-14,SizeFreq,0,
+44-CAAL-revASPM-14,Recruitment,-25.0524,1
+44-CAAL-revASPM-14,InitEQ_Regime,0,1
+44-CAAL-revASPM-14,Forecast_Recruitment,0.00018526,1
+44-CAAL-revASPM-14,Parm_priors,0,1
+44-CAAL-revASPM-14,Parm_softbounds,0,
+44-CAAL-revASPM-14,Parm_devs,0,1
+44-CAAL-revASPM-14,Crash_Pen,0,1
