@@ -1,0 +1,15 @@
+id,Label,values,lambdas
+57-CAAL-NZdblnorm-5,TOTAL,838.582,
+57-CAAL-NZdblnorm-5,Catch,0.817529,
+57-CAAL-NZdblnorm-5,Equil_catch,0,
+57-CAAL-NZdblnorm-5,Survey,-28.3413,
+57-CAAL-NZdblnorm-5,Length_comp,108.474,
+57-CAAL-NZdblnorm-5,Age_comp,0.108823,
+57-CAAL-NZdblnorm-5,SizeFreq,756.674,
+57-CAAL-NZdblnorm-5,Recruitment,0.800644,1
+57-CAAL-NZdblnorm-5,InitEQ_Regime,0,1
+57-CAAL-NZdblnorm-5,Forecast_Recruitment,0.0206925,1
+57-CAAL-NZdblnorm-5,Parm_priors,0,1
+57-CAAL-NZdblnorm-5,Parm_softbounds,0.0277735,
+57-CAAL-NZdblnorm-5,Parm_devs,0,1
+57-CAAL-NZdblnorm-5,Crash_Pen,0,1

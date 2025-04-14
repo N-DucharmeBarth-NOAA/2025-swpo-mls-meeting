@@ -1,0 +1,15 @@
+id,Label,values,lambdas
+54-CAAL-exdblnorm,TOTAL,3009.61,
+54-CAAL-exdblnorm,Catch,1.11459e-05,
+54-CAAL-exdblnorm,Equil_catch,0,
+54-CAAL-exdblnorm,Survey,-13.3498,
+54-CAAL-exdblnorm,Length_comp,369.282,
+54-CAAL-exdblnorm,Age_comp,0.109295,
+54-CAAL-exdblnorm,SizeFreq,2386.13,
+54-CAAL-exdblnorm,Recruitment,247.907,1
+54-CAAL-exdblnorm,InitEQ_Regime,7.83875e-31,1
+54-CAAL-exdblnorm,Forecast_Recruitment,19.4938,1
+54-CAAL-exdblnorm,Parm_priors,0,1
+54-CAAL-exdblnorm,Parm_softbounds,0.0386575,
+54-CAAL-exdblnorm,Parm_devs,0,1
+54-CAAL-exdblnorm,Crash_Pen,0,1

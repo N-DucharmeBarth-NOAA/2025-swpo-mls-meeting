@@ -1,0 +1,15 @@
+id,Label,values,lambdas
+51-CAAL-oneFleet-09,TOTAL,2.1876,
+51-CAAL-oneFleet-09,Catch,0.038674,
+51-CAAL-oneFleet-09,Equil_catch,0,
+51-CAAL-oneFleet-09,Survey,-31.2043,
+51-CAAL-oneFleet-09,Length_comp,0,
+51-CAAL-oneFleet-09,Age_comp,0.035514,
+51-CAAL-oneFleet-09,SizeFreq,56.475,
+51-CAAL-oneFleet-09,Recruitment,-23.1577,1
+51-CAAL-oneFleet-09,InitEQ_Regime,7.83875e-31,1
+51-CAAL-oneFleet-09,Forecast_Recruitment,3.55579e-06,1
+51-CAAL-oneFleet-09,Parm_priors,0,1
+51-CAAL-oneFleet-09,Parm_softbounds,0.000430976,
+51-CAAL-oneFleet-09,Parm_devs,0,1
+51-CAAL-oneFleet-09,Crash_Pen,0,1

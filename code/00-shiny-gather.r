@@ -44,7 +44,7 @@
         dir.create(file.path(proj_dir,"shiny","data",all_dirs[i]),recursive=TRUE)
         if(sum(list.files(file.path(proj_dir,"shiny","data",all_dirs[i])) %in% summary_files) != length(summary_files)){
             file.copy(from=file.path(file.path(model_stem,all_dirs[i],summary_files)),to=file.path(proj_dir,"shiny","data",all_dirs[i],summary_files),overwrite=TRUE)
-        }
+       }
     }
 
 #_____________________________________________________________________________________________________________________________

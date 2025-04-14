@@ -1,0 +1,15 @@
+id,Label,values,lambdas
+28-CAAL-noNZrec-ASPM,TOTAL,778.173,
+28-CAAL-noNZrec-ASPM,Catch,0.0497226,
+28-CAAL-noNZrec-ASPM,Equil_catch,0,
+28-CAAL-noNZrec-ASPM,Survey,-26.6697,
+28-CAAL-noNZrec-ASPM,Length_comp,106.312,
+28-CAAL-noNZrec-ASPM,Age_comp,0.114056,
+28-CAAL-noNZrec-ASPM,SizeFreq,701.581,
+28-CAAL-noNZrec-ASPM,Recruitment,-3.26096,1
+28-CAAL-noNZrec-ASPM,InitEQ_Regime,0,1
+28-CAAL-noNZrec-ASPM,Forecast_Recruitment,0.0185513,1
+28-CAAL-noNZrec-ASPM,Parm_priors,0,1
+28-CAAL-noNZrec-ASPM,Parm_softbounds,0.0287877,
+28-CAAL-noNZrec-ASPM,Parm_devs,0,1
+28-CAAL-noNZrec-ASPM,Crash_Pen,0,1
