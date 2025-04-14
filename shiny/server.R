@@ -57,6 +57,7 @@ plot_composition_comparison = function(model_ids, model_stem,
   } else if(length(model_labels) != length(model_ids)) {
     stop("If model_labels is provided, it must have the same length as model_ids")
   }
+  model_labels = sort(model_labels)
   
   # Create vector of model specifications with labels
   selected_models = data.frame(
@@ -235,6 +236,7 @@ plot_model_comparison_selex = function(model_ids, model_stem,
   } else if(length(model_labels) != length(model_ids)) {
     stop("If model_labels is provided, it must have the same length as model_ids")
   }
+  model_labels = sort(model_labels)
   
   # Create vector of model specifications with labels
   selected_models = data.frame(
@@ -390,10 +392,13 @@ plot_catch_comparison <- function(model_ids, model_stem = "data",
     model_ids <- model_ids[keep_selected]
   }
   
-  # If model_labels is not provided, use model_ids
+  # If model_labels is not provided, use model_ids as labels
   if(is.null(model_labels)) {
-    model_labels <- model_ids
+    model_labels = model_ids
+  } else if(length(model_labels) != length(model_ids)) {
+    stop("If model_labels is provided, it must have the same length as model_ids")
   }
+  model_labels = sort(model_labels)
   
   # Read and combine catch data
   plot_dt <- rbindlist(lapply(seq_along(selected_models), function(i) {
@@ -700,7 +705,7 @@ create_cpue_comparison_plot <- function(model_ids, model_stem = "data",
   }
   
     # Set label as factor with correct order
-  plot_dt[, label := factor(model_label, levels = model_ids)]
+  plot_dt[, label := factor(model_label, levels = sort(model_ids))]
   
   # Create base plot
   p = ggplot(plot_dt[order(id3, time)])  
