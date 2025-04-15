@@ -70,9 +70,9 @@ make_ss_output = function(dir,
         
     # run ss
     if(calc_hessian){
-        run(dir=tmp_dir,exe=exe,extras="-maxfn 0 -phase 9999",show_in_console=FALSE)
+        run(dir=tmp_dir,exe=exe,extras="-maxfn 0 -phase 9999",show_in_console=FALSE,skipfinished =FALSE,verbose=TRUE)
     } else {
-        run(dir=tmp_dir,exe=exe,extras="-maxfn 0 -phase 9999 -nohess",show_in_console=FALSE)
+        run(dir=tmp_dir,exe=exe,extras="-maxfn 0 -phase 9999 -nohess",show_in_console=FALSE,skipfinished =FALSE,verbose = TRUE)
     }
 
     # transfer files to original dir

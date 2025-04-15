@@ -1,0 +1,46 @@
+###
+console output
+2025-04-15 11:16:59.275936
+###
+ 
+ reading from starter.ss
+ reading from data file
+Data read successful 999
+
+ reading forecast file 
+ reading from control file
+End of control file successful! 999
+Begin setting up parameters ...  read parm file: ss3.par
+ found ss3.par
+ end of parameter section 
+Evaluating biology calculations once ... done
+Starting optimization of 'ss3' in phase 6 of 6 at Tue Apr 15 11:16:56 2025
+ CPUE  0 0 0 0 0 0 0 0 0 0 0 0 0 0 86.4522
+ Length   150.707 362.612 161.11 0 110.126 1449.63 799.362 11.4127 0 234.277 3732.93 6209.35 34.3264 695.556 95.809
+ sizefreq  12.8585 1009.4 405.626 14334.8 2205.64 617.198 758.522 83.4975
+ Recr 272.773  sum_recdev: 0.0484825
+ InitEQ_Regime 0
+ Parm_Priors 0
+ Parm_devs 
+ SoftBound 0.0774756
+ F_ballpark 0
+Catch 3.75327e-06
+ EQUL_catch 4.66156
+  crash 0
+6 1 -log(L): 33891.9  Spbio: 83187.2 41727.9
+Iterations: 1
+Finished calculating benchmarks
+Finished forecast
+Writing wtatage.ss_new
+mceval counter: 0
+Finished posteriors
+ finished appending to cumreport.sso 
+Finished final writing of report.sso
+Begin writing *.ss_new output files ... Finished writing *.ss_new output files
+
+ N parameters that are on or within 1% of min-max bound: 8
+
+!!  Run has completed  !! 
+!!  See warning.sso for 3 warnings  and 3 notes 
+
+Finished running model 'ss3' after 2.8 s.

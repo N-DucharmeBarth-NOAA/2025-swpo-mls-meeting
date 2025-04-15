@@ -9,7 +9,27 @@
 
 # dir = to_dir
 
-summarize_ss_model = function(dir,verbose=TRUE)
+weighted_mean <- function(x, w) {
+  # Input validation
+  if(length(x) != length(w)) {
+    stop("Lengths of x and w must be equal")
+  }
+  if(any(w < 0)) {
+    stop("Weights must be non-negative")
+  }
+  if(sum(w) == 0) {
+    stop("Sum of weights must be positive")
+  }
+  
+  # Calculate weighted mean: sum(x*w)/sum(w)
+  total_w <- sum(w)
+  weighted_sum <- sum(x * w)
+  
+  # Return the weighted mean
+  return(weighted_sum / total_w)
+}
+
+summarize_ss_model = function(dir,verbose=TRUE,overwrite_html=FALSE)
 {
     A = proc.time()
     # make summary file
@@ -23,7 +43,13 @@ summarize_ss_model = function(dir,verbose=TRUE)
     }
 
     # check if Report.sso exists
-    if(!file.exists(file.path(dir,"Report.sso"))){
+    if(!file.exists(file.path(dir,"Report.sso"))|!file.exists(file.path(dir,"CompReport.sso"))){
+        if(file.exists(file.path(dir,"Report.sso"))){
+            file.remove(file.path(dir,"Report.sso"))
+        }
+        if(file.exists(file.path(dir,"CompReport.sso"))){
+            file.remove(file.path(dir,"CompReport.sso"))
+        }
         make_ss_output(dir)
     }
 
@@ -151,6 +177,17 @@ summarize_ss_model = function(dir,verbose=TRUE)
               .[,id:=rep(tmp_dt$id,.N)] %>%
               .[,Fleet_name:=tmp_flt$Fleet_name[Fleet]] %>%
               .[,.(id,Fleet,Fleet_name,Used,Kind,Sex,Bin,Obs,Exp,Dev,effN,Nsamp_in,Nsamp_adj)]
+
+    tmp_len_obs_time = as.data.table(tmp_report$lendbase) %>% .[,.(Yr.S,Fleet,Used,Kind,Sex,Bin,Obs)] %>%
+              .[,id:=rep(tmp_dt$id,.N)] %>%
+              .[,Fleet_name:=tmp_flt$Fleet_name[Fleet]] %>%
+              .[,.(id,Fleet,Fleet_name,Yr.S,Used,Kind,Sex,Bin,Obs)]
+    
+    tmp_len_exp_time = as.data.table(tmp_report$lendbase) %>% .[,.(Yr.S,Fleet,Used,Kind,Sex,Bin,Exp)] %>%
+              .[,id:=rep(tmp_dt$id,.N)] %>%
+              .[,Fleet_name:=tmp_flt$Fleet_name[Fleet]] %>%
+              .[,.(id,Fleet,Fleet_name,Yr.S,Used,Kind,Sex,Bin,Exp)] %>%
+              .[,.(Exp_Mean=weighted_mean(x=Bin,w=Exp)),by=.(id,Fleet,Fleet_name,Yr.S,Used,Kind,Sex)]
     
     tmp_size = as.data.table(tmp_report$sizedbase) %>% .[,.(Yr.S,Fleet,Used,Kind,Sex,Bin,Obs,Exp,effN,Nsamp_in,Nsamp_adj)] %>%
               .[,.(Obs=sum(Obs),Exp=sum(Exp),effN=sum(effN),Nsamp_in=sum(Nsamp_in),Nsamp_adj=sum(Nsamp_adj)),by=.(Fleet,Used,Kind,Sex,Bin)] %>%
@@ -158,6 +195,18 @@ summarize_ss_model = function(dir,verbose=TRUE)
               .[,id:=rep(tmp_dt$id,.N)] %>%
               .[,Fleet_name:=tmp_flt$Fleet_name[Fleet]] %>%
               .[,.(id,Fleet,Fleet_name,Used,Kind,Sex,Bin,Obs,Exp,Dev,effN,Nsamp_in,Nsamp_adj)]
+
+    tmp_size_obs_time = as.data.table(tmp_report$sizedbase) %>% .[,.(Yr.S,Fleet,Used,Kind,Sex,Bin,Obs)] %>%
+              .[,id:=rep(tmp_dt$id,.N)] %>%
+              .[,Fleet_name:=tmp_flt$Fleet_name[Fleet]] %>%
+              .[,.(id,Fleet,Fleet_name,Yr.S,Used,Kind,Sex,Bin,Obs)]
+    
+    tmp_size_exp_time = as.data.table(tmp_report$sizedbase) %>% .[,.(Yr.S,Fleet,Used,Kind,Sex,Bin,Exp)] %>%
+              .[,id:=rep(tmp_dt$id,.N)] %>%
+              .[,Fleet_name:=tmp_flt$Fleet_name[Fleet]] %>%
+              .[,.(id,Fleet,Fleet_name,Yr.S,Used,Kind,Sex,Bin,Exp)] %>%
+              .[,.(Exp_Mean=weighted_mean(x=Bin,w=Exp)),by=.(id,Fleet,Fleet_name,Yr.S,Used,Kind,Sex)]
+
     
     # tmp_age = as.data.table(tmp_report$agedbase) %>% .[,.(Yr.S,Fleet,Used,Kind,Sex,Bin,Obs,Exp,effN)] %>%
     #           .[,.(Obs=sum(Obs),Exp=sum(Exp),effN=sum(effN)),by=.(Fleet,Used,Kind,Sex,Bin)] %>%
@@ -374,16 +423,37 @@ summarize_ss_model = function(dir,verbose=TRUE)
     fwrite(tmp_varadj,file=file.path(dir,"varadj.csv"))
     fwrite(tmp_lambdas,file=file.path(dir,"lambdas.csv"))
 
+    fwrite(tmp_len_obs_time,file=file.path(dir,"comp_len_obs_time.csv"))
+    fwrite(tmp_len_exp_time,file=file.path(dir,"comp_len_exp_time.csv"))
+    fwrite(tmp_size_obs_time,file=file.path(dir,"comp_size_obs_time.csv"))
+    fwrite(tmp_size_exp_time,file=file.path(dir,"comp_size_exp_time.csv"))
+
     # save output for html table
-    write.table(tmp_report$parameters,file=file.path(dir,"html_parameters.txt"))
-    writeLines(row.names(tmp_report$parameters),con=file.path(dir,"html_parameters_rownames.txt"))
-    write.table(tmp_report$recruitpars,file=file.path(dir,"html_recruitpars.txt"))
-    writeLines(row.names(tmp_report$recruitpars),con=file.path(dir,"html_recruitpars_rownames.txt"))
-    write.table(tmp_report$estimated_non_dev_parameters,file=file.path(dir,"html_estimated_non_dev_parameters.txt"))
-    writeLines(row.names(tmp_report$estimated_non_dev_parameters),con=file.path(dir,"html_estimated_non_dev_parameters_rownames.txt"))
-    write.table(tmp_report$derived_quants,file=file.path(dir,"html_derived_quants.txt"))
+    if(!file.exists(file.path(dir,"html_parameters.txt"))|overwrite_html){
+        write.table(tmp_report$parameters,file=file.path(dir,"html_parameters.txt"))
+    }
+    if(!file.exists(file.path(dir,"html_parameters_rownames.txt"))|overwrite_html){
+        writeLines(row.names(tmp_report$parameters),con=file.path(dir,"html_parameters_rownames.txt"))
+    }
+    if(!file.exists(file.path(dir,"html_recruitpars.txt"))|overwrite_html){
+            write.table(tmp_report$recruitpars,file=file.path(dir,"html_recruitpars.txt"))
+    }
+    if(!file.exists(file.path(dir,"html_recruitpars_rownames.txt"))|overwrite_html){
+        writeLines(row.names(tmp_report$recruitpars),con=file.path(dir,"html_recruitpars_rownames.txt"))
+    }
+    if(!file.exists(file.path(dir,"html_estimated_non_dev_parameters.txt"))|overwrite_html){
+        write.table(tmp_report$estimated_non_dev_parameters,file=file.path(dir,"html_estimated_non_dev_parameters.txt"))
+    }
+    if(!file.exists(file.path(dir,"html_estimated_non_dev_parameters_rownames.txt"))|overwrite_html){
+        writeLines(row.names(tmp_report$estimated_non_dev_parameters),con=file.path(dir,"html_estimated_non_dev_parameters_rownames.txt"))
+    }
+    if(!file.exists(file.path(dir,"html_derived_quants.txt"))|overwrite_html){
+        write.table(tmp_report$derived_quants,file=file.path(dir,"html_derived_quants.txt"))
+    }
+    if(!file.exists(file.path(dir,"html_derived_quants_rownames.txt"))|overwrite_html){
     writeLines(row.names(tmp_report$derived_quants),con=file.path(dir,"html_derived_quants_rownames.txt"))
-         
+    }    
+  
     B=proc.time()
     time = round((B-A)[3],digits=2)
     if(verbose){

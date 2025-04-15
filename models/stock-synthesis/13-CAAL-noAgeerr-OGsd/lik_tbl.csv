@@ -7,7 +7,7 @@ id,Label,values,lambdas
 13-CAAL-noAgeerr-OGsd,Age_comp,0.143691,
 13-CAAL-noAgeerr-OGsd,SizeFreq,755.85,
 13-CAAL-noAgeerr-OGsd,Recruitment,0.821693,1
-13-CAAL-noAgeerr-OGsd,InitEQ_Regime,0,1
+13-CAAL-noAgeerr-OGsd,InitEQ_Regime,7.83875e-31,1
 13-CAAL-noAgeerr-OGsd,Forecast_Recruitment,0.0207683,1
 13-CAAL-noAgeerr-OGsd,Parm_priors,0,1
 13-CAAL-noAgeerr-OGsd,Parm_softbounds,0.0281533,
