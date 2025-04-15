@@ -1,0 +1,15 @@
+id,Label,values,lambdas
+26-CAAL-maxAge-15,TOTAL,836.63,
+26-CAAL-maxAge-15,Catch,0.741215,
+26-CAAL-maxAge-15,Equil_catch,0,
+26-CAAL-maxAge-15,Survey,-27.8885,
+26-CAAL-maxAge-15,Length_comp,107.721,
+26-CAAL-maxAge-15,Age_comp,0.115432,
+26-CAAL-maxAge-15,SizeFreq,755.751,
+26-CAAL-maxAge-15,Recruitment,0.14153,1
+26-CAAL-maxAge-15,InitEQ_Regime,0,1
+26-CAAL-maxAge-15,Forecast_Recruitment,0.0204385,1
+26-CAAL-maxAge-15,Parm_priors,0,1
+26-CAAL-maxAge-15,Parm_softbounds,0.0273271,
+26-CAAL-maxAge-15,Parm_devs,0,1
+26-CAAL-maxAge-15,Crash_Pen,0,1
