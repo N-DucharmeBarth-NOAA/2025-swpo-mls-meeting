@@ -1,4 +1,346 @@
 
+plot_composition_time_comparison <- function(model_ids, model_stem, 
+                                           comp_type = "length", # Can be "length" or "weight"
+                                           show_fit = TRUE, 
+                                           n_col = 2, 
+                                           free_y_scale = TRUE,
+                                           free_x_scale = TRUE,  
+                                           model_labels = NULL, 
+                                           custom_colors = NULL) {
+  
+  # Required packages
+  required_packages <- c("data.table", "ggplot2", "viridis")
+  for(pkg in required_packages) {
+    if(!requireNamespace(pkg, quietly = TRUE)) {
+      stop(paste("Package", pkg, "is needed for this function to work. Please install it."))
+    }
+  }
+  
+  # Set comp_type to lowercase for consistent handling
+  comp_type = tolower(comp_type)
+  
+  # Validate comp_type
+  if(!comp_type %in% c("length", "weight")) {
+    stop("comp_type must be either 'length' or 'weight'")
+  }
+  
+  # Set file names and plot titles based on comp_type
+  if(comp_type == "length") {
+    obs_file_name = "comp_len_obs_time.csv"
+    exp_file_name = "comp_len_exp_time.csv"
+    kind_filter = "LEN"
+    x_label = "Year"
+    y_label = "Length"
+    plot_title = "Length Composition Time Series Comparison"
+  } else { # weight
+    obs_file_name = "comp_size_obs_time.csv"
+    exp_file_name = "comp_size_exp_time.csv"
+    kind_filter = "SIZE"
+    x_label = "Year"
+    y_label = "Weight"
+    plot_title = "Weight Composition Time Series Comparison"
+  }
+  
+  # Validate inputs
+  if(length(model_ids) < 1) {
+    stop("Please provide at least one model ID")
+  }
+  
+  # Handle model_stem as vector or single path
+  if(length(model_stem) == 1) {
+    model_stem = rep(model_stem, length(model_ids))
+  } else if(length(model_stem) != length(model_ids)) {
+    stop("If model_stem is a vector, it must have the same length as model_ids")
+  }
+  
+  # If model_labels is not provided, use model_ids as labels
+  if(is.null(model_labels)) {
+    model_labels = model_ids
+  } else if(length(model_labels) != length(model_ids)) {
+    stop("If model_labels is provided, it must have the same length as model_ids")
+  }
+  model_labels = sort(model_labels)
+  
+  # Create vector of model specifications with labels
+  selected_models = data.frame(
+    id = model_ids,
+    path = model_stem,
+    label = model_labels,
+    stringsAsFactors = FALSE
+  )
+  
+  # Check if observation file exists for all models
+  obs_file_exists = sapply(1:nrow(selected_models), function(i) {
+    file.exists(file.path(selected_models$path[i], selected_models$id[i], obs_file_name))
+  })
+  
+  if(sum(obs_file_exists) == 0) {
+    stop(paste0("The file ", obs_file_name, " does not exist for any of the models you selected."))
+  } else if(sum(obs_file_exists) < length(obs_file_exists)) {
+    warning(paste0("The file ", obs_file_name, " does not exist for some models. These models will be excluded."))
+    selected_models = selected_models[obs_file_exists, ]
+  }
+  
+  # Check if expectation file exists for all models
+  exp_file_exists = sapply(1:nrow(selected_models), function(i) {
+    file.exists(file.path(selected_models$path[i], selected_models$id[i], exp_file_name))
+  })
+  
+  if(sum(exp_file_exists) == 0 && show_fit) {
+    warning(paste0("The file ", exp_file_name, " does not exist for any of the models you selected. Expected values will not be shown."))
+    show_fit = FALSE
+  } else if(sum(exp_file_exists) < length(exp_file_exists) && show_fit) {
+    warning(paste0("The file ", exp_file_name, " does not exist for some models. Expected values for these models will not be shown."))
+  }
+  
+  # Read and compile observation data
+  obs_data_list = lapply(1:nrow(selected_models), function(i) {
+    if(!obs_file_exists[i]) return(NULL)
+    
+    # Read composition data
+    obs_file = file.path(selected_models$path[i], selected_models$id[i], obs_file_name)
+    obs_dt = fread(obs_file)
+    
+    # Filter by Kind
+    obs_dt = obs_dt[Kind == kind_filter]
+    
+    # Add model identifiers
+    obs_dt[, model_id := selected_models$id[i]]
+    obs_dt[, model_label := selected_models$label[i]]
+    
+    return(obs_dt)
+  })
+  
+  # Combine all observation data
+  obs_dt = rbindlist(obs_data_list[!sapply(obs_data_list, is.null)], fill = TRUE)
+  
+  # Check if we have any data after filtering
+  if(nrow(obs_dt) == 0) {
+    stop(paste0("No ", comp_type, " composition observation data found with Kind = ", kind_filter))
+  }
+  
+  # Read and compile expectation data if requested
+  if(show_fit) {
+    exp_data_list = lapply(1:nrow(selected_models), function(i) {
+      if(!exp_file_exists[i]) return(NULL)
+      
+      # Read composition data
+      exp_file = file.path(selected_models$path[i], selected_models$id[i], exp_file_name)
+      exp_dt = fread(exp_file)
+      
+      # Filter by Kind
+      exp_dt = exp_dt[Kind == kind_filter]
+      
+      # Add model identifiers
+      exp_dt[, model_id := selected_models$id[i]]
+      exp_dt[, model_label := selected_models$label[i]]
+      
+      return(exp_dt)
+    })
+    
+    # Combine all expectation data
+    exp_dt = rbindlist(exp_data_list[!sapply(exp_data_list, is.null)], fill = TRUE)
+    
+    # Check if we have any data after filtering
+    if(nrow(exp_dt) == 0) {
+      warning(paste0("No ", comp_type, " composition expectation data found with Kind = ", kind_filter, ". Expected values will not be shown."))
+      show_fit = FALSE
+    }
+  }
+  
+  # Calculate summary statistics for each fleet, year, and sex combination
+  obs_summary = obs_dt[, .(
+    mean = weighted.mean(Bin, w = Obs, na.rm = TRUE),
+    q025 = quantile(rep(Bin, ceiling(Obs*1000)), 0.025, na.rm = TRUE),
+    q25 = quantile(rep(Bin, ceiling(Obs*1000)), 0.25, na.rm = TRUE),
+    median = quantile(rep(Bin, ceiling(Obs*1000)), 0.5, na.rm = TRUE),
+    q75 = quantile(rep(Bin, ceiling(Obs*1000)), 0.75, na.rm = TRUE),
+    q975 = quantile(rep(Bin, ceiling(Obs*1000)), 0.975, na.rm = TRUE)
+  ), by = .(model_label,Fleet, Fleet_name, Yr.S, Sex, Used)]
+  
+  # Convert Sex to a factor with clear labels
+  obs_summary[Sex == 1, sex_label := "Female"]
+  obs_summary[Sex == 2, sex_label := "Male"]
+  obs_summary[Sex == 3, sex_label := "Aggregated"]
+  obs_summary[is.na(sex_label), sex_label := "NA"]
+  
+  # Check if we need to facet by sex (more than one unique sex)
+  sex_count = uniqueN(obs_summary$Sex)
+  if(sex_count > 1) {
+    # Create a facet label that combines fleet and sex
+    obs_summary[, facet_label := paste0(Fleet_name, " (", sex_label, ")")]
+  } else {
+    # Only facet by fleet
+    obs_summary[, facet_label := Fleet_name]
+  }
+  
+  # Process expected data if available
+  if(show_fit) {
+    # Convert Sex to a factor with clear labels
+    exp_dt[Sex == 1, sex_label := "Female"]
+    exp_dt[Sex == 2, sex_label := "Male"]
+    exp_dt[is.na(sex_label), sex_label := "NA"]
+    
+    # Apply same faceting logic
+    if(sex_count > 1) {
+      exp_dt[, facet_label := paste0(Fleet_name, " (", sex_label, ")")]
+    } else {
+      exp_dt[, facet_label := Fleet_name]
+    }
+    
+    # Set model_label as factor with correct order
+    exp_dt[, model_label := factor(model_label, levels = model_labels)]
+  }
+
+  # Check consistency of observed values across models for the same fleet/year/sex/bin
+  consistency_check = obs_dt[, {
+    # For each unique combination, check if Obs values are consistent (within tolerance)
+    obs_values = unique(Obs)
+    is_consistent = all(abs(obs_values - obs_values[1]) < 0.00001)
+    list(
+      models = list(unique(model_label)),
+      consistent = is_consistent
+    )
+  }, by = .(Fleet_name, Yr.S, Sex, Bin)]
+
+  # Identify which fleet/sex combinations have inconsistencies
+  facet_with_inconsistencies = consistency_check[consistent == FALSE, 
+                                                .(has_inconsistency = TRUE), 
+                                                by = .(Fleet_name, Sex)]
+
+  # Merge this information back to our summary data
+  if(nrow(facet_with_inconsistencies) > 0) {
+    # Convert Sex to a factor with clear labels for merging
+    facet_with_inconsistencies[Sex == 1, sex_label := "Female"]
+    facet_with_inconsistencies[Sex == 2, sex_label := "Male"]
+    facet_with_inconsistencies[Sex == 3, sex_label := "Aggregated"]
+    facet_with_inconsistencies[is.na(sex_label), sex_label := "NA"]
+    
+    # Create facet label
+    if(sex_count > 1) {
+      facet_with_inconsistencies[, facet_label := paste0(Fleet_name, " (", sex_label, ")")]
+    } else {
+      facet_with_inconsistencies[, facet_label := Fleet_name]
+    }
+    
+    # Merge with obs_summary
+    obs_summary = merge(obs_summary, facet_with_inconsistencies[, .(facet_label, has_inconsistency)], 
+                        by = "facet_label", all.x = TRUE)
+    obs_summary[is.na(has_inconsistency), has_inconsistency := FALSE]
+  }
+
+  # Filter to only use observations from the first model in model_labels
+  first_model = model_labels[1]
+  obs_summary_filtered = obs_summary[model_label == first_model | is.na(model_label)]
+  
+ # Create the plot
+  p = ggplot()
+
+  # Add visualization elements
+  p = p + 
+    # Thin line for 2.5%-97.5% range
+    geom_linerange(
+      data = obs_summary_filtered,
+      aes(x = Yr.S, ymin = q025, ymax = q975, group = Yr.S),
+      linewidth = 0.5,
+      color = "gray40"
+    ) +
+    # Thicker line for IQR
+    geom_linerange(
+      data = obs_summary_filtered,
+      aes(x = Yr.S, ymin = q25, ymax = q75, group = Yr.S),
+      linewidth = 1.5,
+      color = "gray40"
+    ) +
+    # Point for mean
+    geom_point(
+      data = obs_summary_filtered,
+      aes(x = Yr.S, y = mean),
+      size = 3,
+      shape = 21,
+      fill = "black",
+      color = "white",
+      stroke = 1
+    )
+    
+  # Add the expected mean lines if requested
+  if(show_fit) {
+    p = p + 
+      geom_line(
+        data = exp_dt, 
+        aes(x = Yr.S, y = Exp_Mean, color = model_label, group = model_label),
+        linewidth = 1
+      )
+  }
+
+  # Add facets
+  if(free_y_scale){
+    if(free_x_scale){
+      axes_scales_type="free"
+    } else {
+      axes_scales_type="free_y"
+    }
+  } else {
+    if(free_x_scale){
+      axes_scales_type="free_x"
+    } else {
+      axes_scales_type="fixed"
+    }
+  }
+  p = p + 
+    facet_wrap(~ facet_label, ncol = n_col, scales = axes_scales_type)
+
+  # Add warning text to facets with inconsistencies
+  if(nrow(facet_with_inconsistencies) > 0) {
+    # Get y-axis range for each facet
+    if(free_y_scale) {
+      # If using free y-scale, calculate range for each facet
+      y_ranges = obs_summary_filtered[, .(
+        y_min = min(q025, na.rm = TRUE),
+        y_max = max(q975, na.rm = TRUE)
+      ), by = facet_label]
+    } else {
+      # If using fixed y-scale, use global range
+      global_y_min = min(obs_summary_filtered$q025, na.rm = TRUE)
+      global_y_max = max(obs_summary_filtered$q975, na.rm = TRUE)
+      y_ranges = obs_summary_filtered[, .(
+        y_min = global_y_min,
+        y_max = global_y_max
+      ), by = facet_label]
+    }
+    
+    # Merge with inconsistency info
+    warning_data = merge(facet_with_inconsistencies, y_ranges, by = "facet_label")
+    
+    # Add warning text at top of facet
+    p = p + 
+      geom_text(
+        data = warning_data,
+        aes(x = min(obs_summary_filtered$Yr.S), 
+            y = y_max * 0.95, 
+            label = "Note: Observations inconsistent across models"),
+        hjust = 0,
+        vjust = 1,
+        color = "red",
+        size = 3
+      )
+  }
+  
+  # Apply consistent theme elements
+  p = p + theme(
+    panel.background = element_rect(fill = "white", color = "black", linetype = "solid"),
+    panel.grid.major = element_line(color = 'gray70', linetype = "dotted"),
+    panel.grid.minor = element_line(color = 'gray70', linetype = "dotted"),
+    strip.background = element_rect(fill = "white"),
+    legend.key = element_rect(fill = "white")
+  ) +
+  xlab("Time") +
+  ylab("Mean")
+
+  
+  return(p)
+}
+
 # Function to create comparative composition plots (length or weight) across multiple models
 plot_composition_comparison = function(model_ids, model_stem, 
                                     comp_type = "length", # Can be "length" or "weight"
@@ -1477,6 +1819,81 @@ server = function(input, output){
     }
     
     n_rows <- ceiling(fleet_count / input$comp_n_col)
+    return(max(height_per_panel * 1.5, height_per_panel * n_rows))
+  })
+
+  output$comp_time_plot <- renderPlot({
+    input_models <- unique(filtered_id())
+    
+    if(length(input_models) < 1) {
+      return()
+    }
+    
+    # Convert input$comp_time_type to lowercase for function
+    comp_type <- tolower(input$comp_time_type)
+    
+    # Create the plot using the provided function
+    tryCatch({
+      p <- plot_composition_time_comparison(
+        model_ids = input_models,
+        model_stem = model_stem,
+        comp_type = comp_type,
+        show_fit = input$comp_time_show_fit,
+        n_col = input$comp_time_n_col,
+        free_y_scale = input$comp_time_free_y,
+        free_x_scale = input$comp_time_free_x
+      )
+      
+      return(p)
+    }, error = function(e) {
+      # Create empty plot with error message
+      p <- ggplot() + 
+        annotate("text", x = 0.5, y = 0.5, 
+                label = paste("No composition time series data available:", e$message), 
+                hjust = 0.5, vjust = 0.5) +
+        theme_void()
+      return(p)
+    })
+  }, height = function() {
+    input_models <- unique(filtered_id())
+    
+    if(length(input_models) < 1) {
+      return(height_per_panel * 1.5)
+    }
+    
+    # Calculate appropriate height based on facets
+    # Estimate the number of facets (fleets * sexes)
+    selected_models <- sapply(input_models, function(x) all_dirs[grep(x, all_dirs, fixed=TRUE)])
+    fleet_count <- 0
+    sex_count <- 1
+    
+    comp_type <- tolower(input$comp_time_type)
+    file_name <- if(comp_type == "length") "comp_len_obs_time.csv" else "comp_size_obs_time.csv"
+    kind_filter <- if(comp_type == "length") "LEN" else "SIZE"
+    
+    for(model_path in selected_models) {
+      comp_file <- file.path(model_stem, model_path, file_name)
+      if(file.exists(comp_file)) {
+        comp_data <- fread(comp_file)
+        comp_data <- comp_data[Kind == kind_filter]
+        fleet_count <- max(fleet_count, length(unique(comp_data$Fleet_name)))
+        # Check if sex faceting is needed
+        if("Sex" %in% colnames(comp_data)) {
+          sex_count <- max(sex_count, length(unique(comp_data$Sex)))
+        }
+      }
+    }
+    
+    if(sex_count > 1) {
+      total_facets <- fleet_count * sex_count
+    } else {
+      total_facets <- fleet_count
+    }
+    if(total_facets == 0) {
+      return(height_per_panel * 1.5)
+    }
+    
+    n_rows <- ceiling(total_facets / input$comp_time_n_col)
     return(max(height_per_panel * 1.5, height_per_panel * n_rows))
   })
 
