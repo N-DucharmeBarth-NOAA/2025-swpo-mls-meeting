@@ -337,6 +337,22 @@ plot_composition_time_comparison <- function(model_ids, model_stem,
   xlab("Time") +
   ylab("Mean")
 
+    # Apply color scales - either custom colors or viridis palette
+  if(!is.null(custom_colors)) {
+    # Validate that enough colors are provided
+    if(length(custom_colors) < length(unique(selex_data$model_label))) {
+      warning("Not enough custom colors provided. Falling back to viridis palette.")
+      p = p + viridis::scale_color_viridis("Model", begin = 0.1, end = 0.8, 
+                                         direction = 1, option = "H", discrete = TRUE)
+    } else {
+      # Use custom colors
+      p = p + scale_color_manual("Model", values = custom_colors)
+    }
+  } else {
+    # Use default viridis palette
+    p = p + viridis::scale_color_viridis("Model", begin = 0.1, end = 0.8, 
+                                       direction = 1, option = "H", discrete = TRUE)
+  }
   
   return(p)
 }
