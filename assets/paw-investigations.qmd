@@ -1,0 +1,21 @@
+---
+title: "PAW investigations"
+format: 
+  html:
+    toc: true
+---
+
+As mentioned in the note on the *Home* page, a number of models were configured and run during the course of the 2025 SPC Pre-Assessment Workshop (PAW). These models were inspired by discussions held during the PAW meeting and represent investigations into key data components or alternative model structural assumptions. All models were run as one-off sensitivities from the `12-CAAL-old-growth-SD` model. Similar to the models produced during the January 2025 meeting, any model runs contained within this repository represent preliminary model explorations and should not be used '*as is*' for the consideration of management advice.
+
+Briefly, individual models or groups of similar models that were run during the PAW meeting are described below:
+
+- `26-CAAL-maxAge-15`: Model maximum age was extended to 15 to match the maximum age seen in the conditional-age-at-length (CAAL) data.
+- `27-CAAL-NZdblnorm`: A double-normal selectivity curve was assumed for the New Zealand recreational fishery (Fishery 10), rather than logistic selectivity curve. The descending limb and terminal selectivity were freely estimated.
+- `28-CAAL-noNZrec-ASPM`: The selectivity curve for the New Zealand recreational fishery (Fishery 10) was held fixed at previously estimated values, and the length/weight composition components of the likelihood for this fishery were set to 0.
+- `29-CAAL-ASPM-all`: An age-structured production model was configured by holding all fishery selectivity curves at fixed values, and setting all length/weight composition components of the likelihood to 0.
+- `30-CAAL-cUnc-cv2`: Uncertainty in the early (1952-1978) Japanese longline catch in model sub-region 2 was increased. A CV of 2 was assumed for the large catch observation in 1954, while a CV of 0.4 was assumed for the other catch observations.
+- `31-CAAL-revASPM-xx`: Selectivity was held fixed for all fisheries. The likelihood components for length/weight were set to 0 for all fleets except `xx` where `xx` denotes the fleet (e.g., `01`) whose size composition data the model was fit to. A total of 16 models, one for each fishery, were run.
+- `47-CAAL-oneFleet-xx`: Similar to `31-CAAL-revASPM-xx` except selectivity was additionally estimated for fleet `xx`. A total of 7 models were run.
+- `54-CAAL-exdblnorm`: Double-normal selectivity was assumed for all fleets and dome shaped selectivity was forced for all fleets.
+- `55-CAAL-NZdblnorm-xx`: Double-normal selectivity was assumed for the New Zealand recreational fishery (Fishery 10), where selectivity at the largest size class was held fixed at value `xx`. A total of 5 models were run.
+- `60-CAAL-NZdblnorm-xx`: Similar to `55-CAAL-NZdblnorm-xx` except the slope of the descending limb was also held fixed. A total of 5 models were run.

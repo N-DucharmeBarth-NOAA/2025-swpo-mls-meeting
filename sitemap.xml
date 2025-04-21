@@ -2,30 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://N-DucharmeBarth-NOAA.github.io/2025-swpo-mls-meeting/DISCLAIMER.html</loc>
-    <lastmod>2025-04-14T00:03:29.915Z</lastmod>
+    <lastmod>2025-04-21T20:15:39.736Z</lastmod>
   </url>
   <url>
-    <loc>https://N-DucharmeBarth-NOAA.github.io/2025-swpo-mls-meeting/assets/noaa-spc-model-meeting-report.html</loc>
-    <lastmod>2025-04-14T00:03:29.917Z</lastmod>
-  </url>
-  <url>
-    <loc>https://N-DucharmeBarth-NOAA.github.io/2025-swpo-mls-meeting/index.html</loc>
-    <lastmod>2025-04-14T00:03:30.111Z</lastmod>
-  </url>
-  <url>
-    <loc>https://N-DucharmeBarth-NOAA.github.io/2025-swpo-mls-meeting/shiny/stock-synthesis-model-summary.html</loc>
-    <lastmod>2025-04-14T00:03:32.615Z</lastmod>
-  </url>
-  <url>
-    <loc>https://N-DucharmeBarth-NOAA.github.io/2025-swpo-mls-meeting/shiny/introduction_index.html</loc>
-    <lastmod>2025-04-14T00:03:32.615Z</lastmod>
+    <loc>https://N-DucharmeBarth-NOAA.github.io/2025-swpo-mls-meeting/assets/paw-investigations.html</loc>
+    <lastmod>2025-04-21T20:15:39.738Z</lastmod>
   </url>
   <url>
     <loc>https://N-DucharmeBarth-NOAA.github.io/2025-swpo-mls-meeting/assets/instructions.html</loc>
-    <lastmod>2025-04-14T00:03:29.917Z</lastmod>
+    <lastmod>2025-04-21T20:15:39.737Z</lastmod>
+  </url>
+  <url>
+    <loc>https://N-DucharmeBarth-NOAA.github.io/2025-swpo-mls-meeting/shiny/introduction_index.html</loc>
+    <lastmod>2025-04-21T20:15:42.966Z</lastmod>
+  </url>
+  <url>
+    <loc>https://N-DucharmeBarth-NOAA.github.io/2025-swpo-mls-meeting/shiny/stock-synthesis-model-summary.html</loc>
+    <lastmod>2025-04-21T20:15:42.966Z</lastmod>
+  </url>
+  <url>
+    <loc>https://N-DucharmeBarth-NOAA.github.io/2025-swpo-mls-meeting/index.html</loc>
+    <lastmod>2025-04-21T20:15:39.931Z</lastmod>
+  </url>
+  <url>
+    <loc>https://N-DucharmeBarth-NOAA.github.io/2025-swpo-mls-meeting/assets/noaa-spc-model-meeting-report.html</loc>
+    <lastmod>2025-04-21T20:15:39.738Z</lastmod>
   </url>
   <url>
     <loc>https://N-DucharmeBarth-NOAA.github.io/2025-swpo-mls-meeting/assets/noaa-spc-model-meeting-pres.html</loc>
-    <lastmod>2025-04-14T00:03:29.917Z</lastmod>
+    <lastmod>2025-04-21T20:15:39.737Z</lastmod>
   </url>
 </urlset>
