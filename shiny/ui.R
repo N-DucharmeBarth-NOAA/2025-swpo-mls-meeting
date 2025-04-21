@@ -106,6 +106,7 @@ ui = dashboardPage(
       menuItem("Selectivity plots", tabName="selex_plots"),
       menuItem("Fit to catch", tabName="catch_fit_plots"),
       menuItem("Fit to size composition", tabName="comp_plots"),
+      menuItem("Size composition time series", tabName="comp_time_plots"),
       menuItem("Fit to CPUE", tabName="cpue_plots")
     ),
 
@@ -311,6 +312,54 @@ ui = dashboardPage(
         step = 1
       )
     ),
+    conditionalPanel(condition="input.sidebarmenu == 'comp_time_plots'",
+    # Type selection
+    awesomeRadio(
+      inputId = "comp_time_type",
+      label = "Composition type", 
+      choices = c("Length", "Weight"),
+      selected = "Length"
+    ),
+    # Show fitted lines
+    switchInput(
+      inputId = "comp_time_show_fit",  
+      label = "Show fitted lines",
+      value = TRUE,
+      onLabel = "TRUE",
+      offLabel = "FALSE",
+      onStatus = "success", 
+      offStatus = "danger"
+    ),
+    # Free Y scale
+    switchInput(
+      inputId = "comp_time_free_y",  
+      label = "Free Y-axis scales",
+      value = TRUE,
+      onLabel = "TRUE",
+      offLabel = "FALSE",
+      onStatus = "success", 
+      offStatus = "danger"
+    ),
+    # Free X scale (this wasn't in your implementation plan but is in your function)
+    switchInput(
+      inputId = "comp_time_free_x",  
+      label = "Free X-axis scales",
+      value = TRUE,
+      onLabel = "TRUE",
+      offLabel = "FALSE",
+      onStatus = "success", 
+      offStatus = "danger"
+    ),
+    # Number of columns
+    sliderInput(
+      inputId = "comp_time_n_col",
+      label = "Number of columns",
+      min = 1,
+      max = 4,
+      value = 2,
+      step = 1
+    )
+  ),
     br(),
     br(),
     tags$footer(
@@ -405,6 +454,16 @@ ui = dashboardPage(
           box(title="Size Composition", solidHeader=TRUE, collapsible=TRUE, collapsed=FALSE, status="primary", width=12,
             p("Select at least one model to compare size composition data."),
             plotOutput("comp_plot", height="auto")
+          )
+        )
+      ),
+
+      # Add this to the tabItems in ui.R
+      tabItem(tabName="comp_time_plots", h2("Size Composition Time Series"),
+        fluidRow(
+          box(title="Size Composition Over Time", solidHeader=TRUE, collapsible=TRUE, collapsed=FALSE, status="primary", width=12,
+            p("Select at least one model to compare size composition data over time."),
+            plotOutput("comp_time_plot", height="auto")
           )
         )
       ),

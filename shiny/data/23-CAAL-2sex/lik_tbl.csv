@@ -7,7 +7,7 @@ id,Label,values,lambdas
 23-CAAL-2sex,Age_comp,0.137331,
 23-CAAL-2sex,SizeFreq,275.717,
 23-CAAL-2sex,Recruitment,-3.83997,1
-23-CAAL-2sex,InitEQ_Regime,0,1
+23-CAAL-2sex,InitEQ_Regime,7.83875e-31,1
 23-CAAL-2sex,Forecast_Recruitment,0.0165224,1
 23-CAAL-2sex,Parm_priors,0,1
 23-CAAL-2sex,Parm_softbounds,0.0332652,

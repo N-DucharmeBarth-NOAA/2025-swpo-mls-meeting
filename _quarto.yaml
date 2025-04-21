@@ -30,6 +30,8 @@ website:
           file: assets/noaa-spc-model-meeting-report.pdf
       - text: "Repository instructions"
         file: assets/instructions.qmd
+      - text: "PAW investigations"
+        file: assets/paw-investigations.qmd
       - section: "Support"
         contents:
         - text: "Submit an issue"

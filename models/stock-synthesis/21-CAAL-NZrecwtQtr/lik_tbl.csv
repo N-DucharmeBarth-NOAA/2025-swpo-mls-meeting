@@ -7,7 +7,7 @@ id,Label,values,lambdas
 21-CAAL-NZrecwtQtr,Age_comp,0.108941,
 21-CAAL-NZrecwtQtr,SizeFreq,799.763,
 21-CAAL-NZrecwtQtr,Recruitment,0.724103,1
-21-CAAL-NZrecwtQtr,InitEQ_Regime,7.83875e-31,1
+21-CAAL-NZrecwtQtr,InitEQ_Regime,0,1
 21-CAAL-NZrecwtQtr,Forecast_Recruitment,0.020336,1
 21-CAAL-NZrecwtQtr,Parm_priors,0,1
 21-CAAL-NZrecwtQtr,Parm_softbounds,0.0266169,
