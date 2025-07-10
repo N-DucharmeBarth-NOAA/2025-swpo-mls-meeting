@@ -24,7 +24,7 @@ meetingtype: "SCIENTIFIC COMMITTEE"
 meetingnumber: "TWENTY-FIRST REGULAR SESSION"
 meetinglocation: "Tonga"
 meetingdates: "13-21 August 2025"
-repnumber: WCPFC-SC21-2025/SA-IP-XX
+repnumber: WCPFC-SC21-2025/SA-IP-15
 format:
   pdf:
     pdf-engine: pdflatex
@@ -49,8 +49,6 @@ format:
     code-font: "Consolas, Monaco, 'Andale Mono', monospace"
     filters:
       - inline-code.lua
-    header-includes: |
-     \usepackage{draftwatermark}
   html:
     toc: true
     toc-depth: 3
@@ -63,24 +61,6 @@ bibliography: 202503_swpo_mls.bib
 csl: apa.csl
 
 ---
-
-```{=html}
-<style>
-.draft-watermark {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) rotate(-45deg);
-  font-size: 100px;
-  font-weight: bold;
-  color: #ccc;
-  opacity: 0.5;
-  z-index: -1000;
-  pointer-events: none;
-}
-</style>
-<div class="draft-watermark">DRAFT</div>
-```
 
 \newpage
 
