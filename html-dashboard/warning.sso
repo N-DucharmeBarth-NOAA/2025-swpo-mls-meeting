@@ -1,0 +1,9 @@
+Warning 1 Adjustment: reset upper end of F_reporting_ages to be nages-2  
+Warning 2 : Forecast=0 or -1, so rest of forecast file will not be read and can be omitted;
+Warning 3 : A one year forecast using recent F will be done automatically
+Warning 4 : Setting in starter does not request all priors, and 5 parameters have priors and are not estimated, so their prior not included in obj_fun.
+Warning 5 : 1st iteration warning: catch logL > 50% total logL; check configuration; suggest start with larger R0
+Warning 6 : Main recdev biasadj is >2 times ratio of rmse to sigmaR
+Note 1 Information: A revised protocol for the Fcast_yr specification is available and recommended.
+Note 2 Information:  N parameters that are on or within 1% of min-max bound: 1; check results, variance may be suspect
+ 6 warnings  and 2 notes 
