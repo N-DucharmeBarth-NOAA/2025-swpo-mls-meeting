@@ -1,0 +1,7 @@
+Warning 1 : Forecast=0 or -1, so rest of forecast file will not be read and can be omitted;
+Warning 2 : A one year forecast using recent F will be done automatically
+Warning 3 : Setting in starter does not request all priors, and 4 parameters have priors and are not estimated, so their prior not included in obj_fun.
+Warning 4 : 1st iteration warning: ssb(endyr)/ssb(styr)= 4.97244e-07; suggest start with larger R0 to get near 0.4; or use depletion fleet option
+Warning 5 : 1st iteration warning: catch logL > 50% total logL; check configuration; suggest start with larger R0
+Note 1 Information: A revised protocol for the Fcast_yr specification is available and recommended.
+ 5 warnings  and 1 note 
